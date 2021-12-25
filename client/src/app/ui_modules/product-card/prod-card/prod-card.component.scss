@@ -1,0 +1,37 @@
+nz-card {
+  &::ng-deep {
+    .ant-card-cover img {
+      height: 150px;
+      object-fit: cover;
+    }
+    .ant-card-meta-description {
+      text-decoration: line-through;
+    }
+    .ant-card-body {
+      padding: 24px 10px;
+    }
+  }
+}
+nz-rate {
+  &::ng-deep {
+    .ant-rate-star {
+      margin-right: 0;
+      font-size: 14px;
+    }
+  }
+}
+
+.card-foot {
+  display: flex;
+  justify-content: space-between;
+
+  .price {
+    color: #0077C0;
+    font-weight: 500;
+    margin-bottom: -14px;
+  }
+}
+
+button {
+  padding: 4px 4px;
+}

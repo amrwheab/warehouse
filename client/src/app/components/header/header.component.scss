@@ -1,0 +1,86 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 5px;
+
+  .logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    i {
+      font-size: 20px;
+    }
+    img {
+      margin-left: 10px;
+      width: 60px;
+    }
+  }
+
+  .menu-bar i {
+    font-size: 20px;
+  }
+
+  .menu {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+
+    li {
+      margin-right: 10px;
+      font-size: 1.05rem;
+      position: relative;
+      &.active {
+        font-weight: 500;
+        &::before {
+          content: "";
+          position: absolute;
+          width: 20px;
+          height: 3px;
+          left: 50%;
+          transform: translateX(-50%);
+          bottom: -3px;
+          background-color: #0077C0;
+        }
+      }
+    }
+  }
+
+  .restform {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .heart, .search {
+      margin-right: 5px;
+
+      i {
+        font-size: 20px;
+      }
+    }
+
+    .cart-icon {
+      margin-right: 5px;
+
+      img {
+        width: 25px;
+      }
+    }
+
+    .auth {
+      .primary {
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+nav hr {
+  margin-top: 3px;
+  border-top: 0.1rem solid #dfdede;
+  border-bottom: none;
+  margin-bottom: -1px;
+}

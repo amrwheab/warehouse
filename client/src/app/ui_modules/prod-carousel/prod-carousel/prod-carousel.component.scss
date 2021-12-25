@@ -1,0 +1,40 @@
+.slides-contain {
+  overflow: hidden;
+  position: relative;
+
+  .arrows {
+    position: absolute;
+    transform: translateY(-50%);
+    z-index: 3000;
+    color: white;
+    background-color: #1890ff63;
+    font-size: 25px;
+    top: 50%;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: .3s ease-out;
+
+    &:hover {
+      background-color: #188fff;
+    }
+
+    &.not-allowed {
+      cursor: not-allowed;
+      background-color: #2996fc3d;
+    }
+  }
+  .screen-slider {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row;
+    transition: .3s ease-out;
+    .slide-cell {
+      margin-right: 10px;
+    }
+  }
+
+}

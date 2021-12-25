@@ -1,0 +1,104 @@
+.mycarousel {
+  overflow: hidden;
+  position: relative;
+  max-height: 450px;
+}
+.mycarousel i {
+  position: absolute;
+  transform: translateY(-50%);
+  z-index: 3000;
+  color: white;
+  background-color: #1890ff63;
+  font-size: 25px;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: .3s ease-out;
+}
+.mycarousel i:hover{
+  background-color: #188fff;
+  cursor: pointer;
+}
+.inner-car {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  height: 450px;
+  position: relative;
+}
+.inner-car div img {
+  width: 100%;
+}
+.mycarousel .bullets {
+  z-index: 100;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+.mycarousel .bullets .bullet {
+  width: 12px;
+  background-color: #1890ff63;
+  color: transparent;
+  border-radius: 50%;
+  border: .5px solid transparent;
+  cursor: pointer;
+  transition: .3s ease-out;
+}
+.mycarousel .bullets .bullet:hover,
+.mycarousel .bullets .bullet.active {
+  background-color: #188fff;
+  border-color: white;
+}
+.insideCar {
+  height: 100%;
+  padding: 70px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.insideCar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .6);
+}
+.insideCar .car-input {
+  width: 50%;
+  z-index: 100;
+  text-align: start;
+}
+.insideCar .car-input h2 {
+  color: white;
+  font-size: 3rem;
+}
+.insideCar .car-input p {
+  color: #bfbbbb;
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+.insideCar .car-input::ng-deep.ant-btn {
+  padding: 10px 45px 40px;
+  line-height: 30px;
+  color: #1D242B;
+  background-color: white;
+  border: none;
+  font-size: 1rem;
+}
+.insideCar .car-input a:hover {
+  background-color: #188fff;
+  text-decoration: none;
+}

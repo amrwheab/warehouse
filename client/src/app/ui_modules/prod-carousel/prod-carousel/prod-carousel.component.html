@@ -1,0 +1,11 @@
+<div class="slides-contain" [style]="'width:'+ ((225 * slidesToShow) + (10 * (slidesToShow))) + 'px'">
+  <i nz-icon nzType="left" class="arrows" [class.not-allowed]="departsSlide >= 0" nzTheme="outline"
+    (click)="departSlideAction(false)" style="left: 20px;"></i>
+  <i nz-icon nzType="right" class="arrows" [class.not-allowed]="departsSlide <= -departsSlideWidth+10" nzTheme="outline"
+    (click)="departSlideAction(true)" style="right: 20px;"></i>
+  <div class="screen-slider" [style]="'transform: translate('+departsSlide+'px);'">
+    <div class="slide-cell" *ngFor="let product of products">
+      <app-prod-card [product]="product"></app-prod-card>
+    </div>
+  </div>
+</div>

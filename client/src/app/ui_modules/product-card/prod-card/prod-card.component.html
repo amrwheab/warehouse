@@ -1,0 +1,19 @@
+<nz-card style="width:225px;height: 267px;" [nzCover]="coverTemplate">
+  <nz-card-meta [nzTitle]="product.title" [nzDescription]="product.oldPrice"></nz-card-meta>
+  <div class="card-foot">
+    <div>
+      <p class="price">{{product.newPrice}}</p>
+      <nz-rate [ngModel]="product.rating*5" nzAllowHalf nzDisabled ></nz-rate>
+      ({{product.ratingNum}})
+    </div>
+    <div>
+      <button nz-button nzType="primary">
+        add to cart
+        <i nz-icon nzType="shopping-cart" nzTheme="outline"></i>
+      </button>
+    </div>
+  </div>
+</nz-card>
+<ng-template #coverTemplate>
+  <img alt="example" src="assets/test/samsung.png" />
+</ng-template>

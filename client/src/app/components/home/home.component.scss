@@ -1,0 +1,92 @@
+.home {
+  // height: 5000px;
+
+  .title {
+    text-align: center;
+    position: relative;
+    font-size: 1.6rem;
+    font-weight: bold;
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 38px;
+      height: 3px;
+      font-weight: bold;
+      background-color: #0077C0;
+    }
+  }
+
+  .departs {
+    padding-top: 20px;
+    .departs-container {
+      padding-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        // width: 78%;
+        flex-wrap: wrap;
+      }
+    }
+  }
+
+  .featured-products {
+    padding-bottom: 25px;
+
+    .feat-title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 267px;
+      line-height: 45px;
+    }
+    .cards-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+
+      app-prod-card {
+        margin-bottom: 10px;
+      }
+    }
+    .show-more {
+      font-size: 1.1rem;
+      transition: color .3s;
+      &:hover {
+        color: #0077C0;
+        text-decoration: underline;
+      }
+    }
+
+    .poster {
+      padding-top: 15px;
+      img {
+        width: 100%;
+        object-fit: cover;
+        object-position: left;
+      }
+    }
+    .most-feat {
+
+      margin-top: -17px;
+
+      .most-feat-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+      }
+    }
+
+
+  }
+
+}

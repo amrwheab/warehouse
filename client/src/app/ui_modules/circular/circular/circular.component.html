@@ -1,0 +1,15 @@
+<a href="#" (mouseenter)="spin = 'rot1'"
+            (mouseover)="mouseover = true"
+            (mouseleave)="spin = 'rot0'; mouseover = false">
+  <div class="spinner">
+    <div class="spinner-line" [@spin]="spin" (@spin.done)="animationDone($event)"></div>
+    <div class="spinner-circle">
+      <div class="spinner small">
+        <div class="spinner-line small"></div>
+        <div class="spinner-circle small">
+          {{text.length > 23 ? text.slice(0, 20) + '...' : text}}
+        </div>
+      </div>
+    </div>
+  </div>
+</a>
