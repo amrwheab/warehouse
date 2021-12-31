@@ -2,6 +2,7 @@ const router = require('express').Router()
 const Category = require('../models/Category')
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -28,6 +29,7 @@ router.get('/', async (req, res) => {
     const categories = await Category.find();
     res.status(200).json(categories)
   } catch (err) {
+    console.log(err)
     res.status(400).json('some thing went wrong')
   }
 })
@@ -44,6 +46,7 @@ router.post('/', upload.single('image'), async (req, res) => {
       res.status(400).json('some thing went wrong')
     }
   } catch(err) {
+    console.log(err)
     res.status(400).json('some thing went wrong')
   }
 })
@@ -54,13 +57,19 @@ router.put('/:id',  upload.single('image'), async (req, res) => {
   try {
     if (req.file) {
       const image = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
-      await Category.updateOne({_id: id}, {name, image})
+      const category = await Category.findByIdAndUpdate(id, {name, image})
+      const imageName = category?.image.split('/')[category?.image.split('/').length-1]
+      const fileTest = fs.existsSync(path.join(__dirname, '..', 'uploads', imageName))
+      if (fileTest) {
+        fs.unlinkSync(path.join(__dirname, '..', 'uploads', imageName))
+      }
       res.status(200).json('updated successfully')
     } else {
       await Category.updateOne({_id: id}, {name})
       res.status(200).json('updated successfully')
     }
   } catch(err) {
+    console.log(err)
     res.status(400).json('some thing went wrong')
   }
 })
@@ -68,9 +77,15 @@ router.put('/:id',  upload.single('image'), async (req, res) => {
 router.delete('/:id', async (req, res) => {
   const {id} = req.params
   try {
-    await Category.deleteOne({_id: id})
+    const category = await Category.findByIdAndDelete(id)
+    const imageName = category?.image.split('/')[category?.image.split('/').length-1]
+    const fileTest = fs.existsSync(path.join(__dirname, '..', 'uploads', imageName))
+      if (fileTest) {
+        fs.unlinkSync(path.join(__dirname, '..', 'uploads', imageName))
+      }
     res.status(200).json('deleted successfully')
   } catch (err) {
+    console.log(err)
     res.status(400).json('some thing went wrong')
   }
 })

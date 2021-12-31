@@ -9,11 +9,7 @@ const productSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  richDescription: {
-    type: String,
-    default: ''
-  },
-  image: {
+  cardImage: {
     type: String,
     default: ''
   },
@@ -58,7 +54,7 @@ const productSchema = mongoose.Schema({
   },
   dateCreated: {
     type: Date,
-    default: Date.now,
+    default: Date.now(),
   },
 })
 
