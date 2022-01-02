@@ -4,10 +4,14 @@
     <div class="container">
       <h2 class="title">What are you looking for?</h2>
       <div class="departs-container">
-        <div>
-          <app-circular *ngFor="let depart of departs" [text]="depart.name"></app-circular>
-          <app-circular *ngFor="let depart of departs" [text]="depart.name"></app-circular>
-        </div>
+          <swiper class="swiper" [config]="circlarConfig" [index]="0">
+            <div class="swiper-slide" *ngFor="let depart of departs">
+              <app-circular [text]="depart.name"></app-circular>
+            </div>
+            <div class="swiper-slide" *ngFor="let depart of departs">
+              <app-circular [text]="depart.name"></app-circular>
+            </div>
+          </swiper>
       </div>
     </div>
   </section>
@@ -24,9 +28,12 @@
         </div>
         <div class="col-md-7">
           <div class="cards-container">
-            <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}"></app-prod-card>
-            <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}"></app-prod-card>
-            <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}"></app-prod-card>
+            <!-- <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}">
+            </app-prod-card>
+            <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}">
+            </app-prod-card>
+            <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}">
+            </app-prod-card> -->
           </div>
         </div>
         <div class="col-md-2">
@@ -44,21 +51,50 @@
       <div class="most-feat">
         <h2 class="title">featured products</h2>
         <div class="most-feat-container">
-          <app-prod-carousel [products]="[{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}]"></app-prod-carousel>
+          <!-- <swiper class="swiper" [config]="config" [index]="0">
+            <div class="swiper-slide">
+              <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}">
+              </app-prod-card>
+            </div>
+            <div class="swiper-slide">
+              <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}">
+              </app-prod-card>
+            </div>
+            <div class="swiper-slide">
+              <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}">
+              </app-prod-card>
+            </div>
+            <div class="swiper-slide">
+              <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}">
+              </app-prod-card>
+            </div>
+            <div class="swiper-slide">
+              <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}">
+              </app-prod-card>
+            </div>
+            <div class="swiper-slide">
+              <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}">
+              </app-prod-card>
+            </div>
+          </swiper> -->
         </div>
       </div>
       <nz-divider></nz-divider>
       <div class="most-feat">
         <h2 class="title">Clothes</h2>
         <div class="most-feat-container">
-          <app-prod-carousel [products]="[{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}]"></app-prod-carousel>
+          <!-- <app-prod-carousel
+            [products]="[{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}]">
+          </app-prod-carousel> -->
         </div>
       </div>
       <nz-divider></nz-divider>
       <div class="most-feat">
         <h2 class="title">Accessories</h2>
         <div class="most-feat-container">
-          <app-prod-carousel [products]="[{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}]"></app-prod-carousel>
+          <!-- <app-prod-carousel
+            [products]="[{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}]">
+          </app-prod-carousel> -->
         </div>
       </div>
     </div>

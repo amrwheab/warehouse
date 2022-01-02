@@ -1,0 +1,9 @@
+<image-cropper
+    [imageBase64]="image"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="aspect"
+    format="png"
+    (imageCropped)="imageCropped($event)"
+></image-cropper>
+
+<img [src]="croppedImage" />

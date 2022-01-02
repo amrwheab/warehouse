@@ -1,0 +1,29 @@
+<nz-layout>
+  <nz-layout>
+    <nz-sider nzWidth="230px" nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0">
+      <ul nz-menu nzTheme="dark" nzMode="inline" class="sider-menu">
+
+        <div class="user-area">
+          <img src="assets/user.png" alt="">
+          <h3>Amr Wheab</h3>
+          <p>main admin at the site</p>
+          <nz-divider></nz-divider>
+        </div>
+
+        <li nz-menu-item routerLink="./dashboard" routerLinkActive="ant-menu-item-selected">Dashboard</li>
+        <li nz-menu-item routerLink="./users" routerLinkActive="ant-menu-item-selected">Users</li>
+        <li nz-menu-item routerLink="./products" routerLinkActive="ant-menu-item-selected">Products</li>
+        <li nz-menu-item routerLink="./categories" routerLinkActive="ant-menu-item-selected">Categories</li>
+        <li nz-menu-item routerLink="./orders" routerLinkActive="ant-menu-item-selected">Orders</li>
+        <li nz-menu-item routerLink="./carousel" routerLinkActive="ant-menu-item-selected">Carousel</li>
+        <li nz-menu-item routerLink="./footer" routerLinkActive="ant-menu-item-selected">Footer</li>
+
+      </ul>
+    </nz-sider>
+    <nz-layout class="inner-layout">
+      <nz-content>
+        <router-outlet></router-outlet>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>

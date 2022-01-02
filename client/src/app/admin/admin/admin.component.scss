@@ -1,0 +1,67 @@
+.sider-menu {
+  height: 100%;
+  border-right: 0;
+  background-color: #1d242b;
+
+  .ant-menu-item {
+    font-size: .95rem;
+    letter-spacing: .2px;
+  }
+
+  .ant-menu-item-selected {
+    background-color: #0077c0;
+  }
+}
+
+.inner-layout {
+  padding: 0 24px 24px;
+  min-height: calc(100vh - 85px);
+  margin-top: 26px;
+}
+
+nz-breadcrumb {
+  margin: 16px 0;
+}
+
+nz-content {
+  background: #fff;
+  padding: 24px;
+  min-height: 280px;
+}
+
+.user-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+
+  img {
+    width: 94px;
+    height: 94px;
+    border-radius: 50%;
+  }
+
+  h3 {
+    margin: 22px 0;
+    color: white;
+    font-size: 1rem;
+    letter-spacing: .5px;
+    font-weight: bold;
+  }
+
+  p {
+    font-size: 1rem;
+    letter-spacing: .3px;
+    border-color: rgba(255, 255, 255, 0.65);
+  }
+
+  &::ng-deep .ant-divider-horizontal {
+    margin: 10px 0 20px;
+    border-color: rgba(255, 255, 255, 0.65);
+  }
+
+}
+
+::ng-deep .ant-layout-sider-zero-width-trigger {
+  background-color: #1d242b;
+}

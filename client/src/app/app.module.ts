@@ -20,7 +20,14 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { HomeComponent } from './components/home/home.component';
-import { ProdCarouselModule } from './ui_modules/prod-carousel/prod-carousel.module';
+import { SwiperModule } from 'ngx-swiper-wrapper';
+import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
+import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+
+const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
+  direction: 'horizontal',
+  slidesPerView: 'auto'
+};
 
 registerLocaleData(en);
 
@@ -44,9 +51,17 @@ registerLocaleData(en);
     CircularModule,
     ProductCardModule,
     NzDividerModule,
-    ProdCarouselModule
+    SwiperModule
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  providers: [
+    {
+      provide: NZ_I18N,
+      useValue: en_US
+    },
+    {
+      provide: SWIPER_CONFIG,
+      useValue: DEFAULT_SWIPER_CONFIG
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

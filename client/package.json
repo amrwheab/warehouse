@@ -12,6 +12,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~10.1.0",
+    "@angular/cdk": "^10.2.7",
     "@angular/common": "~10.1.0",
     "@angular/compiler": "~10.1.0",
     "@angular/core": "~10.1.0",
@@ -19,8 +20,13 @@
     "@angular/platform-browser": "~10.1.0",
     "@angular/platform-browser-dynamic": "~10.1.0",
     "@angular/router": "~10.1.0",
+    "@ckeditor/ckeditor5-angular": "^2.0.2",
+    "@ckeditor/ckeditor5-build-classic": "^31.1.0",
     "ng-zorro-antd": "^10.2.2",
+    "ngx-image-cropper": "^5.0.1",
+    "ngx-swiper-wrapper": "^9.0.1",
     "rxjs": "~6.6.0",
+    "swiper": "^7.4.1",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },

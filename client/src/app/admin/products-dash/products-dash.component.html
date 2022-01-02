@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-lg-6 col-md-8 col-xs-12">
+    <form class="search-form">
+      <input nz-input placeholder="search for products" name="searchValue" [(ngModel)]="searchValue" />
+      <button nz-button nzType="primary">Search</button>
+    </form>
+  </div>
+</div>
+<section class="products-table">
+  <nz-table #middleTable nzSize="middle" [nzData]="products" [nzScroll]="{ x: '1000px', y: '240px' }">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Brand</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>CountInStock</th>
+        <th>Rating</th>
+        <th>IsFeatured</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of middleTable.data">
+        <td>{{ data.name }}</td>
+        <td>{{ data.brand }}</td>
+        <td>{{ data.price }}</td>
+        <td>{{ data.category.name }}</td>
+        <td>{{ data.countInStock }}</td>
+        <td>{{ data.rating }}</td>
+        <td>{{ data.dateCreated }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</section>

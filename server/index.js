@@ -15,11 +15,13 @@ mongoose.connect(process.env.MONGODB_URL, () => {
 
 const productRouter = require('./routs/products.route')
 const categoryRouter = require('./routs/categories.route')
+const imageUploadRouter = require('./routs/uploadimage.route')
 
 // requests
 
 app.use('/products', productRouter)
 app.use('/categories', categoryRouter)
+app.use('/uploadimage', imageUploadRouter)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT ,() => {

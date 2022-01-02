@@ -25,8 +25,11 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 router.get('/', async (req, res) => {
+  const page = parseInt(req.query.page)
+  const skip = (page-1)*10
+  const { search } = req.query
   try {
-    const categories = await Category.find();
+    const categories = await Category.find({name: {$regex: search}}).limit(10).skip(skip);
     res.status(200).json(categories)
   } catch (err) {
     console.log(err)
