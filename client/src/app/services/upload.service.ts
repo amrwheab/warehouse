@@ -13,4 +13,8 @@ export class UploadService {
   removeFile(name: string): Observable<string> {
     return this.http.delete<string>(environment.apiUrl + '/uploadimage', {params: {name}});
   }
+
+  updateFile(formdata: FormData): Observable<string> {
+    return this.http.post<string>(environment.apiUrl + '/uploadimage/update', formdata);
+  }
 }

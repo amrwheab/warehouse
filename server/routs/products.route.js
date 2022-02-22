@@ -1,19 +1,7 @@
 const router = require('express').Router()
 const Product = require('../models/Product')
-const multer = require('multer')
 const path = require('path')
 const fs = require('fs')
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '..', 'uploads'))
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1])
-  }
-})
-
-const upload = multer({ storage })
 
 router.get('/', async (req, res) => {
   try {
@@ -25,22 +13,16 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.post('/', upload.array('images', 10), async (req, res) => {
+router.post('/', async (req, res) => {
   const { name,
     description,
     brand,
     price,
     category,
     countInStock,
-    isFeatured } = req.body
+    isFeatured,
+    images } = req.body
   try {
-    const imagesFiles = req.files
-    const images = imagesFiles.map(image => {
-      return {
-        url: `${req.protocol}://${req.get('host')}/uploads/${image.filename}`,
-        color: image.originalname.split('.')[0]
-      }
-    })
     const newProduct = new Product({
       name,
       description,
@@ -59,64 +41,64 @@ router.post('/', upload.array('images', 10), async (req, res) => {
   }
 })
 
-router.put('/:id', upload.array('images', 10), async (req, res) => {
-  const {
-    name,
-    description,
-    brand,
-    price,
-    category,
-    countInStock,
-    isFeatured } = req.body
-  const { id } = req.params
-  try {
-    if (req.files[0]?.filename) {
+// router.put('/:id', upload.array('images', 10), async (req, res) => {
+//   const {
+//     name,
+//     description,
+//     brand,
+//     price,
+//     category,
+//     countInStock,
+//     isFeatured } = req.body
+//   const { id } = req.params
+//   try {
+//     if (req.files[0]?.filename) {
 
-      const imagesFiles = req.files
-      const images = imagesFiles.map(image => {
-        return {
-          url: `${req.protocol}://${req.get('host')}/uploads/${image.filename}`,
-          color: image.originalname.split('.')[0]
-        }
-      })
+//       const imagesFiles = req.files
+//       const images = imagesFiles.map(image => {
+//         return {
+//           url: `${req.protocol}://${req.get('host')}/uploads/${image.filename}`,
+//           color: image.originalname.split('.')[0]
+//         }
+//       })
 
-      const product = await Product.findByIdAndUpdate(id, {
-        name,
-        description,
-        brand,
-        price,
-        category,
-        countInStock,
-        isFeatured,
-        images
-      })
+//       const product = await Product.findByIdAndUpdate(id, {
+//         name,
+//         description,
+//         brand,
+//         price,
+//         category,
+//         countInStock,
+//         isFeatured,
+//         images
+//       })
 
-      product.images?.map(image => {
-        const imageName = image?.url.split('/')[image?.url.split('/').length-1]
-        const fileTest = fs.existsSync(path.join(__dirname, '..', 'uploads', imageName))
-        if (fileTest) {
-          fs.unlinkSync(path.join(__dirname, '..', 'uploads', imageName))
-        }
-      })
+//       product.images?.map(image => {
+//         const imageName = image?.url.split('/')[image?.url.split('/').length-1]
+//         const fileTest = fs.existsSync(path.join(__dirname, '..', 'uploads', imageName))
+//         if (fileTest) {
+//           fs.unlinkSync(path.join(__dirname, '..', 'uploads', imageName))
+//         }
+//       })
 
-    } else {
-      await Product.updateOne({_id: id}, {
-        name,
-        description,
-        brand,
-        price,
-        category,
-        countInStock,
-        isFeatured
-      })
-    }
+//     } else {
+//       await Product.updateOne({_id: id}, {
+//         name,
+//         description,
+//         brand,
+//         price,
+//         category,
+//         countInStock,
+//         isFeatured
+//       })
+//     }
 
-    res.status(200).json('updated successfully')
-  } catch (err) {
-    console.log(err)
-    res.status(400).json('some thing went wrong')
-  }
-})
+//     res.status(200).json('updated successfully')
+//   } catch (err) {
+//     console.log(err)
+//     res.status(400).json('some thing went wrong')
+//   }
+// })
 
 router.delete('/:id', async (req, res) => {
   const { id } = req.params

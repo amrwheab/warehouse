@@ -26,6 +26,10 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ImageCropperComponent } from './image-cropper/image-cropper.component';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 @NgModule({
   declarations: [
@@ -58,7 +62,11 @@ import { ImageCropperComponent } from './image-cropper/image-cropper.component';
     CKEditorModule,
     NzUploadModule,
     NzModalModule,
-    ImageCropperModule
+    ImageCropperModule,
+    NzSwitchModule,
+    NzSelectModule,
+    NzNotificationModule,
+    NzMessageModule
   ]
 })
 export class AdminModule { }

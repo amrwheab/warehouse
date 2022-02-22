@@ -1,16 +1,22 @@
 <h3 nz-typography>Add Product</h3>
 <div class="row">
   <div class="col-md-8 col-xs-12">
-    <form nz-form [formGroup]="productForm">
+    <form nz-form [formGroup]="productForm" (submit)="handleSubmit()">
       <nz-form-item class="d-block">
         <nz-form-label nzFor="name">name</nz-form-label>
-        <nz-form-control>
+        <nz-form-control
+        [nzValidateStatus]="(productForm.controls.name.invalid && productForm.controls.name.touched) ? 'error': ''"
+        nzErrorTip="Name is required"
+        >
           <input nz-input formControlName="name" placeholder="name" type="text" id="name">
         </nz-form-control>
       </nz-form-item>
       <nz-form-item class="d-block">
         <nz-form-label nzFor="name">description</nz-form-label>
-        <nz-form-control>
+        <nz-form-control
+        [nzValidateStatus]="(productForm.controls.description.invalid && productForm.controls.description.touched) ? 'error': ''"
+        nzErrorTip="description is required"
+        >
           <ckeditor [config]="{placeholder: 'description'}" [editor]="editor" placeholder="desc"
             formControlName="description"></ckeditor>
         </nz-form-control>
@@ -34,11 +40,66 @@
           <nz-modal [nzWidth]="1000" [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
             (nzOnCancel)="previewVisible = false">
             <ng-template #modalContent>
-              <app-image-cropper [aspect]="1" [image]="previewImage"></app-image-cropper>
+              <app-image-cropper [aspect]="1" [image]="previewImage" (subImg)="handleSubImg($event)"></app-image-cropper>
             </ng-template>
           </nz-modal>
         </nz-form-control>
       </nz-form-item>
+      <nz-form-item class="d-block">
+        <nz-form-label nzFor="brand">brand</nz-form-label>
+        <nz-form-control
+        [nzValidateStatus]="(productForm.controls.brand.invalid && productForm.controls.brand.touched) ? 'error': ''"
+        nzErrorTip="brand is required"
+        >
+          <input nz-input formControlName="brand" placeholder="brand" type="text" id="brand">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="d-block">
+        <nz-form-label nzFor="price">price</nz-form-label>
+        <nz-form-control
+        [nzValidateStatus]="(productForm.controls.price.invalid && productForm.controls.price.touched) ? 'error': ''"
+        nzErrorTip="price is required"
+        >
+          <input nz-input formControlName="price" placeholder="price" type="number" id="price">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="d-block">
+        <nz-form-label nzFor="category">category</nz-form-label>
+        <nz-form-control
+        [nzValidateStatus]="(productForm.controls.category.invalid && productForm.controls.category.touched) ? 'error': ''"
+        nzErrorTip="category is required"
+        >
+          <nz-select
+          nzShowSearch
+          nzServerSearch
+          nzPlaceHolder="category"
+          formControlName="category"
+          [nzShowArrow]="false"
+          [nzFilterOption]="true"
+          (nzOnSearch)="categorySearch($event)"
+        >
+          <nz-option *ngFor="let c of categories" [nzLabel]="c.name" [nzValue]="c.id"></nz-option>
+        </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="d-block">
+        <nz-form-label nzFor="countInStock">count in stock</nz-form-label>
+        <nz-form-control
+        [nzValidateStatus]="(productForm.controls.countInStock.invalid && productForm.controls.countInStock.touched) ? 'error': ''"
+        nzErrorTip="count in stock is required"
+        >
+          <input nz-input formControlName="countInStock" placeholder="count in stock" type="number" id="countInStock">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="d-block">
+        <nz-form-label nzFor="countInStock">is featured</nz-form-label>
+        <nz-form-control>
+          <nz-switch formControlName="isFeatured"></nz-switch>
+        </nz-form-control>
+      </nz-form-item>
+      <div>
+        <button nz-button nzType="primary" type="submit" [disabled]="productForm.invalid">Submit</button>
+      </div>
     </form>
   </div>
 </div>

@@ -1,6 +1,6 @@
 <nz-layout>
   <nz-layout>
-    <nz-sider nzWidth="230px" nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0">
+    <nz-sider nzWidth="230px" nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0" (nzCollapsedChange)="collepseChange($event)">
       <ul nz-menu nzTheme="dark" nzMode="inline" class="sider-menu">
 
         <div class="user-area">
@@ -20,7 +20,7 @@
 
       </ul>
     </nz-sider>
-    <nz-layout class="inner-layout">
+    <nz-layout class="inner-layout" [style]="collepsed? '':'margin-left: 218px;'">
       <nz-content>
         <router-outlet></router-outlet>
       </nz-content>

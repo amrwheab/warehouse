@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
+  collepsed = false;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  collepseChange(e: boolean): void  {
+    this.collepsed = e;
   }
 
 }

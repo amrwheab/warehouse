@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 @Component({
@@ -10,8 +10,11 @@ export class ImageCropperComponent implements OnInit {
 
   @Input() aspect: number;
   @Input() image: File;
+  @Output() subImg = new EventEmitter();
 
   croppedImage: any = '';
+  switchValue = false;
+  color = '';
 
   constructor() { }
 
@@ -20,6 +23,13 @@ export class ImageCropperComponent implements OnInit {
 
   imageCropped(event: ImageCroppedEvent): void {
     this.croppedImage = event.base64;
+  }
+
+  handleSubmit(): void {
+    this.subImg.emit(JSON.stringify({
+      color: this.switchValue ? this.color : 'nocolor',
+      image: this.croppedImage
+    }));
   }
 
 }
