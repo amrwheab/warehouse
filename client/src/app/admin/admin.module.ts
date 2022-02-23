@@ -30,6 +30,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
     NzSwitchModule,
     NzSelectModule,
     NzNotificationModule,
-    NzMessageModule
+    NzMessageModule,
+    NzSpinModule
   ]
 })
 export class AdminModule { }

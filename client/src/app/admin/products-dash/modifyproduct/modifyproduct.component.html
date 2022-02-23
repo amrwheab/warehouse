@@ -1,4 +1,7 @@
-<h3 nz-typography>Add Product</h3>
+<div class="overlay" *ngIf="update && loading">
+  <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+</div>
+<h3 nz-typography>{{update ? 'Update':'Add'}} Product</h3>
 <div class="row">
   <div class="col-md-8 col-xs-12">
     <form nz-form [formGroup]="productForm" (submit)="handleSubmit()">
@@ -30,7 +33,6 @@
             [nzBeforeUpload]="false"
             [nzShowButton]="images.length < 10"
             [nzPreview]="handlePreview"
-            (nzChange)="removeImage($event)"
             >
             <div>
               <i nz-icon nzType="plus"></i>

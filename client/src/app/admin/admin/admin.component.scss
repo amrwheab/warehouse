@@ -1,11 +1,12 @@
 nz-layout {
-  margin-top: 29px;
+  margin-top: 28px;
 }
 
 .sider-menu {
   height: 100%;
   border-right: 0;
   background-color: #1d242b;
+  box-shadow: -7px 0px 16px black;
 
   .ant-menu-item {
     font-size: .95rem;
@@ -48,6 +49,8 @@ nz-sider {
     width: 94px;
     height: 94px;
     border-radius: 50%;
+    padding: 1px;
+    background-color: #fff;
   }
 
   h3 {

@@ -55,7 +55,7 @@ const productSchema = mongoose.Schema({
     default: false,
   },
   dateCreated: {
-    type: Number,
+    type: Date,
     default: Date.now(),
   },
   slug: {

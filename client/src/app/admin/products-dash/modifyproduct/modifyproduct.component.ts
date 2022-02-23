@@ -1,3 +1,5 @@
+import { Product } from 'src/app/interfaces/Product';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from './../../../services/product.service';
 import { UploadService } from './../../../services/upload.service';
 import { environment } from './../../../../environments/environment';
@@ -26,10 +28,13 @@ const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
 })
 export class ModifyproductComponent implements OnInit {
 
+  update = false;
+  loading = true;
   productForm: FormGroup;
   categories: Category[] = [];
   editor = ClassicEditor;
   images = [];
+  id: string;
 
   previewImage: string | undefined = '';
   previewVisible = false;
@@ -42,9 +47,15 @@ export class ModifyproductComponent implements OnInit {
     private uploadServ: UploadService,
     private notification: NzNotificationService,
     private productServ: ProductService,
-    private message: NzMessageService) { }
+    private message: NzMessageService,
+    private actRoute: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+    if (this.actRoute.snapshot.url[1].path === 'updateproduct') {
+      this.update = true;
+    }
     this.__getCategories('1', '');
     this.productForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -61,6 +72,45 @@ export class ModifyproductComponent implements OnInit {
   private __getCategories(page: string, search: string): void {
     this.categoryServ.getCategories(page, search).subscribe((data: Category[]) => {
       this.categories = data;
+      if (this.update) {
+        this.actRoute.params.subscribe(({ id }) => {
+          this.id = id;
+          this.__getProduct(id);
+        });
+      }
+    });
+  }
+
+  private __getProduct(id: string): void {
+    this.loading = true;
+    this.productServ.getOneProduct(id).subscribe(prod => {
+      if (!prod?.id) {this.router.navigateByUrl('/admin');}
+      const categ = this.categories.find(category => category.id === prod.category.id);
+      if (!categ?.id) { this.categories.push(prod.category); }
+      this.productForm.patchValue({
+        name: prod.name,
+        description: prod.description,
+        images: [],
+        brand: prod.brand,
+        price: prod.price,
+        category: prod.category.id,
+        countInStock: prod.countInStock,
+        isFeatured: prod.isFeatured
+      });
+
+      this.images = prod.images.map(img => {
+        return { ...img,
+          response: img.url.split('/')[img.url.split('/').length - 1],
+          url: img.url.replace('http://localhost', environment.apiUrl)
+        };
+      }
+      );
+
+      this.loading = false;
+    }, err => {
+      console.log(err);
+      this.loading = false;
+      this.router.navigateByUrl('/admin');
     });
   }
 
@@ -86,22 +136,27 @@ export class ModifyproductComponent implements OnInit {
     this.previewVisible = true;
   }
 
-  removeImage(e: any): void {
-    if (e.type === 'removed') {
-      this.uploadServ.removeFile(e.file.response).subscribe();
-    }
-  }
-
   handleSubImg(e: string): void {
     this.previewVisible = false;
-    const removedImg = this.images.find(img => img.preview === this.previewImage).response;
     const newImgData = JSON.parse(e);
     const newImg = this.DataURIToBlob(newImgData.image);
+    const lastImg = this.images.find(img => {
+      if (img._id) {
+        return img.url === this.previewImage;
+      } else {
+        return img.preview === this.previewImage;
+      }
+    });
     const formData = new FormData();
-    formData.append('image', newImg, removedImg);
-    formData.append('removedImg', removedImg);
+    formData.append('image', newImg, lastImg.response);
     this.uploadServ.updateFile(formData).subscribe((res) => {
-      const modImg = this.images.find(img => img.preview === this.previewImage);
+      const modImg = this.images.find(img => {
+        if (img._id) {
+          return img.url === this.previewImage;
+        } else {
+          return img.preview === this.previewImage;
+        }
+      });
       modImg.color = newImgData.color;
       modImg.response = res;
     });
@@ -117,26 +172,37 @@ export class ModifyproductComponent implements OnInit {
         images: this.images.map(image => ({ url: image.response, color: image?.color || 'nocolor' }))
       });
       const load = this.message.loading('Action in progress..').messageId;
-      this.productServ.addProduct(this.productForm.value).subscribe((res) => {
-        this.message.remove(load);
-        this.message.success('product added successfully');
-        this.productForm.reset();
-        this.productForm.patchValue({
-          name: '',
-          description: '',
-          images: [],
-          brand: '',
-          price: '',
-          category: '',
-          countInStock: '',
-          isFeatured: false
+      if (this.update) {
+        this.productServ.updateProduct(this.productForm.value, this.id).subscribe((res) => {
+          this.message.remove(load);
+          this.message.success('product updated successfully');
+        }, (err) => {
+          console.log(err);
+          this.message.remove(load);
+          this.message.error('some thing went wrong');
         });
-        this.images = [];
-      }, (err) => {
-        console.log(err);
-        this.message.remove(load);
-        this.message.error('some thing went wrong');
-      });
+      } else {
+        this.productServ.addProduct(this.productForm.value).subscribe((res) => {
+          this.message.remove(load);
+          this.message.success('product added successfully');
+          this.productForm.reset();
+          this.productForm.patchValue({
+            name: '',
+            description: '',
+            images: [],
+            brand: '',
+            price: '',
+            category: '',
+            countInStock: '',
+            isFeatured: false
+          });
+          this.images = [];
+        }, (err) => {
+          console.log(err);
+          this.message.remove(load);
+          this.message.error('some thing went wrong');
+        });
+      }
     } else {
       this.notification.create(
         'error',

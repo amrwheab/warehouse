@@ -8,3 +8,11 @@
 .products-table {
   margin-top: 15px;
 }
+::ng-deep .updatebtn.ant-btn-primary{
+  background-color: #0077c0;
+  border-color: #0077c0;
+}
+
+.addProd {
+  text-align: right;
+}
