@@ -6,6 +6,7 @@ export interface Product {
   description: string;
   cardImage: string;
   images: [{
+    _id: string;
     url: string;
     color: string;
   }];

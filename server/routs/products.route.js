@@ -76,7 +76,7 @@ router.put('/', async (req, res) => {
       category,
       countInStock,
       isFeatured,
-      images: images.map(img => ({ ...img, url: `${req.protocol}://${req.get('host')}/uploads/${img.url}` }))
+      images: images.map(img => img.touched ? ({ ...img, url: `${req.protocol}://${req.get('host')}/uploads/${img.url}` }): img)
     })
     res.status(200).json('updated successfully')
   } catch (err) {

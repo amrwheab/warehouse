@@ -84,7 +84,7 @@ export class ModifyproductComponent implements OnInit {
   private __getProduct(id: string): void {
     this.loading = true;
     this.productServ.getOneProduct(id).subscribe(prod => {
-      if (!prod?.id) {this.router.navigateByUrl('/admin');}
+      if (!prod?.id) { this.router.navigateByUrl('/admin'); }
       const categ = this.categories.find(category => category.id === prod.category.id);
       if (!categ?.id) { this.categories.push(prod.category); }
       this.productForm.patchValue({
@@ -100,8 +100,10 @@ export class ModifyproductComponent implements OnInit {
 
       this.images = prod.images.map(img => {
         return { ...img,
+          uid: img._id,
           response: img.url.split('/')[img.url.split('/').length - 1],
-          url: img.url.replace('http://localhost', environment.apiUrl)
+          url: img.url.replace('http://localhost', environment.apiUrl),
+          touched: false
         };
       }
       );
@@ -136,6 +138,14 @@ export class ModifyproductComponent implements OnInit {
     this.previewVisible = true;
   }
 
+  uploadImg(e: any): void {
+    if (e.type === 'success') {
+      const uid = e.file.uid;
+      const newImg = this.images.find(img => img?.uid === uid);
+      newImg.touched = true;
+    }
+  }
+
   handleSubImg(e: string): void {
     this.previewVisible = false;
     const newImgData = JSON.parse(e);
@@ -159,6 +169,7 @@ export class ModifyproductComponent implements OnInit {
       });
       modImg.color = newImgData.color;
       modImg.response = res;
+      modImg.touched = true;
     });
   }
 
@@ -169,7 +180,21 @@ export class ModifyproductComponent implements OnInit {
   handleSubmit(): void {
     if (this.images.length !== 0) {
       this.productForm.patchValue({
-        images: this.images.map(image => ({ url: image.response, color: image?.color || 'nocolor' }))
+        images: this.images.map(image => {
+          if (this.update && !image.touched) {
+            return {
+              url: image.url.replace(environment.apiUrl, 'http://localhost'),
+              color: image?.color || 'nocolor',
+              touched: image?.touched
+            };
+          } else {
+            return {
+              url: image.response,
+              color: image?.color || 'nocolor',
+              touched: image?.touched
+            };
+          }
+        })
       });
       const load = this.message.loading('Action in progress..').messageId;
       if (this.update) {

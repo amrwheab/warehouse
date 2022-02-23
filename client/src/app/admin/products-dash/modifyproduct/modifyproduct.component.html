@@ -33,6 +33,7 @@
             [nzBeforeUpload]="false"
             [nzShowButton]="images.length < 10"
             [nzPreview]="handlePreview"
+            (nzChange)="uploadImg($event)"
             >
             <div>
               <i nz-icon nzType="plus"></i>
