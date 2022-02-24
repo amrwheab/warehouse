@@ -43,7 +43,7 @@
           <nz-modal [nzWidth]="1000" [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
             (nzOnCancel)="previewVisible = false">
             <ng-template #modalContent>
-              <app-image-cropper [aspect]="1" [image]="previewImage" (subImg)="handleSubImg($event)"></app-image-cropper>
+              <app-image-cropper [parent]="'product'" [aspect]="1" [image]="previewImage" (subImg)="handleSubImg($event)"></app-image-cropper>
             </ng-template>
           </nz-modal>
         </nz-form-control>

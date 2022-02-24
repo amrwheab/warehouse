@@ -10,6 +10,7 @@ export class ImageCropperComponent implements OnInit {
 
   @Input() aspect: number;
   @Input() image: File;
+  @Input() parent: string;
   @Output() subImg = new EventEmitter();
 
   croppedImage: any = '';

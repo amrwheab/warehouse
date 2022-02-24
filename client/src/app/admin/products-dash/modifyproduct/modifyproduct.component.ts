@@ -70,8 +70,8 @@ export class ModifyproductComponent implements OnInit {
   }
 
   private __getCategories(page: string, search: string): void {
-    this.categoryServ.getCategories(page, search).subscribe((data: Category[]) => {
-      this.categories = data;
+    this.categoryServ.getCategories(page, search).subscribe(({categories}) => {
+      this.categories = categories;
       if (this.update) {
         this.actRoute.params.subscribe(({ id }) => {
           this.id = id;
@@ -102,7 +102,7 @@ export class ModifyproductComponent implements OnInit {
         return { ...img,
           uid: img._id,
           response: img.url.split('/')[img.url.split('/').length - 1],
-          url: img.url.replace('http://localhost', environment.apiUrl),
+          url: img.url.replace(environment.localHost, environment.apiUrl),
           touched: false
         };
       }
@@ -183,7 +183,7 @@ export class ModifyproductComponent implements OnInit {
         images: this.images.map(image => {
           if (this.update && !image.touched) {
             return {
-              url: image.url.replace(environment.apiUrl, 'http://localhost'),
+              url: image.url.replace(environment.apiUrl, environment.localHost),
               color: image?.color || 'nocolor',
               touched: image?.touched
             };

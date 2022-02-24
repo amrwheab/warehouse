@@ -12,13 +12,13 @@
     </div>
     <div class="col-4">
       <form nz-form>
-        <nz-form-item>
+        <nz-form-item *ngIf="parent === 'product'">
           <nz-form-label nzFor="color">color</nz-form-label>
           <nz-form-control>
             <input nz-input name="color" type="color" id="color" [disabled]="!switchValue" [(ngModel)]="color">
           </nz-form-control>
         </nz-form-item >
-        <nz-form-item>
+        <nz-form-item *ngIf="parent === 'product'">
           <nz-form-label nzFor="swithcolor">have color</nz-form-label>
           <nz-form-control>
             <nz-switch [(ngModel)]="switchValue" name="havecolor"></nz-switch>

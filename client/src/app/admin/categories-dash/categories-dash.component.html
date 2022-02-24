@@ -1,1 +1,40 @@
-<p>categories-dash works!</p>
+<div class="row">
+  <div class="col-lg-6 col-md-8 col-xs-12">
+    <form class="search-form" (submit)="applySearch()">
+      <input nz-input placeholder="search for categories" name="searchValue" [(ngModel)]="searchValue" />
+      <button nz-button nzType="primary">Search</button>
+    </form>
+  </div>
+  <div class="col-lg-6 col-md-4 col-xs-12 mt-1 mt-md-0 addCat">
+    <a routerLink="/admin/categories/addcategory" nz-button nzType="primary">Add Category</a>
+  </div>
+</div>
+<section class="categories-table">
+  <nz-table #middleTable nzSize="middle" [nzLoading]="loading" [nzScroll]="{ x: '700px' }" [nzData]="categories"
+    [nzFrontPagination]="false" [nzTotal]="count" [nzPageSize]="8" [nzPageIndex]="page"
+    (nzQueryParams)="onQueryParamsChange($event)">
+    <thead>
+      <tr>
+        <th nzWidth="50px"><strong>#</strong></th>
+        <th nzWidth="300px"><strong>Name</strong></th>
+        <th nzWidth="300px"><strong>Image</strong></th>
+        <th nzWidth="300px"><strong>Action</strong></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of middleTable.data; let i = index">
+        <td>{{i+1}}</td>
+        <td>{{ data.name.length > 84 ? data.name.slice(0, 84) + '...':data.name }}</td>
+        <td><img class="cat-img" [src]="data.image.replace(localHost, apiUrl)" [alt]="data.name"></td>
+        <td>
+          <button nz-button nzType="primary" class="mr-1 updatebtn" (click)="updateCategory(data.id)">
+            <i nz-icon nzType="edit" nzTheme="outline"></i>
+          </button>
+          <button nz-button nzDanger (click)="confirmDelete(data.id)">
+            <i nz-icon nzType="delete" nzTheme="outline"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</section>

@@ -1,0 +1,55 @@
+<div class="overlay" *ngIf="update && loading">
+  <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+</div>
+<h3 nz-typography>{{update ? 'Update':'Add'}} Category</h3>
+<div class="row">
+  <div class="col-md-8 col-xs-12">
+    <form nz-form [formGroup]="categoryForm" (submit)="handleSubmit()">
+      <nz-form-item class="d-block">
+        <nz-form-label nzFor="name">name</nz-form-label>
+        <nz-form-control
+        [nzValidateStatus]="(categoryForm.controls.name.invalid && categoryForm.controls.name.touched) ? 'error': ''"
+        nzErrorTip="Name is required"
+        >
+          <input nz-input formControlName="name" placeholder="name" type="text" id="name">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="d-block">
+        <nz-form-label nzFor="name">image</nz-form-label>
+        <nz-form-control>
+          <nz-upload
+            [nzAction]="imageUploadAction" nzListType="picture-card"
+            [(nzFileList)]="images"
+            [nzBeforeUpload]="false"
+            [nzShowButton]="images.length < 1"
+            [nzPreview]="handlePreview"
+            (nzChange)="uploadImg($event)"
+            >
+            <div>
+              <i nz-icon nzType="plus"></i>
+              <div style="margin-top: 8px">Upload</div>
+            </div>
+          </nz-upload>
+          <nz-modal [nzWidth]="1000" [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
+            (nzOnCancel)="previewVisible = false">
+            <ng-template #modalContent>
+              <app-image-cropper [parent]="'category'" [aspect]="16/9" [image]="previewImage" (subImg)="handleSubImg($event)"></app-image-cropper>
+            </ng-template>
+          </nz-modal>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="d-block">
+        <nz-form-label nzFor="filters">filters</nz-form-label>
+        <nz-form-control
+        [nzValidateStatus]="categoryForm.controls.filters.invalid ? 'error': ''"
+        nzErrorTip="maximum number of filters is 10"
+        >
+          <input nz-input formControlName="filters" placeholder="filter1,filter2,filter3" type="text" id="filters">
+        </nz-form-control>
+      </nz-form-item>
+      <div>
+        <button nz-button nzType="primary" type="submit" [disabled]="categoryForm.invalid">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -5,13 +5,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd/modal';
 
-interface QueryChange {
-  filter: [];
-  pageIndex: number;
-  pageSize: number;
-  sort: [];
-}
-
 @Component({
   selector: 'app-products-dash',
   templateUrl: './products-dash.component.html',
@@ -59,7 +52,7 @@ export class ProductsDashComponent implements OnInit {
     });
   }
 
-  onQueryParamsChange(e: QueryChange): void {
+  onQueryParamsChange(e: any): void {
     this.router.navigate([], {queryParams: {search: this.search, page: e.pageIndex}});
   }
 

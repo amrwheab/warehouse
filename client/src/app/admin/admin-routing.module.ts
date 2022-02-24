@@ -9,6 +9,7 @@ import { UsersDashComponent } from './users-dash/users-dash.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ModifyCategoryComponent } from './categories-dash/modify-category/modify-category.component';
 
 const routes: Routes = [
   { path: '', component: AdminComponent, children: [
@@ -18,6 +19,8 @@ const routes: Routes = [
     { path: 'products/addproduct', component: ModifyproductComponent },
     { path: 'products/updateproduct/:id', component: ModifyproductComponent },
     { path: 'categories', component: CategoriesDashComponent },
+    { path: 'categories/addcategory', component: ModifyCategoryComponent },
+    { path: 'categories/updatecategory/:id', component: ModifyCategoryComponent },
     { path: 'orders', component: OrdersDashComponent },
     { path: 'carousel', component: CarouselDashComponent },
     { path: 'footer', component: FooterDashComponent },

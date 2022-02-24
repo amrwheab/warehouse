@@ -31,6 +31,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { ModifyCategoryComponent } from './categories-dash/modify-category/modify-category.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
     UsersDashComponent,
     AdminComponent,
     ModifyproductComponent,
-    ImageCropperComponent
+    ImageCropperComponent,
+    ModifyCategoryComponent
   ],
   imports: [
     CommonModule,
