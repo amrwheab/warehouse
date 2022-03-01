@@ -146,7 +146,7 @@ export class ModifyCategoryComponent implements OnInit {
             };
           } else {
             return {
-              url: image.response,
+              url: image.response.replace(environment.apiUrl, environment.localHost),
               touched: image?.touched
             };
           }

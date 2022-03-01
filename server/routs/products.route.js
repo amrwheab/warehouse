@@ -36,7 +36,8 @@ router.post('/', async (req, res) => {
     category,
     countInStock,
     isFeatured,
-    images } = req.body
+    images,
+    filters } = req.body
   try {
     const newProduct = new Product({
       name,
@@ -46,6 +47,7 @@ router.post('/', async (req, res) => {
       category,
       countInStock,
       isFeatured,
+      filters,
       images: images.map(img => ({ ...img, url: `${req.protocol}://${req.get('host')}/uploads/${img.url}` }))
     })
     await newProduct.save()
@@ -66,6 +68,7 @@ router.put('/', async (req, res) => {
     category,
     countInStock,
     isFeatured,
+    filters,
     images } = req.body
   try {
     await Product.updateOne({ _id: id }, {
@@ -76,6 +79,7 @@ router.put('/', async (req, res) => {
       category,
       countInStock,
       isFeatured,
+      filters,
       images: images.map(img => img.touched ? ({ ...img, url: `${req.protocol}://${req.get('host')}/uploads/${img.url}` }): img)
     })
     res.status(200).json('updated successfully')

@@ -18,4 +18,5 @@ export interface Product {
   numReviews: number;
   isFeatured: boolean;
   dateCreated: Date;
+  filters: object;
 }

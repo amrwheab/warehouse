@@ -1,9 +1,8 @@
-import { Product } from 'src/app/interfaces/Product';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from './../../../services/product.service';
 import { UploadService } from './../../../services/upload.service';
 import { environment } from './../../../../environments/environment';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Category } from 'src/app/interfaces/Category';
 import { CategoryService } from 'src/app/services/category.service';
@@ -28,6 +27,8 @@ const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
 })
 export class ModifyproductComponent implements OnInit {
 
+  @ViewChild('form') form: ElementRef;
+
   update = false;
   loading = true;
   productForm: FormGroup;
@@ -39,6 +40,8 @@ export class ModifyproductComponent implements OnInit {
   previewImage: string | undefined = '';
   previewVisible = false;
   imageUploadAction = environment.apiUrl + '/uploadimage';
+
+  filters: {} | any = {};
 
 
   constructor(
@@ -65,12 +68,13 @@ export class ModifyproductComponent implements OnInit {
       price: ['', Validators.required],
       category: ['', Validators.required],
       countInStock: ['', Validators.required],
-      isFeatured: [false, Validators.required]
+      isFeatured: [false, Validators.required],
+      filters: [null]
     });
   }
 
   private __getCategories(page: string, search: string): void {
-    this.categoryServ.getCategories(page, search).subscribe(({categories}) => {
+    this.categoryServ.getCategories(page, search).subscribe(({ categories }) => {
       this.categories = categories;
       if (this.update) {
         this.actRoute.params.subscribe(({ id }) => {
@@ -95,19 +99,21 @@ export class ModifyproductComponent implements OnInit {
         price: prod.price,
         category: prod.category.id,
         countInStock: prod.countInStock,
-        isFeatured: prod.isFeatured
+        isFeatured: prod.isFeatured,
+        filters: prod.filters
       });
 
       this.images = prod.images.map(img => {
-        return { ...img,
+        return {
+          ...img,
           uid: img._id,
           response: img.url.split('/')[img.url.split('/').length - 1],
           url: img.url.replace(environment.localHost, environment.apiUrl),
           touched: false
         };
-      }
-      );
+      });
 
+      this.filters = prod.filters;
       this.loading = false;
     }, err => {
       console.log(err);
@@ -177,6 +183,19 @@ export class ModifyproductComponent implements OnInit {
     this.__getCategories('1', e);
   }
 
+  trackByFun(i: number, _: any): number {
+    return i;
+  }
+
+  categoryChange(e: string): void {
+    this.filters = {};
+    this.productForm.patchValue({ filters: null });
+    const selectedCatFilter = this.categories.find(cat => cat.id === e)?.filters;
+    selectedCatFilter?.map(cat => {
+      this.filters[cat] = '';
+    });
+  }
+
   handleSubmit(): void {
     if (this.images.length !== 0) {
       this.productForm.patchValue({
@@ -194,7 +213,8 @@ export class ModifyproductComponent implements OnInit {
               touched: image?.touched
             };
           }
-        })
+        }),
+        filters: this.filters
       });
       const load = this.message.loading('Action in progress..').messageId;
       if (this.update) {

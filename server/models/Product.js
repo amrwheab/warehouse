@@ -11,10 +11,6 @@ const productSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  cardImage: {
-    type: String,
-    default: ''
-  },
   images: [{
     url: {
       type: String
@@ -62,6 +58,10 @@ const productSchema = mongoose.Schema({
     type: String,
     unique: true,
     slug: 'name'
+  },
+  filters: {
+    type: {},
+    default: {}
   }
 })
 
