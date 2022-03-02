@@ -1,11 +1,11 @@
-import { CategoryService } from 'src/app/services/category.service';
+import { CarouselService } from './../../../services/carousel.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { UploadService } from './../../../services/upload.service';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
-import { environment } from 'src/environments/environment';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { environment } from './../../../../environments/environment';
 import { Component, OnInit } from '@angular/core';
 
 const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
@@ -16,19 +16,12 @@ const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
     reader.onerror = error => reject(error);
   });
 
-const ValidateFilter = (control: AbstractControl): { [key: string]: any } | null => {
-  if (control?.value?.split(',').length > 10) {
-    return { filterInvalid: true };
-  }
-  return null;
-};
-
 @Component({
-  selector: 'app-modify-category',
-  templateUrl: './modify-category.component.html',
-  styleUrls: ['./modify-category.component.scss']
+  selector: 'app-modify-carousel',
+  templateUrl: './modify-carousel.component.html',
+  styleUrls: ['./modify-carousel.component.scss']
 })
-export class ModifyCategoryComponent implements OnInit {
+export class ModifyCarouselComponent implements OnInit {
 
   update = false;
   loading = true;
@@ -36,40 +29,46 @@ export class ModifyCategoryComponent implements OnInit {
   images = [];
   previewImage: string | undefined = '';
   previewVisible = false;
-  categoryForm: FormGroup;
+  caruselForm: FormGroup;
   id: string;
 
   constructor(
     private actRoute: ActivatedRoute,
-    private router: Router,
-    private uploadServ: UploadService,
     private formBuilder: FormBuilder,
     private message: NzMessageService,
     private notification: NzNotificationService,
-    private categoryServ: CategoryService
+    private uploadServ: UploadService,
+    private carouselServ: CarouselService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    if (this.actRoute.snapshot.url[1].path === 'updatecategory') {
+    if (this.actRoute.snapshot.url[1].path === 'updatecarousel') {
       this.update = true;
     }
-    this.categoryForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      image: [{}],
-      filters: ['', [ValidateFilter]]
+    this.caruselForm = this.formBuilder.group({
+      title: ['', Validators.required],
+      image: [''],
+      content: ['', Validators.required],
+      action: ['', Validators.required]
     });
     if (this.update) {
       this.actRoute.params.subscribe(({id}) => {
         this.loading = true;
         this.id = id;
-        this.categoryServ.getOneCategory(id).subscribe(({name, image, filters}) => {
+        this.carouselServ.getCarouselSingleItem(id).subscribe((res) => {
           this.loading = false;
-          this.categoryForm.patchValue({
-            name,
-            filters: filters.join(',')
+          this.caruselForm.patchValue({
+            title: res.title,
+            content: res.content,
+            action: res.action
           });
           this.images = [];
-          this.images[0] = {_id: id, url: image.replace(environment.localHost, environment.apiUrl), touched: false};
+          this.images[0] = {
+            _id: id,
+            url: res.image.replace(environment.localHost, environment.apiUrl),
+            response: res.image.split('/')[res.image.split('/').length - 1]
+          };
         }, err => {
           console.log(err);
           this.loading = false;
@@ -86,14 +85,6 @@ export class ModifyCategoryComponent implements OnInit {
     }
     this.previewImage = file.url || file.preview;
     this.previewVisible = true;
-  }
-
-  uploadImg(e: any): void {
-    if (e.type === 'success') {
-      const uid = e.file.uid;
-      const newImg = this.images.find(img => img?.uid === uid);
-      newImg.touched = true;
-    }
   }
 
   private DataURIToBlob(dataURI: string): Blob {
@@ -124,30 +115,18 @@ export class ModifyCategoryComponent implements OnInit {
         }
       });
       modImg.response = res;
-      modImg.touched = true;
     });
   }
 
+
   handleSubmit(): void {
     if (this.images.length !== 0) {
-      this.categoryForm.patchValue({
-        image: this.images.map(image => {
-          if (this.update && !image.touched) {
-            return {
-              url: image.url.replace(environment.apiUrl, environment.localHost),
-              touched: image?.touched
-            };
-          } else {
-            return {
-              url: image.response.replace(environment.apiUrl, environment.localHost),
-              touched: image?.touched
-            };
-          }
-        })[0]
+      this.caruselForm.patchValue({
+        image: this.images[0].response
       });
       const load = this.message.loading('Action in progress..').messageId;
       if (this.update) {
-        this.categoryServ.updateCategory(this.categoryForm.value, this.id).subscribe(() => {
+        this.carouselServ.updateCarouselItem(this.id, this.caruselForm.value).subscribe(() => {
           this.message.remove(load);
           this.message.success('updated successfully');
         }, err => {
@@ -156,10 +135,10 @@ export class ModifyCategoryComponent implements OnInit {
           this.message.error('some thing went wrong');
         });
       } else {
-        this.categoryServ.addCategory(this.categoryForm.value).subscribe(() => {
+        this.carouselServ.addCarouselItem(this.caruselForm.value).subscribe(() => {
           this.message.remove(load);
           this.message.success('added successfully');
-          this.categoryForm.reset();
+          this.caruselForm.reset();
           this.images = [];
         }, err => {
           console.log(err);

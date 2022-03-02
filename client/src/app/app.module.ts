@@ -23,6 +23,7 @@ import { HomeComponent } from './components/home/home.component';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -51,6 +52,7 @@ registerLocaleData(en);
     CircularModule,
     ProductCardModule,
     NzDividerModule,
+    NzSpinModule,
     SwiperModule
   ],
   providers: [

@@ -20,21 +20,21 @@ export class CarouselComponent implements OnInit {
       id: '1',
       title: 'Get the best fashion deals!',
       content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
-      img: 'assets/test/car1.png',
+      image: 'assets/test/car1.png',
       action: 'any'
     },
     {
       id: '2',
       title: 'hello',
       content: 'sdjhdfidifsdjkskhsskhsusknshcfjncjhsjshfkdgiksjhsjnfsj',
-      img: 'assets/test/car2.png',
+      image: 'assets/test/car2.png',
       action: 'any'
     },
     {
       id: '3',
       title: 'hello',
       content: 'sdjhdfidifsdjkskhsskhsusknshcfjncjhsjshfkdgiksjhsjnfsj',
-      img: 'assets/test/car3.png',
+      image: 'assets/test/car3.png',
       action: 'any'
     }
   ];

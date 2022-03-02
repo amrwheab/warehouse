@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
       countInStock,
       isFeatured,
       filters,
-      images: images.map(img => ({ ...img, url: `${req.protocol}://${req.get('host')}/uploads/${img.url}` }))
+      images: images.map(img => ({ ...img, url: `http://localhost:3000/uploads/${img.url}` }))
     })
     await newProduct.save()
     res.status(200).json(newProduct)
@@ -80,7 +80,7 @@ router.put('/', async (req, res) => {
       countInStock,
       isFeatured,
       filters,
-      images: images.map(img => img.touched ? ({ ...img, url: `${req.protocol}://${req.get('host')}/uploads/${img.url}` }): img)
+      images: images.map(img => img.touched ? ({ ...img, url: `http://localhost:3000/uploads/${img.url}` }): img)
     })
     res.status(200).json('updated successfully')
   } catch (err) {

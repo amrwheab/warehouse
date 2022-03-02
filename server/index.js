@@ -7,7 +7,8 @@ const app = express();
 app.use(cors())
 app.use(express.json())
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
-mongoose.connect(process.env.MONGODB_URL, () => {
+mongoose.connect(process.env.MONGODB_URL, (err) => {
+  if (err) return console.log('db connection error')
   console.log('database connected')
 })
 
@@ -16,12 +17,14 @@ mongoose.connect(process.env.MONGODB_URL, () => {
 const productRouter = require('./routs/products.route')
 const categoryRouter = require('./routs/categories.route')
 const imageUploadRouter = require('./routs/uploadimage.route')
+const carouselRouter = require('./routs/carousel.route')
 
 // requests
 
 app.use('/products', productRouter)
 app.use('/categories', categoryRouter)
 app.use('/uploadimage', imageUploadRouter)
+app.use('/carousel', carouselRouter)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT ,() => {

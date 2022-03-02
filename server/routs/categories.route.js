@@ -52,10 +52,11 @@ router.post('/', async (req, res) => {
       ) {
         return res.status(400).json('some thing went wrong with filters')
       }
-  }
+    }
+    const filtersArr = filters.split(',').map(item => item.trim())
   try {
-    const newImage = `${req.protocol}://${req.get('host')}/uploads/${image.url}`
-    const newCategory = new Category({name, image: newImage, filters: filters ? [...new Set(filters.split(','))] : []})
+    const newImage = `http://localhost:3000/uploads/${image.url}`
+    const newCategory = new Category({name, image: newImage, filters: filters ? [...new Set(filtersArr)] : []})
     await newCategory.save()
     res.status(200).json('added successfully')
   } catch(err) {
@@ -88,9 +89,10 @@ router.put('/:id', async (req, res) => {
         return res.status(400).json('some thing went wrong with filters')
       }
   }
+  const filtersArr = filters.split(',').map(item => item.trim())
   try {
-    const imageUrl = image.touched ? `${req.protocol}://${req.get('host')}/uploads/${image.url}` : image.url
-    const category = await Category.findByIdAndUpdate(id, {name, image: imageUrl, filters: filters ? [...new Set(filters.split(','))] : []})
+    const imageUrl = image.touched ? `http://localhost:3000/uploads/${image.url}` : image.url
+    const category = await Category.findByIdAndUpdate(id, {name, image: imageUrl, filters: filters ? [...new Set(filtersArr)] : []})
     const imageName = category?.image.split('/')[category?.image.split('/').length-1]
     if (image.touched) {
       const fileTest = fs.existsSync(path.join(__dirname, '..', 'uploads', imageName))

@@ -1,0 +1,59 @@
+<div class="overlay" *ngIf="update && loading">
+  <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+</div>
+<h3 nz-typography>{{update ? 'Update':'Add'}} Carousel Item</h3>
+
+<div class="row">
+  <div class="col-md-8 col-xs-12">
+    <form nz-form [formGroup]="caruselForm" (submit)="handleSubmit()">
+      <nz-form-item class="d-block">
+        <nz-form-label nzFor="title">title</nz-form-label>
+        <nz-form-control
+          [nzValidateStatus]="(caruselForm.controls.title.invalid && caruselForm.controls.title.touched) ? 'error': ''"
+          nzErrorTip="Title is required">
+          <input nz-input formControlName="title" placeholder="title" type="text" id="title">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="d-block">
+        <nz-form-label nzFor="content">content</nz-form-label>
+        <nz-form-control
+          [nzValidateStatus]="(caruselForm.controls.content.invalid && caruselForm.controls.content.touched) ? 'error': ''"
+          nzErrorTip="Content is required">
+          <nz-textarea-count [nzMaxCharacterCount]="100">
+            <textarea rows="4" formControlName="content" placeholder="content" id="content" nz-input></textarea>
+          </nz-textarea-count>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="d-block">
+        <nz-form-label>image</nz-form-label>
+        <nz-form-control>
+          <nz-upload [nzAction]="imageUploadAction" nzListType="picture-card" [(nzFileList)]="images"
+            [nzBeforeUpload]="false" [nzShowButton]="images.length < 1" [nzPreview]="handlePreview">
+            <div>
+              <i nz-icon nzType="plus"></i>
+              <div style="margin-top: 8px">Upload</div>
+            </div>
+          </nz-upload>
+          <nz-modal [nzWidth]="1000" [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null"
+            (nzOnCancel)="previewVisible = false">
+            <ng-template #modalContent>
+              <app-image-cropper [parent]="'category'" [aspect]="16/9" [image]="previewImage"
+                (subImg)="handleSubImg($event)"></app-image-cropper>
+            </ng-template>
+          </nz-modal>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="d-block">
+        <nz-form-label nzFor="action">action</nz-form-label>
+        <nz-form-control
+          [nzValidateStatus]="(caruselForm.controls.action.invalid && caruselForm.controls.action.touched) ? 'error': ''"
+          nzErrorTip="action path is required">
+          <input nz-input formControlName="action" placeholder="___/___/___/___" type="text" id="action">
+        </nz-form-control>
+      </nz-form-item>
+      <div>
+        <button nz-button nzType="primary" type="submit" [disabled]="caruselForm.invalid">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

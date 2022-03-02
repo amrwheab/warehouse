@@ -46,7 +46,6 @@ router.delete('/', async (req, res) => {
 })
 
 router.post('/update', upload.single('image'),async (req, res) => {
-  const { removedImg } = req.body
   try {
     if (req.file?.filename) {
       res.status(200).json(req.file.filename)

@@ -1,1 +1,35 @@
-<p>carousel-dash works!</p>
+<div class="row">
+  <div class="col-6">
+    <h2 nz-typography>Carousel</h2>
+  </div>
+  <div class="col-6 mt-1 addCat">
+    <a routerLink="/admin/carousel/addcarousel" nz-button nzType="primary">Add Carousel</a>
+  </div>
+</div>
+<section class="carousel-table">
+  <nz-table #middleTable nzSize="middle" [nzLoading]="loading" [nzScroll]="{ x: '700px' }" [nzData]="caroselItems">
+    <thead>
+      <tr>
+        <th nzWidth="50px"><strong>#</strong></th>
+        <th nzWidth="300px"><strong>Title</strong></th>
+        <th nzWidth="300px"><strong>Image</strong></th>
+        <th><strong>Action</strong></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of middleTable.data; let i = index">
+        <td>{{i+1}}</td>
+        <td>{{ data.title.length > 84 ? data.title.slice(0, 84) + '...':data.title }}</td>
+        <td><img class="car-img" [src]="data.image.replace(localHost, apiUrl)" [alt]="data.title"></td>
+        <td>
+          <button nz-button nzType="primary" class="mr-1 updatebtn" [routerLink]="'/admin/carousel/updatecarousel/'+data.id">
+            <i nz-icon nzType="edit" nzTheme="outline"></i>
+          </button>
+          <button nz-button nzDanger (click)="confirmDelete(data.id)">
+            <i nz-icon nzType="delete" nzTheme="outline"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</section>

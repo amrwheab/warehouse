@@ -10,6 +10,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ModifyCategoryComponent } from './categories-dash/modify-category/modify-category.component';
+import { ModifyCarouselComponent } from './carousel-dash/modify-carousel/modify-carousel.component';
 
 const routes: Routes = [
   { path: '', component: AdminComponent, children: [
@@ -23,8 +24,10 @@ const routes: Routes = [
     { path: 'categories/updatecategory/:id', component: ModifyCategoryComponent },
     { path: 'orders', component: OrdersDashComponent },
     { path: 'carousel', component: CarouselDashComponent },
+    { path: 'carousel/addcarousel', component: ModifyCarouselComponent },
+    { path: 'carousel/updatecarousel/:id', component: ModifyCarouselComponent },
     { path: 'footer', component: FooterDashComponent },
-    { path: '**', redirectTo: 'dashboard' }
+    // { path: '**', redirectTo: 'dashboard' }
   ] }
 ];
 
