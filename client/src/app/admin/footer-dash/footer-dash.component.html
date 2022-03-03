@@ -1,1 +1,39 @@
-<p>footer-dash works!</p>
+<div class="overlay" *ngIf="loading">
+  <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+</div>
+<h3 nz-typography>Footer Dashboard</h3>
+<nz-divider></nz-divider>
+<form>
+  <div class="row">
+    <div class="col col-lg-8">
+      <div *ngFor="let foot of footer; let i = index; trackBy: trackByFun">
+        <h4 nz-typography>Field #{{i+1}}</h4>
+        <nz-form-item>
+          <nz-form-label>title</nz-form-label>
+          <nz-form-control>
+            <input nz-input placeholder="title" type="text" [name]="foot.field['_id']" [(ngModel)]="footer[i].field['title']" >
+          </nz-form-control>
+        </nz-form-item>
+        <div class="ml-5" *ngFor="let row of foot.field['rows']; let j = index">
+          <nz-form-item>
+            <nz-form-label>{{j+1}}</nz-form-label>
+            <nz-form-control>
+              <div class="row">
+                <div class="col">
+                  <input nz-input placeholder="field" type="text" [name]="'field'+i+''+j" [(ngModel)]="footer[i].field['rows'][j]['title']">
+                </div>
+                <div class="col">
+                  <input nz-input placeholder="path" type="text" [name]="'path'+i+''+j" [(ngModel)]="footer[i].field['rows'][j]['path']">
+                </div>
+              </div>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div>
+          <button nz-button nzType="primary" type="submit" (click)="handleSubmit(foot.id)">Submit</button>
+        </div>
+        <nz-divider *ngIf="i !== footer.length-1"></nz-divider>
+      </div>
+    </div>
+  </div>
+</form>

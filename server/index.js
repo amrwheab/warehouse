@@ -13,18 +13,18 @@ mongoose.connect(process.env.MONGODB_URL, (err) => {
 })
 
 // routes
-
 const productRouter = require('./routs/products.route')
 const categoryRouter = require('./routs/categories.route')
 const imageUploadRouter = require('./routs/uploadimage.route')
 const carouselRouter = require('./routs/carousel.route')
+const footerRouter = require('./routs/footer.route')
 
 // requests
-
 app.use('/products', productRouter)
 app.use('/categories', categoryRouter)
 app.use('/uploadimage', imageUploadRouter)
 app.use('/carousel', carouselRouter)
+app.use('/footer', footerRouter)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT ,() => {

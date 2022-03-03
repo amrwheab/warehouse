@@ -23,6 +23,8 @@ router.get('/single/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
+  const count = await Carousel.find().count()
+  if (count >= 10) return res.status(400).json('carousal items max number is 10')
   const { title, content, image, action } = req.body
   try {
     const newCarouselItem = new Carousel({

@@ -143,7 +143,7 @@ export class ModifyCarouselComponent implements OnInit {
         }, err => {
           console.log(err);
           this.message.remove(load);
-          this.message.error('some thing went wrong');
+          this.message.error(err.error);
         });
       }
     } else {
