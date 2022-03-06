@@ -1,9 +1,6 @@
-// body {
-//   background-color: #FAFAFA;
-// }
 
 html, body { height: 100%; }
-body { margin: 0; font-family: 'Open Sans', sans-serif; }
+body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 1rem; }
 
 .overlay {
   position: fixed;
@@ -17,3 +14,18 @@ body { margin: 0; font-family: 'Open Sans', sans-serif; }
   background-color: rgba($color: #fff, $alpha: .5);
   z-index: 2000;
 }
+
+.title-of-site {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 30px;
+    height: 3px;
+    font-weight: bold;
+    background-color: #0077C0;
+  }
+}
+

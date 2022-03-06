@@ -1,17 +1,18 @@
+import { Subscription } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { environment } from 'src/environments/environment';
 import { CategoryService } from 'src/app/services/category.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Category } from 'src/app/interfaces/Category';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-categories-dash',
   templateUrl: './categories-dash.component.html',
   styleUrls: ['./categories-dash.component.scss']
 })
-export class CategoriesDashComponent implements OnInit {
+export class CategoriesDashComponent implements OnInit, OnDestroy {
 
   searchValue: string;
   categories: Category[] = [];
@@ -21,6 +22,8 @@ export class CategoriesDashComponent implements OnInit {
   loading = true;
   apiUrl = environment.apiUrl;
   localHost = environment.localHost;
+  actRouteSub: Subscription;
+  categorySub: Subscription;
 
   constructor(
     private router: Router,
@@ -31,16 +34,21 @@ export class CategoriesDashComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.actRoute.queryParams.subscribe(({search, page}) => {
+    this.actRouteSub = this.actRoute.queryParams.subscribe(({search, page}) => {
       this.page = page || 1;
       this.search = search || '';
       this.__getCategories(page, search);
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.actRouteSub) { this.actRouteSub.unsubscribe(); }
+    if (this.categorySub) { this.categorySub.unsubscribe(); }
+  }
+
   __getCategories(page: string, search: string): void {
     this.loading = true;
-    this.categroryServ.getCategories(page, search).subscribe(({categories, count}) => {
+    this.categorySub = this.categroryServ.getCategories(page, search).subscribe(({categories, count}) => {
       this.categories = categories;
       this.count = count;
       this.loading = false;

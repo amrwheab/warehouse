@@ -1,0 +1,41 @@
+<div class="login">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-5">
+        <h3 class="title-of-site" nz-typography>Login</h3>
+        <p class="paragraph">Lorem ipsum, dolor sit amet consectetur adipisicing elit,
+          harum quae sequi eaque consectetur repellendus iusto
+          doloremque excepturi sit distinctio ut modi.</p>
+
+          <form [formGroup]="loginForm">
+            <nz-form-item class="d-block">
+              <nz-form-label nzFor="email">email</nz-form-label>
+              <nz-form-control
+                [nzValidateStatus]="(loginForm.controls.email.invalid && loginForm.controls.email.touched) ? 'error': ''"
+                nzErrorTip="email is invalid">
+                <input nz-input formControlName="email" placeholder="email" type="email" id="email">
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="d-block">
+              <nz-form-label nzFor="password">password</nz-form-label>
+              <nz-form-control
+                [nzValidateStatus]="(loginForm.controls.password.invalid && loginForm.controls.password.touched) ? 'error': ''"
+                [nzErrorTip]="loginForm.controls.password.errors?.required ? 'password is required':'min length is 6'">
+                <input nz-input formControlName="password" placeholder="password" type="password" id="password">
+              </nz-form-control>
+            </nz-form-item>
+
+            <div class="signup">
+              <a routerLink="/auth/signup">You don't have account yet?</a>
+            </div>
+            <div class="sub-btn">
+              <button nz-button nzType="primary" type="submit" (click)="handleSubmit()">Submit</button>
+            </div>
+          </form>
+      </div>
+      <div class="col-lg-7 d-none d-lg-block">
+        <img style="width: 100%;" src="assets/loginimage.svg" alt="login">
+      </div>
+    </div>
+  </div>
+</div>

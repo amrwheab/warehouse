@@ -1,8 +1,9 @@
+import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from './../../../services/product.service';
 import { UploadService } from './../../../services/upload.service';
 import { environment } from './../../../../environments/environment';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Category } from 'src/app/interfaces/Category';
 import { CategoryService } from 'src/app/services/category.service';
@@ -25,7 +26,7 @@ const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
   templateUrl: './modifyproduct.component.html',
   styleUrls: ['./modifyproduct.component.scss']
 })
-export class ModifyproductComponent implements OnInit {
+export class ModifyproductComponent implements OnInit, OnDestroy {
 
   @ViewChild('form') form: ElementRef;
 
@@ -42,6 +43,10 @@ export class ModifyproductComponent implements OnInit {
   imageUploadAction = environment.apiUrl + '/uploadimage';
 
   filters: {} | any = {};
+
+  actRouteSub: Subscription;
+  productsSub: Subscription;
+  categorySub: Subscription;
 
 
   constructor(
@@ -73,11 +78,17 @@ export class ModifyproductComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.actRouteSub) { this.actRouteSub.unsubscribe(); }
+    if (this.productsSub) { this.productsSub.unsubscribe(); }
+    if (this.categorySub) { this.categorySub.unsubscribe(); }
+  }
+
   private __getCategories(page: string, search: string): void {
-    this.categoryServ.getCategories(page, search).subscribe(({ categories }) => {
+    this.categorySub = this.categoryServ.getCategories(page, search).subscribe(({ categories }) => {
       this.categories = categories;
       if (this.update) {
-        this.actRoute.params.subscribe(({ id }) => {
+        this.actRouteSub = this.actRoute.params.subscribe(({ id }) => {
           this.id = id;
           this.__getProduct(id);
         });
@@ -87,7 +98,7 @@ export class ModifyproductComponent implements OnInit {
 
   private __getProduct(id: string): void {
     this.loading = true;
-    this.productServ.getOneProduct(id).subscribe(prod => {
+    this.productsSub = this.productServ.getOneProduct(id).subscribe(prod => {
       if (!prod?.id) { this.router.navigateByUrl('/admin'); }
       const categ = this.categories.find(category => category.id === prod.category.id);
       if (!categ?.id) { this.categories.push(prod.category); }

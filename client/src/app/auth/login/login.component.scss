@@ -1,0 +1,29 @@
+.login {
+  padding: 15px 0 25px;
+}
+.paragraph {
+  font-size: 1.09rem;
+  color: #9d9898;
+  line-height: 1.6;
+  margin: 25px 0;
+}
+.signup {
+  text-align: right;
+  margin-bottom: 27px;
+  margin-top: -20px;
+
+  a {
+    font-size: 1rem;
+    transition: .3s;
+    color: #0077C0;
+    text-decoration: underline;
+
+    &:hover {
+      color: #1D242B;
+    }
+  }
+}
+
+::ng-deep .sub-btn button {
+  width: 100%;
+}

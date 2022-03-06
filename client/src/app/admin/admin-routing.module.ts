@@ -27,7 +27,7 @@ const routes: Routes = [
     { path: 'carousel/addcarousel', component: ModifyCarouselComponent },
     { path: 'carousel/updatecarousel/:id', component: ModifyCarouselComponent },
     { path: 'footer', component: FooterDashComponent },
-    // { path: '**', redirectTo: 'dashboard' }
+    { path: '**', redirectTo: 'dashboard' }
   ] }
 ];
 

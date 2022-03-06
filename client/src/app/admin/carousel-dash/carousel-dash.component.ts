@@ -3,19 +3,21 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { CarouselService } from './../../services/carousel.service';
 import { environment } from './../../../environments/environment';
 import { Carousel } from './../../interfaces/Carousel';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-carousel-dash',
   templateUrl: './carousel-dash.component.html',
   styleUrls: ['./carousel-dash.component.scss']
 })
-export class CarouselDashComponent implements OnInit {
+export class CarouselDashComponent implements OnInit, OnDestroy {
 
   loading = true;
   caroselItems: Carousel[];
   localHost = environment.localHost;
   apiUrl = environment.apiUrl;
+  carouselSub: Subscription;
 
   constructor(
     private carouselServ: CarouselService,
@@ -27,9 +29,15 @@ export class CarouselDashComponent implements OnInit {
     this.__getCarouselItems();
   }
 
+  ngOnDestroy(): void {
+    if (this.carouselSub) {
+      this.carouselSub.unsubscribe();
+    }
+  }
+
   private __getCarouselItems(): void {
     this.loading = true;
-    this.carouselServ.getCaroselItems().subscribe(items => {
+    this.carouselSub = this.carouselServ.getCaroselItems().subscribe(items => {
       this.caroselItems = items;
       this.loading = false;
     }, err => {

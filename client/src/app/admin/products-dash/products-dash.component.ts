@@ -1,7 +1,8 @@
+import { Subscription } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ProductService } from './../../services/product.service';
 import { Product } from './../../interfaces/Product';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd/modal';
 
@@ -10,7 +11,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
   templateUrl: './products-dash.component.html',
   styleUrls: ['./products-dash.component.scss']
 })
-export class ProductsDashComponent implements OnInit {
+export class ProductsDashComponent implements OnInit, OnDestroy {
 
   searchValue: string;
   products: Product[] = [];
@@ -18,6 +19,8 @@ export class ProductsDashComponent implements OnInit {
   search: string;
   page: string | number = 1;
   loading = true;
+  actRouteSub: Subscription;
+  productsSub: Subscription;
 
   constructor(
     private productServ: ProductService,
@@ -28,7 +31,7 @@ export class ProductsDashComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.actRoute.queryParams.subscribe(({search, page}) => {
+    this.actRouteSub = this.actRoute.queryParams.subscribe(({search, page}) => {
       this.search = search || '';
       this.page = page || 1;
       this.searchValue = this.search;
@@ -38,7 +41,7 @@ export class ProductsDashComponent implements OnInit {
 
   private __getProducts(search: string, page: string | number): void {
     this.loading = true;
-    this.productServ.getProducts(search, page).subscribe(prods => {
+    this.productsSub = this.productServ.getProducts(search, page).subscribe(prods => {
       this.loading = false;
       this.products = prods.products;
       this.count = prods.count;
@@ -50,6 +53,11 @@ export class ProductsDashComponent implements OnInit {
       console.log(err);
       this.message.error('some thing went wrong');
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.actRouteSub) { this.actRouteSub.unsubscribe(); }
+    if (this.productsSub) { this.productsSub.unsubscribe(); }
   }
 
   onQueryParamsChange(e: any): void {

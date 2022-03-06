@@ -1,0 +1,97 @@
+<div class="signup">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-5">
+        <h3 nz-typography class="title-of-site">Sign up</h3>
+        <form [formGroup]="signUpForm">
+          <nz-form-item class="d-block">
+            <nz-form-label nzFor="name">name</nz-form-label>
+            <nz-form-control
+              [nzValidateStatus]="(signUpForm.controls.name.invalid && signUpForm.controls.name.touched) ? 'error': ''"
+              nzErrorTip="name is required">
+              <input nz-input formControlName="name" placeholder="name" type="text" id="name">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="d-block">
+            <nz-form-label nzFor="email">email</nz-form-label>
+            <nz-form-control
+              [nzValidateStatus]="(signUpForm.controls.email.invalid && signUpForm.controls.email.touched) ? 'error': ''"
+              nzErrorTip="email is invalid">
+              <input nz-input formControlName="email" placeholder="email" type="email" id="email">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="d-block">
+            <nz-form-label nzFor="password">password</nz-form-label>
+            <nz-form-control
+              [nzValidateStatus]="(signUpForm.controls.password.invalid && signUpForm.controls.password.touched) ? 'error': ''"
+              [nzErrorTip]="signUpForm.controls.password.errors?.required ? 'password is required':'min length is 6'">
+              <input nz-input formControlName="password" placeholder="password" type="password" id="password">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="d-block">
+            <nz-form-label nzFor="confirmpassword">confirm password</nz-form-label>
+            <nz-form-control
+              [nzValidateStatus]="(signUpForm.errors?.passInvalid && signUpForm.controls.confirmPassword.touched) ? 'error': ''"
+              nzErrorTip="passwords don't match">
+              <input nz-input formControlName="confirmPassword" placeholder="confirm password" type="password"
+                id="confirmpassword">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="d-block">
+            <nz-form-label nzFor="phone">phone</nz-form-label>
+            <nz-form-control
+              [nzValidateStatus]="(signUpForm.controls.phone.invalid && signUpForm.controls.phone.touched) ? 'error': ''"
+              nzErrorTip="phone is required">
+              <input nz-input formControlName="phone" placeholder="phone" type="text" id="phone">
+            </nz-form-control>
+          </nz-form-item>
+            <div class="row mr-0 ml-0">
+              <nz-form-item class="d-block col mr-1">
+                <nz-form-label nzFor="country">country</nz-form-label>
+                <nz-form-control
+                  [nzValidateStatus]="(signUpForm.controls.country.invalid && signUpForm.controls.country.touched) ? 'error': ''"
+                  nzErrorTip="country is required">
+                  <input nz-input formControlName="country" placeholder="country" type="text" id="country">
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item class="d-block col mr-1">
+                <nz-form-label nzFor="city">city</nz-form-label>
+                <nz-form-control
+                  [nzValidateStatus]="(signUpForm.controls.city.invalid && signUpForm.controls.city.touched) ? 'error': ''"
+                  nzErrorTip="city is required">
+                  <input nz-input formControlName="city" placeholder="city" type="text" id="city">
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item class="d-block col">
+                <nz-form-label nzFor="street">street</nz-form-label>
+                <nz-form-control>
+                  <input nz-input formControlName="street" placeholder="street" type="text" id="street">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <nz-form-item class="d-block">
+              <nz-form-label nzFor="zip">zip</nz-form-label>
+              <nz-form-control>
+                <input nz-input formControlName="zip" placeholder="zip" type="number" id="zip">
+              </nz-form-control>
+            </nz-form-item>
+            <div class="login">
+              <a routerLink="/auth/login">You aready have an account?</a>
+            </div>
+            <div>
+              <button nz-button nzType="primary" type="submit" [disabled]="signUpForm.invalid" (click)="handleSubmit()">Submit</button>
+            </div>
+        </form>
+      </div>
+      <div class="offset-1 col-lg-6 d-none d-lg-block">
+        <h3 nz-typography class="title-of-site mt-2">Welcome To Warehouse!</h3>
+        <p class="paragraph">
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit, harum quae sequi eaque consectetur repellendus iusto doloremque excepturi sit distinctio ut modi.
+        </p>
+        <div class="img-contain">
+          <img src="assets/login.svg" alt="sign up">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

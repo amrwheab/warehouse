@@ -1,29 +1,35 @@
+import { Subscription } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { FooterService } from './../../services/footer.service';
 import { Footer } from './../../interfaces/Footer';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-footer-dash',
   templateUrl: './footer-dash.component.html',
   styleUrls: ['./footer-dash.component.scss']
 })
-export class FooterDashComponent implements OnInit {
+export class FooterDashComponent implements OnInit, OnDestroy {
 
   loading = true;
   footer: Footer[] = [];
+  footerSub: Subscription;
 
   constructor(private footServ: FooterService, private message: NzMessageService) { }
 
   ngOnInit(): void {
     this.loading = true;
-    this.footServ.getFooter().subscribe(res => {
+    this.footerSub = this.footServ.getFooter().subscribe(res => {
       this.footer = res;
       this.loading = false;
     }, err => {
       console.log(err);
       this.loading = false;
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.footerSub) { this.footerSub.unsubscribe(); }
   }
 
   trackByFun(i: number): number {

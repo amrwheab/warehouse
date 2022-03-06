@@ -2,11 +2,15 @@
   <div class="container">
     <div class="nav">
       <a class="logo" routerLink='/'>
-        <i class="d-none d-lg-inline" nz-icon nzType="align-left" nzTheme="outline"></i>
         <img src="assets/logo.svg" alt="logo">
       </a>
       <div class="menu-bar">
-        <i class="d-lg-none" nz-icon nzType="align-right" nzTheme="outline"></i>
+        <a href="#" (click)="$event.preventDefault();visible=true">
+          <i class="d-lg-none" nz-icon nzType="align-right" nzTheme="outline"></i>
+        </a>
+        <nz-drawer [nzClosable]="false" [nzVisible]="visible" nzPlacement="right" nzTitle="Warehouse"
+          (nzOnClose)="visible = false">
+        </nz-drawer>
       </div>
       <ul class="menu d-none d-lg-flex">
         <li class="active"><a routerLink="/">Home</a></li>
@@ -24,11 +28,23 @@
         <div class="search">
           <i nz-icon nzType="search" nzTheme="outline"></i>
         </div>
-        <div class="auth">
-          <button nz-button nzType="primary" class="primary">Sign up</button>
-          <button nz-button nzType="default">Log in</button>
+        <div *ngIf="!user?.loading && !user?.id" class="auth">
+          <a nz-button nzType="primary" class="primary" routerLink="/auth/signup">Sign up</a>
+          <a nz-button nzType="default" routerLink="/auth/login">Log in</a>
         </div>
+        <nz-spin *ngIf="user?.loading"></nz-spin>
+        <a *ngIf="!user?.loading && user?.id" class="user-img" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+          <span>{{user.name}}</span>
+          <img src="assets/user.png" alt="user">
+        </a>
       </div>
     </div>
   </div>
 </nav>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item>profile page</li>
+    <li nz-menu-item nzDanger (click)="logOut()">log out</li>
+  </ul>
+</nz-dropdown-menu>

@@ -24,6 +24,8 @@ import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -53,7 +55,9 @@ registerLocaleData(en);
     ProductCardModule,
     NzDividerModule,
     NzSpinModule,
-    SwiperModule
+    SwiperModule,
+    NzDropDownModule,
+    NzDrawerModule
   ],
   providers: [
     {

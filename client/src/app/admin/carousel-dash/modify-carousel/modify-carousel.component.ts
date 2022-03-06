@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { CarouselService } from './../../../services/carousel.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { UploadService } from './../../../services/upload.service';
@@ -6,7 +7,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { environment } from './../../../../environments/environment';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
   new Promise((resolve, reject) => {
@@ -21,7 +22,7 @@ const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
   templateUrl: './modify-carousel.component.html',
   styleUrls: ['./modify-carousel.component.scss']
 })
-export class ModifyCarouselComponent implements OnInit {
+export class ModifyCarouselComponent implements OnInit, OnDestroy {
 
   update = false;
   loading = true;
@@ -31,6 +32,8 @@ export class ModifyCarouselComponent implements OnInit {
   previewVisible = false;
   caruselForm: FormGroup;
   id: string;
+  actRouteSub: Subscription;
+  carouselSub: Subscription;
 
   constructor(
     private actRoute: ActivatedRoute,
@@ -53,10 +56,10 @@ export class ModifyCarouselComponent implements OnInit {
       action: ['', Validators.required]
     });
     if (this.update) {
-      this.actRoute.params.subscribe(({id}) => {
+      this.actRouteSub = this.actRoute.params.subscribe(({id}) => {
         this.loading = true;
         this.id = id;
-        this.carouselServ.getCarouselSingleItem(id).subscribe((res) => {
+        this.carouselSub = this.carouselServ.getCarouselSingleItem(id).subscribe((res) => {
           this.loading = false;
           this.caruselForm.patchValue({
             title: res.title,
@@ -76,6 +79,11 @@ export class ModifyCarouselComponent implements OnInit {
         });
       });
     }
+  }
+
+  ngOnDestroy(): void {
+    if (this.actRouteSub) { this.actRouteSub.unsubscribe(); }
+    if (this.carouselSub) { this.carouselSub.unsubscribe(); }
   }
 
   handlePreview = async (file: NzUploadFile): Promise<void> => {

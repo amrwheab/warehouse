@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { CategoryService } from 'src/app/services/category.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -6,7 +7,7 @@ import { UploadService } from './../../../services/upload.service';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
   new Promise((resolve, reject) => {
@@ -28,7 +29,7 @@ const ValidateFilter = (control: AbstractControl): { [key: string]: any } | null
   templateUrl: './modify-category.component.html',
   styleUrls: ['./modify-category.component.scss']
 })
-export class ModifyCategoryComponent implements OnInit {
+export class ModifyCategoryComponent implements OnInit, OnDestroy {
 
   update = false;
   loading = true;
@@ -38,6 +39,8 @@ export class ModifyCategoryComponent implements OnInit {
   previewVisible = false;
   categoryForm: FormGroup;
   id: string;
+  actRouteSub: Subscription;
+  categorySub: Subscription;
 
   constructor(
     private actRoute: ActivatedRoute,
@@ -59,10 +62,10 @@ export class ModifyCategoryComponent implements OnInit {
       filters: ['', [ValidateFilter]]
     });
     if (this.update) {
-      this.actRoute.params.subscribe(({id}) => {
+      this.actRouteSub = this.actRoute.params.subscribe(({id}) => {
         this.loading = true;
         this.id = id;
-        this.categoryServ.getOneCategory(id).subscribe(({name, image, filters}) => {
+        this.categorySub = this.categoryServ.getOneCategory(id).subscribe(({name, image, filters}) => {
           this.loading = false;
           this.categoryForm.patchValue({
             name,
@@ -77,6 +80,11 @@ export class ModifyCategoryComponent implements OnInit {
         });
       });
     }
+  }
+
+  ngOnDestroy(): void {
+    if (this.actRouteSub) { this.actRouteSub.unsubscribe(); }
+    if (this.categorySub) { this.categorySub.unsubscribe(); }
   }
 
   handlePreview = async (file: NzUploadFile): Promise<void> => {

@@ -1,3 +1,5 @@
+import { UserService } from './../../services/user.service';
+import { User } from './../../interfaces/User';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { Component, OnInit } from '@angular/core';
 
@@ -36,6 +38,10 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.resizing();
+  }
+
+  resizing(): void {
     const size = window.innerWidth;
     if (size > 0 && size < 992) {
       this.config.slidesPerView = 2;
