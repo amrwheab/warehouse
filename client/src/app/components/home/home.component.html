@@ -6,10 +6,10 @@
       <div class="departs-container">
           <swiper class="swiper" [config]="circlarConfig" [index]="0">
             <div class="swiper-slide" *ngFor="let depart of departs">
-              <app-circular [text]="depart.name"></app-circular>
+              <app-circular class="circuler" [text]="depart.name"></app-circular>
             </div>
             <div class="swiper-slide" *ngFor="let depart of departs">
-              <app-circular [text]="depart.name"></app-circular>
+              <app-circular class="circuler" [text]="depart.name"></app-circular>
             </div>
           </swiper>
       </div>
@@ -21,28 +21,28 @@
   <section class="featured-products">
     <div class="container">
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-12 col-lg-3">
           <div class="feat-title">
             <h2>Check out our best mobile deals with up to 20% discount!</h2>
           </div>
         </div>
-        <div class="col-md-7">
-          <div class="cards-container">
-            <!-- <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}">
+        <div class="col-12 col-lg-7 clearfix">
+            <app-prod-card [product]="product" class="mr-2 mb-2" style="float: left;">
             </app-prod-card>
-            <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}">
+            <app-prod-card [product]="product" class="mr-2 mb-2" style="float: left;">
             </app-prod-card>
-            <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}">
-            </app-prod-card> -->
-          </div>
+            <app-prod-card [product]="product" style="float: left;">
+            </app-prod-card>
+            <div style="clear: both"></div>
         </div>
-        <div class="col-md-2">
+        <div class="col-12 col-lg-2">
           <a href="#" class="show-more">show more...</a>
         </div>
       </div>
+      <nz-divider></nz-divider>
       <div class="poster">
         <a href="#">
-          <img src="assets/poster.jpg" alt="poster">
+          <img src="assets/poster.svg" alt="poster">
         </a>
       </div>
       <div class="container">
@@ -51,32 +51,41 @@
       <div class="most-feat">
         <h2 class="title">featured products</h2>
         <div class="most-feat-container">
-          <!-- <swiper class="swiper" [config]="config" [index]="0">
-            <div class="swiper-slide">
-              <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}">
+          <swiper class="swiper" [config]="config" [index]="0">
+            <div class="swiper-slide" style="text-align: left;">
+              <app-prod-card [product]="product">
               </app-prod-card>
             </div>
-            <div class="swiper-slide">
-              <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}">
+            <div class="swiper-slide" style="text-align: left;">
+              <app-prod-card [product]="product">
               </app-prod-card>
             </div>
-            <div class="swiper-slide">
-              <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}">
+            <div class="swiper-slide" style="text-align: left;">
+              <app-prod-card [product]="product">
               </app-prod-card>
             </div>
-            <div class="swiper-slide">
-              <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}">
+            <div class="swiper-slide" style="text-align: left;">
+              <app-prod-card [product]="product">
               </app-prod-card>
             </div>
-            <div class="swiper-slide">
-              <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}">
+            <div class="swiper-slide" style="text-align: left;">
+              <app-prod-card [product]="product">
               </app-prod-card>
             </div>
-            <div class="swiper-slide">
-              <app-prod-card [product]="{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}">
+            <div class="swiper-slide" style="text-align: left;">
+              <app-prod-card [product]="product">
               </app-prod-card>
             </div>
-          </swiper> -->
+            <div class="swiper-slide" style="text-align: left;">
+              <app-prod-card [product]="product">
+              </app-prod-card>
+            </div>
+            <div class="swiper-slide" style="text-align: left;">
+              <app-prod-card [product]="product">
+              </app-prod-card>
+            </div>
+
+          </swiper>
         </div>
       </div>
       <nz-divider></nz-divider>

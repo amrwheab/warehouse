@@ -52,33 +52,38 @@
     }
   }
 
-  .restform {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+}
+.restform {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    .heart, .search {
-      margin-right: 5px;
+  .heart, .search {
+    margin-right: 5px;
 
-      i {
-        font-size: 20px;
-      }
-    }
-
-    .cart-icon {
-      margin-right: 5px;
-
-      img {
-        width: 25px;
-      }
-    }
-
-    .auth {
-      .primary {
-        margin-right: 5px;
-      }
+    i {
+      font-size: 20px;
     }
   }
+
+  .cart-icon {
+    margin-right: 5px;
+
+    img {
+      width: 25px;
+    }
+  }
+
+  .auth {
+    .primary {
+      margin-right: 5px;
+    }
+  }
+}
+
+.restform.draw {
+  width: 70%;
+  margin: 15px auto;
 }
 
 nav {
@@ -119,4 +124,8 @@ nav {
     height: 43px;
     line-height: 30px;
   }
+}
+
+::ng-deep .ant-drawer-body {
+  padding: 0;
 }

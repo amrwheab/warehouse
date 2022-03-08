@@ -1,9 +1,7 @@
 nz-card {
-  &::ng-deep {
-    .ant-card-cover img {
-      height: 150px;
-      object-fit: cover;
-    }
+  width: 213px;
+  height: 277px;
+
     .ant-card-meta-description {
       text-decoration: line-through;
     }
@@ -11,7 +9,6 @@ nz-card {
       padding: 24px 10px;
     }
   }
-}
 nz-rate {
   &::ng-deep {
     .ant-rate-star {
@@ -21,9 +18,17 @@ nz-rate {
   }
 }
 
+@media (max-width: 678px) {
+  nz-card {
+    width: 153px;
+    height: 255px;
+  }
+  ::ng-deep .ant-card-body {
+    padding: 7px;
+  }
+}
+
 .card-foot {
-  display: flex;
-  justify-content: space-between;
 
   .price {
     color: #0077C0;
@@ -34,4 +39,11 @@ nz-rate {
 
 button {
   padding: 4px 4px;
+}
+
+::ng-deep nz-card .ant-card-cover img {
+  height: 150px;
+  width: 150px;
+  object-fit: cover;
+  margin: 1px auto auto;
 }

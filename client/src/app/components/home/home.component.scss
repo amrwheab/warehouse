@@ -1,6 +1,6 @@
 .swiper {
   width: 100%;
-  height: 100%;
+  // height: 100%;
 }
 
 .swiper-slide {
@@ -22,6 +22,10 @@
   -webkit-align-items: center;
   align-items: center;
   overflow: hidden;
+}
+
+.circuler {
+  transform: scale(.8);
 }
 
 .swiper::ng-deep .swiper.s-wrapper .swiper-wrapper .swiper-slide {
@@ -51,16 +55,14 @@
   .departs {
     padding-top: 20px;
     .departs-container {
-      padding-top: 20px;
       display: flex;
       justify-content: center;
       align-items: center;
 
       div {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
-        // width: 78%;
         flex-wrap: wrap;
       }
     }
@@ -78,7 +80,7 @@
     }
     .cards-container {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
       flex-wrap: wrap;
 
@@ -118,4 +120,30 @@
 
   }
 
+}
+
+.clearfix {
+  overflow: hidden;
+}
+
+@media (max-width: 992px) {
+  .feat-title {
+    height: auto !important;
+    line-height: normal !important;
+  }
+  .show-more {
+    display: block;
+    text-align: center;
+    background-color: #1d242b;
+    color: white;
+    padding: 2px 0;
+    line-height: 28.641px;
+    margin-top: 10px;
+    border-radius: 2px;
+
+    &:hover {
+      color: white !important;
+      background-color: #2f3841;
+    }
+  }
 }

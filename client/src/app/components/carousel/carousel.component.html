@@ -1,37 +1,15 @@
 <div style="text-align: center;height: 50vh;line-height: 50vh;" *ngIf="!carouselLoad">
   <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
 </div>
-
-<div class="mycarousel" #mycarousel *ngIf="gallery.length >0 && !mobileScreen">
-  <i nz-icon nzType="left" nzTheme="outline" style="left: 20px;" (click)="carLeft(pageSize)"></i>
-  <i nz-icon nzType="right" nzTheme="outline" style="right: 20px;" (click)="carRight(pageSize)"></i>
-  <div class="inner-car" [style]="
-  'width:'+ pageSize*(gallery?.length+2) + 'px;'+
-  'left:'+(carPosition)+'px;'+
-  'transition:'+carTran">
-    <div [style]="'width:'+pageSize+'px;'+'background-image:url('+gallery[gallery.length-1].img+');'" class="insideCar">
-      <div class="car-input" [class.mob]="mobileScreen">
-        <h2>{{gallery[gallery.length-1].title}}</h2>
-        <p *ngIf="!mobileScreen">{{gallery[gallery.length-1].content}}</p>
-        <a class="car-btn" nz-button nzType="primary" [routerLink]="gallery[gallery.length-1].action" >Go Now</a>
-      </div>
-    </div>
-    <div [style]="'width:'+pageSize+'px;'+'background-image:url('+car.img+');'" *ngFor="let car of gallery;let i = index" class="insideCar">
-      <div class="car-input" [class.mob]="mobileScreen">
+<div style="height: 500px;" class="carousel">
+  <swiper [config]="config" [index]="0">
+    <div *ngFor="let car of gallery;let i = index" class="insideCar">
+      <img [src]="car.image" alt="carousel" class="car-img">
+      <div class="car-input">
         <h2>{{car.title}}</h2>
-        <p *ngIf="!mobileScreen">{{car.content}}</p>
+        <p>{{car.content}}</p>
         <a nz-button nzType="primary" [routerLink]="car.action" >Go Now</a>
       </div>
     </div>
-    <div [style]="'width:'+pageSize+'px;'+'background-image:url('+gallery[0].img+');'" class="insideCar">
-      <div class="car-input" [class.mob]="mobileScreen">
-        <h2>{{gallery[0].title}}</h2>
-        <p *ngIf="!mobileScreen">{{gallery[0].content}}</p>
-        <a nz-button nzType="primary" [routerLink]="gallery[0].action" >Go Now</a>
-      </div>
-    </div>
-  </div>
-  <div class="bullets" [style]="'width:' + 12*(gallery.length+2)+'px'">
-    <span class="bullet" [class.active]="carPosition===(-pageSize*(i+1)) || (carPosition===(-pageSize*(gallery.length+1)) && i===0)|| (carPosition===0 && i===(gallery.length-1))" *ngFor="let carr of gallery; let i = index" (click)="bulletClick(i)">.</span>
-  </div>
+  </swiper>
 </div>

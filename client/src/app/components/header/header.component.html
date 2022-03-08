@@ -10,6 +10,36 @@
         </a>
         <nz-drawer [nzClosable]="false" [nzVisible]="visible" nzPlacement="right" nzTitle="Warehouse"
           (nzOnClose)="visible = false">
+          <div class="restform draw">
+            <div class="heart">
+              <i nz-icon nzType="heart" nzTheme="outline"></i>
+            </div>
+            <div class="cart-icon">
+              <img src="assets/cart.svg" alt="logo">
+            </div>
+            <div class="search">
+              <i nz-icon nzType="search" nzTheme="outline"></i>
+            </div>
+          </div>
+          <ul nz-menu nzMode="inline">
+            <li nz-menu-item nzMatchRouter="/" nzMatchRouterExact="true">
+              <a routerLink="/">Home</a>
+            </li>
+            <li nz-menu-item><a routerLink="#">Categories</a></li>
+            <li nz-menu-item><a routerLink="#">About</a></li>
+            <li nz-menu-item><a routerLink="#">Contact</a></li>
+            <nz-divider></nz-divider>
+            <li *ngIf="!user?.loading && !user?.id" nz-menu-item nzMatchRouter="/auth/signup">
+              <a routerLink="/auth/signup">Sign up</a>
+            </li>
+            <li *ngIf="!user?.loading && !user?.id" nz-menu-item nzMatchRouter="/auth/login">
+              <a routerLink="/auth/login">Log in</a>
+            </li>
+            <li nz-menu-item *ngIf="!user?.loading && user?.id">
+              <a routerLink="#">profile page</a>
+            </li>
+            <li *ngIf="!user?.loading && user?.id" nz-menu-item nzDanger (click)="logOut()">Log out</li>
+          </ul>
         </nz-drawer>
       </div>
       <ul class="menu d-none d-lg-flex">

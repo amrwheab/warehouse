@@ -1,3 +1,4 @@
+import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { Component, OnInit } from '@angular/core';
 import { Carousel } from 'src/app/interfaces/Carousel';
 
@@ -8,12 +9,18 @@ import { Carousel } from 'src/app/interfaces/Carousel';
 })
 export class CarouselComponent implements OnInit {
 
-  pageSize: number | any;
-  carPosition: number | any;
-  carTran = '.5s ease-out;';
-  mobileScreen: boolean | any;
-  sliderIterv: number | any;
   carouselLoad = true;
+
+  config: SwiperConfigInterface = {
+    slidesPerView: 1,
+    spaceBetween: 0,
+    slidesPerGroup: 1,
+    navigation: false,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true
+    }
+  };
 
   gallery: Carousel[] = [
     {
@@ -26,14 +33,14 @@ export class CarouselComponent implements OnInit {
     {
       id: '2',
       title: 'hello',
-      content: 'sdjhdfidifsdjkskhsskhsusknshcfjncjhsjshfkdgiksjhsjnfsj',
+      content: 'sdjhdfid ifsdjkskhssk hsusknshcfjnc jhsj shfkdgiksj hsjnfsj',
       image: 'assets/test/car2.png',
       action: 'any'
     },
     {
       id: '3',
       title: 'hello',
-      content: 'sdjhdfidifsdjkskhsskhsusknshcfjncjhsjshfkdgiksjhsjnfsj',
+      content: 'sdj hdfidifsdjks khsskhsusknshcf jncjhsjshfkdg iksjhsj nfsj',
       image: 'assets/test/car3.png',
       action: 'any'
     }
@@ -43,86 +50,23 @@ export class CarouselComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (window.innerWidth <= 576) {
-      this.mobileScreen = true;
+    if (window.innerWidth >= 678) {
+      this.config.navigation = {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      };
     }
 
     window.addEventListener('resize', () => {
-      if (window.innerWidth <= 576) {
-        this.mobileScreen = true;
+      if (window.innerWidth >= 678) {
+        this.config.navigation = {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        };
+      } else {
+        this.config.navigation = false;
       }
     });
-
-    this.pageSize = window.innerWidth;
-    this.carPosition = - this.pageSize;
-
-    // tslint:disable-next-line: no-non-null-assertion
-    // this.sliderIterv = window.setInterval(() => this.carRight(this.pageSize!), 10000);
-  }
-
-  carRight(w: number): void {
-    // About Interval
-    window.clearInterval(this.sliderIterv);
-
-    // About Position
-    if (this.carPosition === -w) {
-      this.carPosition = 2 * (-w);
-    } else {
-      if (this.carPosition === -(this.gallery.length + 1) * w) {
-        this.carPosition = -w;
-        this.carTran = 'none';
-        setTimeout(() => {
-          // tslint:disable-next-line: no-non-null-assertion
-          this.carPosition! -= w;
-          this.carTran = '.5s ease-out;';
-        }, 0);
-      } else {
-        // tslint:disable-next-line: no-non-null-assertion
-        this.carPosition! -= w;
-        this.carTran = '.5s ease-out;';
-      }
-    }
-
-    // tslint:disable-next-line: no-non-null-assertion
-    this.sliderIterv = window.setInterval(() => this.carRight(this.pageSize!), 10000);
-  }
-
-  carLeft(w: number): void {
-    // About Interval
-    window.clearInterval(this.sliderIterv);
-
-    // About Position
-    if (this.carPosition === 0) {
-      this.carTran = 'none';
-      this.carPosition = -(this.gallery.length) * w;
-      setTimeout(() => {
-        // tslint:disable-next-line: no-non-null-assertion
-        this.carPosition! += w;
-        this.carTran = '.5s ease-out;';
-      }, 0);
-    }else if (this.carPosition === -w) {
-      this.carPosition = 0;
-    }else {
-      // tslint:disable-next-line: no-non-null-assertion
-      this.carPosition! += w;
-    }
-
-    // tslint:disable-next-line: no-non-null-assertion
-    this.sliderIterv = window.setInterval(() => this.carRight(this.pageSize!), 10000);
-  }
-
-  bulletClick(i: number): void {
-    // About Interval
-    window.clearInterval(this.sliderIterv);
-    // tslint:disable-next-line: prefer-for-of
-    for (let j = 0; j < this.gallery.length; j++) {
-
-    }
-
-    // tslint:disable-next-line: no-non-null-assertion
-    this.carPosition = -this.pageSize! * (i + 1);
-    // tslint:disable-next-line: no-non-null-assertion
-    this.sliderIterv = window.setInterval(() => this.carRight(this.pageSize!), 10000);
   }
 
 }
