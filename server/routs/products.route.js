@@ -8,8 +8,8 @@ router.get('/', async (req, res) => {
   const skip = (page - 1) * 8
   const { search } = req.query
   try {
-    const products = await Product.find({ name: { $regex: search } }).limit(8).skip(skip).populate('category');
-    const count = await Product.find({ name: { $regex: search } }).count()
+    const products = await Product.find({ name: { $regex: search, $options : 'i' } }).limit(8).skip(skip).populate('category');
+    const count = await Product.find({ name: { $regex: search, $options : 'i' } }).count()
     res.status(200).json({ products, count })
   } catch (err) {
     console.log(err)

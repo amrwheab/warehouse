@@ -21,6 +21,10 @@ export class ProductService {
     return this.http.get<Product>(environment.apiUrl + '/products/oneproduct/' + id);
   }
 
+  getHomeComp(): Observable<any> {
+    return this.http.get(environment.apiUrl + '/home');
+  }
+
   addProduct(value: {}): Observable<any> {
     return this.http.post(environment.apiUrl + '/products', value);
   }

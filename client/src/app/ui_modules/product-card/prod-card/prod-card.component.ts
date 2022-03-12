@@ -1,3 +1,4 @@
+import { environment } from './../../../../environments/environment';
 import { Component, Input, OnInit } from '@angular/core';
 import { Product } from 'src/app/interfaces/Product';
 
@@ -9,6 +10,8 @@ import { Product } from 'src/app/interfaces/Product';
 export class ProdCardComponent implements OnInit {
 
   @Input() product: Product;
+  apiUrl = environment.apiUrl;
+  localHost = environment.localHost;
   constructor() { }
 
   ngOnInit(): void {

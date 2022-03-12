@@ -11,5 +11,5 @@ interface Field {
 
 export interface Footer {
   id: string | undefined;
-  field: Field[] | undefined;
+  field: Field | undefined;
 }

@@ -1,10 +1,13 @@
+<div class="overlay" *ngIf="loading">
+  <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+</div>
 <div style="text-align: center;height: 50vh;line-height: 50vh;" *ngIf="!carouselLoad">
   <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
 </div>
 <div style="height: 500px;" class="carousel">
   <swiper [config]="config" [index]="0">
     <div *ngFor="let car of gallery;let i = index" class="insideCar">
-      <img [src]="car.image" alt="carousel" class="car-img">
+      <img [src]="car.image.replace(localHost, apiUrl)" alt="carousel" class="car-img">
       <div class="car-input">
         <h2>{{car.title}}</h2>
         <p>{{car.content}}</p>

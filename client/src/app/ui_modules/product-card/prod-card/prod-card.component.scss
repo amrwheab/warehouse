@@ -1,49 +1,55 @@
-nz-card {
-  width: 213px;
-  height: 277px;
-
-    .ant-card-meta-description {
-      text-decoration: line-through;
-    }
-    .ant-card-body {
-      padding: 24px 10px;
-    }
-  }
-nz-rate {
-  &::ng-deep {
-    .ant-rate-star {
-      margin-right: 0;
-      font-size: 14px;
-    }
-  }
-}
-
-@media (max-width: 678px) {
-  nz-card {
-    width: 153px;
-    height: 255px;
-  }
-  ::ng-deep .ant-card-body {
-    padding: 7px;
-  }
-}
-
-.card-foot {
-
-  .price {
-    color: #0077C0;
-    font-weight: 500;
-    margin-bottom: -14px;
-  }
-}
-
-button {
-  padding: 4px 4px;
-}
-
-::ng-deep nz-card .ant-card-cover img {
-  height: 150px;
+.prod-card {
+  border-radius: 3px;
+  position: relative;
   width: 150px;
+  height: 201px;
+  box-shadow: 0.5px 1.5px 8px #00000026;
+  padding: 0px 10px;
+  background-color: white;
+}
+.card-title {
+  margin-bottom: 0;
+}
+.img-contain {
+  margin-top: 8px;
+}
+.img-contain img {
+  width: 100%;
+  height: 110px;
   object-fit: cover;
-  margin: 1px auto auto;
+  margin-top: 16px;
+}
+.prod-rate {
+  margin-top: -9px;
+}
+::ng-deep .ant-rate {
+  font-size: 14px;
+  margin-top: 3px;
+  .ant-rate-star:not(:last-child) {
+    margin-right: 0;
+}
+}
+.action {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  display: flex;
+  flex-direction: column;
+  z-index: 3;
+}
+.heart-icon {
+  font-size: 21px;
+  margin-bottom: 6px;
+  color: #c7c7c7;
+}
+.add-to-cart-icon {
+  width: 21px;
+}
+.old-price {
+  text-decoration: line-through;
+  color: #c7c7c7;
+}
+.price {
+  color: #0077C0;
+  font-weight: bold;
 }

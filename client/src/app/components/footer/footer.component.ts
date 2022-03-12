@@ -1,30 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { FooterService } from './../../services/footer.service';
+import { Footer } from './../../interfaces/Footer';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
-export class FooterComponent implements OnInit {
+export class FooterComponent implements OnInit, OnDestroy {
 
-  footerParts = [
-    {
-      title: 'Clothes',
-      links: ['mens shirts', 'mens pants', 'mens shoes', 'womens dresses', 'womens shoes']
-    },
-    {
-      title: 'Mobiles and tablets',
-      links: ['samsung mobiles', 'samsung tablets', 'samsung watches', 'Iphones', 'Ipads']
-    },
-    {
-      title: 'Accessories',
-      links: ['mens watches', 'womens watches', 'jewelry', 'sunglasses', 'wallets']
-    }
-  ];
+  footerParts: Footer[] = [];
+  loading = true;
+  footerSub: Subscription;
 
-  constructor() { }
+  constructor(private footerServ: FooterService) { }
 
   ngOnInit(): void {
+    this.loading = true;
+    this.footerSub = this.footerServ.getFooter().subscribe(foot => {
+      this.loading = false;
+      this.footerParts = foot;
+    }, err => {
+      console.log(err);
+      this.loading = false;
+    });
   }
 
+  ngOnDestroy(): void {
+    if (this.footerSub) {
+      this.footerSub.unsubscribe();
+    }
+  }
+
+  trackByFun(i: number): number {
+    return i;
+  }
 }

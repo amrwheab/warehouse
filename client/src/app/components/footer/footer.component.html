@@ -1,13 +1,16 @@
 <footer>
+  <div class="overlay" *ngIf="loading">
+    <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+  </div>
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-12">
         <div class="row">
-          <div class="col-md-4" *ngFor="let part of footerParts">
-            <h3 class="part-title">{{part.title}}</h3>
+          <div class="col-md-4" *ngFor="let foot of footerParts;trackBy: trackByFun">
+            <h3 class="part-title">{{foot.field.title}}</h3>
             <div class="links">
-              <div *ngFor="let link of part.links">
-                <a class="footer-link">{{link}}</a>
+              <div *ngFor="let row of foot.field.rows;trackBy: trackByFun">
+                <a class="footer-link" [routerLink]="row.path">{{row.title}}</a>
               </div>
             </div>
             <nz-divider class="d-md-none"></nz-divider>

@@ -19,6 +19,7 @@ const imageUploadRouter = require('./routs/uploadimage.route')
 const carouselRouter = require('./routs/carousel.route')
 const footerRouter = require('./routs/footer.route')
 const userRouter = require('./routs/user.route')
+const homeRouter = require('./routs/home.route')
 
 // requests
 app.use('/products', productRouter)
@@ -27,6 +28,7 @@ app.use('/uploadimage', imageUploadRouter)
 app.use('/carousel', carouselRouter)
 app.use('/footer', footerRouter)
 app.use('/user', userRouter)
+app.use('/home', homeRouter)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT ,() => {

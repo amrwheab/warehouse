@@ -19,4 +19,6 @@ export interface Product {
   isFeatured: boolean;
   dateCreated: Date;
   filters: object;
+  slug: string;
+  discount: number;
 }

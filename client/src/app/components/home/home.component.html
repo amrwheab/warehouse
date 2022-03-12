@@ -1,3 +1,6 @@
+<div class="overlay" *ngIf="loading">
+  <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+</div>
 <div class="home">
   <app-carousel></app-carousel>
   <section class="departs">
@@ -5,12 +8,7 @@
       <h2 class="title">What are you looking for?</h2>
       <div class="departs-container">
           <swiper class="swiper" [config]="circlarConfig" [index]="0">
-            <div class="swiper-slide" *ngFor="let depart of departs">
-              <app-circular class="circuler" [text]="depart.name"></app-circular>
-            </div>
-            <div class="swiper-slide" *ngFor="let depart of departs">
-              <app-circular class="circuler" [text]="depart.name"></app-circular>
-            </div>
+              <app-circular *ngFor="let cat of categories" class="circuler" [text]="cat.name"></app-circular>
           </swiper>
       </div>
     </div>
@@ -26,13 +24,11 @@
             <h2>Check out our best mobile deals with up to 20% discount!</h2>
           </div>
         </div>
-        <div class="col-12 col-lg-7 clearfix">
-            <app-prod-card [product]="product" class="mr-2 mb-2" style="float: left;">
+        <div class="col-12 col-lg-7 checkout">
+          <div *ngFor="let prod of mobileProduct" class="mr-2 mb-2" style="float: left;">
+            <app-prod-card [product]="prod">
             </app-prod-card>
-            <app-prod-card [product]="product" class="mr-2 mb-2" style="float: left;">
-            </app-prod-card>
-            <app-prod-card [product]="product" style="float: left;">
-            </app-prod-card>
+          </div>
             <div style="clear: both"></div>
         </div>
         <div class="col-12 col-lg-2">
@@ -51,59 +47,36 @@
       <div class="most-feat">
         <h2 class="title">featured products</h2>
         <div class="most-feat-container">
-          <swiper class="swiper" [config]="config" [index]="0">
-            <div class="swiper-slide" style="text-align: left;">
-              <app-prod-card [product]="product">
+          <swiper class="swiper middle-sec" [config]="config" [index]="0">
+            <div *ngFor="let prod of featureProduct;trackBy: trackByFun">
+              <app-prod-card [product]="prod">
               </app-prod-card>
             </div>
-            <div class="swiper-slide" style="text-align: left;">
-              <app-prod-card [product]="product">
-              </app-prod-card>
-            </div>
-            <div class="swiper-slide" style="text-align: left;">
-              <app-prod-card [product]="product">
-              </app-prod-card>
-            </div>
-            <div class="swiper-slide" style="text-align: left;">
-              <app-prod-card [product]="product">
-              </app-prod-card>
-            </div>
-            <div class="swiper-slide" style="text-align: left;">
-              <app-prod-card [product]="product">
-              </app-prod-card>
-            </div>
-            <div class="swiper-slide" style="text-align: left;">
-              <app-prod-card [product]="product">
-              </app-prod-card>
-            </div>
-            <div class="swiper-slide" style="text-align: left;">
-              <app-prod-card [product]="product">
-              </app-prod-card>
-            </div>
-            <div class="swiper-slide" style="text-align: left;">
-              <app-prod-card [product]="product">
-              </app-prod-card>
-            </div>
-
           </swiper>
         </div>
       </div>
       <nz-divider></nz-divider>
       <div class="most-feat">
-        <h2 class="title">Clothes</h2>
+        <h2 class="title">Fashion</h2>
         <div class="most-feat-container">
-          <!-- <app-prod-carousel
-            [products]="[{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}]">
-          </app-prod-carousel> -->
+          <swiper class="swiper middle-sec" [config]="config" [index]="0">
+            <div *ngFor="let prod of fashionProduct;trackBy: trackByFun">
+              <app-prod-card [product]="prod">
+              </app-prod-card>
+            </div>
+          </swiper>
         </div>
       </div>
       <nz-divider></nz-divider>
       <div class="most-feat">
-        <h2 class="title">Accessories</h2>
+        <h2 class="title">Technology</h2>
         <div class="most-feat-container">
-          <!-- <app-prod-carousel
-            [products]="[{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32},{title: 'samsung', oldPrice: 2000, newPrice: 1500, rating: .9, ratingNum: 32}]">
-          </app-prod-carousel> -->
+          <swiper class="swiper middle-sec" [config]="config" [index]="0">
+            <div *ngFor="let prod of techProduct; trackBy: trackByFun">
+              <app-prod-card [product]="prod">
+              </app-prod-card>
+            </div>
+          </swiper>
         </div>
       </div>
     </div>

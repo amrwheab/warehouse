@@ -1,5 +1,8 @@
+import { environment } from './../../../environments/environment';
+import { CarouselService } from './../../services/carousel.service';
+import { Subscription } from 'rxjs';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Carousel } from 'src/app/interfaces/Carousel';
 
 @Component({
@@ -7,7 +10,7 @@ import { Carousel } from 'src/app/interfaces/Carousel';
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss']
 })
-export class CarouselComponent implements OnInit {
+export class CarouselComponent implements OnInit, OnDestroy {
 
   carouselLoad = true;
 
@@ -22,33 +25,23 @@ export class CarouselComponent implements OnInit {
     }
   };
 
-  gallery: Carousel[] = [
-    {
-      id: '1',
-      title: 'Get the best fashion deals!',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
-      image: 'assets/test/car1.png',
-      action: 'any'
-    },
-    {
-      id: '2',
-      title: 'hello',
-      content: 'sdjhdfid ifsdjkskhssk hsusknshcfjnc jhsj shfkdgiksj hsjnfsj',
-      image: 'assets/test/car2.png',
-      action: 'any'
-    },
-    {
-      id: '3',
-      title: 'hello',
-      content: 'sdj hdfidifsdjks khsskhsusknshcf jncjhsjshfkdg iksjhsj nfsj',
-      image: 'assets/test/car3.png',
-      action: 'any'
-    }
-  ];
+  carSub: Subscription;
+  loading = true;
+  gallery: Carousel[] = [];
+  localHost = environment.localHost;
+  apiUrl = environment.apiUrl;
 
-  constructor() { }
+  constructor(private carouselServ: CarouselService) { }
 
   ngOnInit(): void {
+    this.loading = true;
+    this.carSub = this.carouselServ.getCaroselItems().subscribe(car => {
+      this.loading = false;
+      this.gallery = car;
+    }, err => {
+      console.log(err);
+      this.loading = false;
+    });
 
     if (window.innerWidth >= 678) {
       this.config.navigation = {
@@ -67,6 +60,12 @@ export class CarouselComponent implements OnInit {
         this.config.navigation = false;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.carSub) {
+      this.carSub.unsubscribe();
+    }
   }
 
 }

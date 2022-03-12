@@ -1,3 +1,4 @@
+import { AppRoutingModule } from './../../app-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +10,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 
 
 
+
 @NgModule({
   declarations: [ProdCardComponent],
   imports: [
@@ -17,7 +19,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     FormsModule,
     NzRateModule,
     NzButtonModule,
-    NzIconModule
+    NzIconModule,
+    AppRoutingModule
   ],
   exports: [ProdCardComponent]
 })

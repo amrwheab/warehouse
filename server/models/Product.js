@@ -28,7 +28,7 @@ const productSchema = mongoose.Schema({
     default: 0
   },
   category: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: 'Category',
     required: true
   },
@@ -62,6 +62,10 @@ const productSchema = mongoose.Schema({
   filters: {
     type: {},
     default: {}
+  },
+  discount: {
+    type: Number,
+    default: 0,
   }
 })
 

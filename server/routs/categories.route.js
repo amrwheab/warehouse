@@ -6,7 +6,7 @@ const fs = require('fs');
 
 router.get('/', async (req, res) => {
   const page = parseInt(req.query.page)
-  const skip = (page-1)*10
+  const skip = (page-1)*8
   const { search } = req.query
   try {
     const categoriesPromise = Category.find({name: {$regex: search}}).limit(8).skip(skip);
@@ -32,7 +32,7 @@ router.get('/onecategory/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   const {name, image, filters} = req.body
-  if (filters.split(',').length>10) return res.status(400).json('some thing went wrong with filters')
+  if (filters?.split(',').length>10) return res.status(400).json('some thing went wrong with filters')
   for (let i=0; i < filters.split(',').length; i++) {
     const filter = filters.split(',')[i]
     if (

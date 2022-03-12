@@ -75,7 +75,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 267px;
+      height: 215px;
       line-height: 45px;
     }
     .cards-container {
@@ -126,10 +126,25 @@
   overflow: hidden;
 }
 
+.middle-sec {
+  height: 280px;
+  &::ng-deep .prod-card {
+    height: 260px !important;
+  }
+}
+.checkout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 @media (max-width: 992px) {
   .feat-title {
     height: auto !important;
     line-height: normal !important;
+  }
+  .circuler {
+    transform: scale(.8) !important;
   }
   .show-more {
     display: block;

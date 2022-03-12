@@ -1,4 +1,4 @@
-<nz-card [nzCover]="coverTemplate">
+<!-- <nz-card [nzCover]="coverTemplate">
   <nz-card-meta [nzTitle]="product.name"></nz-card-meta>
   <div class="card-foot">
     <div>
@@ -16,4 +16,22 @@
 </nz-card>
 <ng-template #coverTemplate>
   <img alt="example" [src]="product.images[0].url" />
-</ng-template>
+</ng-template> -->
+
+<div class="prod-card" style="width: 130px;height: 246px;text-align: left;">
+  <a [routerLink]="'/products/'+product.slug">
+    <div class="img-contain">
+      <img [src]="product.images[0].url.replace(localHost, apiUrl)" [alt]="''">
+    </div>
+    <h4 class="card-title">{{product.name.length >= 18 ? product.name.slice(0, 15)+'...' : product.name}}</h4>
+    <div class="old-price">{{(product.price * product.discount / 100) + product.price | currency}}</div>
+    <div class="price">{{product.price | currency}}</div>
+    <div class="prod-rate">
+      <nz-rate [ngModel]="product.rating*5" nzAllowHalf nzDisabled ></nz-rate>
+    </div>
+    <div class="action">
+      <i nz-icon class="heart-icon" nzType="heart" nzTheme="outline"></i>
+      <img src="assets/addcart.svg" class="add-to-cart-icon" alt="add to cart">
+    </div>
+  </a>
+</div>
