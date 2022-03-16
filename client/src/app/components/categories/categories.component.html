@@ -1,0 +1,35 @@
+<div class="overlay" *ngIf="loading">
+  <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 col-md-8 col-xs-12">
+      <form class="search-form" (submit)="applySearch()">
+        <input nz-input placeholder="search for categories" name="searchValue" [(ngModel)]="searchValue" />
+        <button nz-button nzType="primary">Search</button>
+      </form>
+    </div>
+  </div>
+
+    <div *ngIf="categories.length > 0 && !loading" class="cat-contain">
+      <div class="cat-card m-3" *ngFor="let cat of categories; trackBy: trackBy">
+        <a [routerLink]="'/categories/'+cat.id">
+          <div class="img-contain">
+            <img [src]="cat.image.replace(localHost, apiUrl)" [alt]="cat.name">
+          </div>
+          <h4 class="card-title">{{cat.name.length >= 25 ? cat.name.slice(0, 22)+'...' : cat.name}}</h4>
+        </a>
+      </div>
+    </div>
+
+  <div class="pagin-contain" *ngIf="categories.length > 0 && !loading">
+    <nz-pagination [nzPageIndex]="page" [nzTotal]="count" [nzPageSize]="8" (nzPageIndexChange)="goPage($event)"></nz-pagination>
+  </div>
+
+
+  <div class="notfound" *ngIf="categories.length===0 && !loading">
+    <img src="assets/notfound.svg" alt="not found">
+  </div>
+
+</div>

@@ -1,3 +1,5 @@
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { ProductCardModule } from './ui_modules/product-card/product-card.module';
 import { CircularModule } from './ui_modules/circular/circular.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -27,6 +29,10 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { CategoriesComponent } from './components/categories/categories.component';
+import { CategoryComponent } from './components/category/category.component';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { NzFormModule } from 'ng-zorro-antd/form';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -42,6 +48,8 @@ registerLocaleData(en);
     FooterComponent,
     CarouselComponent,
     HomeComponent,
+    CategoriesComponent,
+    CategoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,7 +67,11 @@ registerLocaleData(en);
     SwiperModule,
     NzDropDownModule,
     NzDrawerModule,
-    NzMenuModule
+    NzMenuModule,
+    NzPaginationModule,
+    NzFormModule,
+    NzSelectModule,
+    NzMessageModule
   ],
   providers: [
     {

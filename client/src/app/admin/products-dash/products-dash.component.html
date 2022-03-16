@@ -31,7 +31,7 @@
         <td>{{i+1}}</td>
         <td>{{ data.name.length > 84 ? data.name.slice(0, 84) + '...':data.name }}</td>
         <td>{{ data.brand }}</td>
-        <td>{{ data.price }}</td>
+        <td>{{ data.price | currency}}</td>
         <td>{{ data.category.name }}</td>
         <td>{{ data.countInStock }}</td>
         <td>{{ data.rating }}</td>

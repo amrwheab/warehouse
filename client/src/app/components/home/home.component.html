@@ -8,7 +8,7 @@
       <h2 class="title">What are you looking for?</h2>
       <div class="departs-container">
           <swiper class="swiper" [config]="circlarConfig" [index]="0">
-              <app-circular *ngFor="let cat of categories" class="circuler" [text]="cat.name"></app-circular>
+              <app-circular *ngFor="let cat of categories" class="circuler" [category]="cat"></app-circular>
           </swiper>
       </div>
     </div>

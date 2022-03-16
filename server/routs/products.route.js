@@ -28,6 +28,62 @@ router.get('/oneproduct/:id', async (req, res) => {
   }
 })
 
+router.get('/filters', async (req, res) => {
+  const query = req.query
+  const page = parseInt(query.page)
+  const skip = (page - 1) * 8
+  let brand = null
+  let price = null
+  let filters = null
+  for (const key in query) {
+    if (key === 'brand') { brand = query[key] }
+    else if (key === 'price') { price = query[key]}
+    else if (key !== 'category' && key!== 'page') {
+      filters = {}
+      filters[key] = query[key]
+    }
+  }
+  try {
+    let body = {category: query.category}
+    if (brand) {body['brand']=brand}
+    if (price) {body['price']={$lt: price}}
+    if (filters) {
+      for (const key in filters)
+      body[`filters.${key}`]=filters[key]
+    }
+    const products = await Product.find(body).limit(10).skip(skip)
+    const count = await Product.find(body).count()
+    res.status(200).json({products, count})
+  } catch(err) {
+    console.log(err)
+    res.status(400).json('some thing went wrong')
+  }
+})
+
+router.get('/brands', async (req, res) => {
+  const {category, brand} = req.query
+  try {
+    const brands = await Product.find({brand: {$regex: brand, $options: 'i'}, category}, {brand: 1}).limit(10)
+    res.status(200).json(brands)
+  } catch (err) {
+    console.log(err)
+    res.status(400).json('some thing went wrong')
+  }
+})
+
+router.get('/avilablefilters', async (req, res) => {
+  const {category, filters, filterKey} = req.query
+  let body = {category};
+  body[`filters.${filterKey}`]={$regex: filters, $options: 'i'}
+  try {
+    const fils = await Product.find(body, {[`filters.${filterKey}`]: 1}).limit(10)
+    res.status(200).json(fils)
+  } catch (err) {
+    console.log(err)
+    res.status(400).json('some thing went wrong')
+  }
+})
+
 router.post('/', async (req, res) => {
   const { name,
     description,

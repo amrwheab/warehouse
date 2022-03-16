@@ -37,7 +37,7 @@
       margin-right: 10px;
       font-size: 1.05rem;
       position: relative;
-      &.active {
+      & a.active {
         font-weight: 500;
         &::before {
           content: "";

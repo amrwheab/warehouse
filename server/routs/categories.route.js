@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
   const skip = (page-1)*8
   const { search } = req.query
   try {
-    const categoriesPromise = Category.find({name: {$regex: search}}).limit(8).skip(skip);
+    const categoriesPromise = Category.find({name: {$regex: search, $options: 'i'}}).limit(8).skip(skip);
     const countPromise = Category.find({name: {$regex: search}}).count()
     const [categories, count] = await Promise.all([categoriesPromise, countPromise])
     res.status(200).json({categories, count})
@@ -94,12 +94,6 @@ router.put('/:id', async (req, res) => {
     const imageUrl = image.touched ? `http://localhost:3000/uploads/${image.url}` : image.url
     const category = await Category.findByIdAndUpdate(id, {name, image: imageUrl, filters: filters ? [...new Set(filtersArr)] : []})
     const imageName = category?.image.split('/')[category?.image.split('/').length-1]
-    if (image.touched) {
-      const fileTest = fs.existsSync(path.join(__dirname, '..', 'uploads', imageName))
-      if (fileTest) {
-        fs.unlinkSync(path.join(__dirname, '..', 'uploads', imageName))
-      }
-    }
     res.status(200).json('updated successfully')
   } catch(err) {
     console.log(err)

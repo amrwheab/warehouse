@@ -25,7 +25,7 @@
             <li nz-menu-item nzMatchRouter="/" nzMatchRouterExact="true">
               <a routerLink="/">Home</a>
             </li>
-            <li nz-menu-item><a routerLink="#">Categories</a></li>
+            <li nz-menu-item><a routerLink="/categories">Categories</a></li>
             <li nz-menu-item><a routerLink="#">About</a></li>
             <li nz-menu-item><a routerLink="#">Contact</a></li>
             <nz-divider></nz-divider>
@@ -43,10 +43,10 @@
         </nz-drawer>
       </div>
       <ul class="menu d-none d-lg-flex">
-        <li class="active"><a routerLink="/">Home</a></li>
-        <li><a routerLink="#">Categories</a></li>
-        <li><a routerLink="#">About</a></li>
-        <li><a routerLink="#">Contact</a></li>
+        <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
+        <li><a routerLink="/categories" routerLinkActive="active">Categories</a></li>
+        <li><a routerLink="#" routerLinkActive="active">About</a></li>
+        <li><a routerLink="#" routerLinkActive="active">Contact</a></li>
       </ul>
       <div class="restform d-none d-lg-flex">
         <div class="heart">
@@ -74,7 +74,8 @@
 
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <ul nz-menu>
-    <li nz-menu-item>profile page</li>
-    <li nz-menu-item nzDanger (click)="logOut()">log out</li>
+    <li nz-menu-item>Profile page</li>
+    <li nz-menu-item routerLink="/admin" *ngIf="user.isAdmin">Admin page</li>
+    <li nz-menu-item nzDanger (click)="logOut()">Log out</li>
   </ul>
 </nz-dropdown-menu>

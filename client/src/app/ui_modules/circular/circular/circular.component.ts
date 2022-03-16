@@ -1,3 +1,5 @@
+import { environment } from 'src/environments/environment';
+import { Category } from 'src/app/interfaces/Category';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 
@@ -24,10 +26,12 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 })
 export class CircularComponent implements OnInit {
 
-  @Input() text: string;
+  @Input() category: Category;
   @ViewChild('small') small: ElementRef;
   spin = 'rot0';
   mouseover = false;
+  apiUrl = environment.apiUrl;
+  localHost = environment.localHost;
 
   constructor() { }
 

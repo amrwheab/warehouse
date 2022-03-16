@@ -7,4 +7,5 @@ export interface User {
   city: string | undefined;
   street: string | undefined;
   zip: string | undefined;
+  isAdmin: boolean | undefined;
 }
