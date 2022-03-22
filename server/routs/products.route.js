@@ -2,6 +2,9 @@ const router = require('express').Router()
 const Product = require('../models/Product')
 const path = require('path')
 const fs = require('fs')
+const Cart = require('../models/Cart')
+const Like = require('../models/Like')
+const jwt = require('jsonwebtoken')
 
 router.get('/', async (req, res) => {
   const page = parseInt(req.query.page)
@@ -31,14 +34,19 @@ router.get('/oneproduct/:id', async (req, res) => {
 router.get('/filters', async (req, res) => {
   const query = req.query
   const page = parseInt(query.page)
-  const skip = (page - 1) * 8
+  const skip = (page - 1) * 16
+  const { token } = req.query
+  let userId = undefined;
+  try {
+    userId = jwt.verify(token, process.env.JWTSECRET)?.id
+  } catch {}
   let brand = null
   let price = null
   let filters = null
   for (const key in query) {
     if (key === 'brand') { brand = query[key] }
     else if (key === 'price') { price = query[key]}
-    else if (key !== 'category' && key!== 'page') {
+    else if (key !== 'category' && key!== 'page' && key!=='token') {
       filters = {}
       filters[key] = query[key]
     }
@@ -46,14 +54,26 @@ router.get('/filters', async (req, res) => {
   try {
     let body = {category: query.category}
     if (brand) {body['brand']=brand}
-    if (price) {body['price']={$lt: price}}
+    if (price) {body['price']={$lt: parseFloat(price)}}
     if (filters) {
       for (const key in filters)
       body[`filters.${key}`]=filters[key]
     }
-    const products = await Product.find(body).limit(10).skip(skip)
-    const count = await Product.find(body).count()
-    res.status(200).json({products, count})
+    const select = '_id name images price discount slug rating numReviews';
+    const productsPromise = Product.find(body).limit(16).skip(skip).select(select)
+    const countPromis = Product.find(body).count()
+    const [products, count] = await Promise.all([productsPromise, countPromis])
+    let cartProdIds = []
+    let likeProdIds = []
+
+      if (userId) {
+        const poductsIds = products.map(ele => (ele._id))
+        const cartProds = await Cart.find({user: userId, product: {$in: poductsIds}})
+        const likeProds = await Like.find({user: userId, product: {$in: poductsIds}})
+        cartProdIds = cartProds.map(cart => (cart.product.toString()))
+        likeProdIds = likeProds.map(like => (like.product.toString()))
+      }
+    res.status(200).json({products, count, cartProdIds, likeProdIds})
   } catch(err) {
     console.log(err)
     res.status(400).json('some thing went wrong')
