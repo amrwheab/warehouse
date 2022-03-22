@@ -11,6 +11,7 @@ import { User } from '../interfaces/User';
 export class UserService {
 
   user: BehaviorSubject<User | { loading: boolean }> = new BehaviorSubject({ loading: true });
+  url = new BehaviorSubject('');
   jwt = new JwtHelperService();
 
   constructor(private http: HttpClient) {

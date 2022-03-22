@@ -1,5 +1,5 @@
 <div class="prod-card" style="width: 130px;height: 246px;text-align: left;">
-  <a [routerLink]="'/products/'+product.slug">
+  <a (click)="goToProduct($event)">
     <div class="img-contain">
       <img [src]="product.images[0].url.replace(localHost, apiUrl)" [alt]="''">
     </div>
@@ -10,8 +10,20 @@
       <nz-rate [ngModel]="product.rating*5" nzAllowHalf nzDisabled ></nz-rate>
     </div>
     <div class="action">
-      <i nz-icon class="heart-icon" nzType="heart" nzTheme="outline"></i>
-      <img src="assets/addcart.svg" class="add-to-cart-icon" alt="add to cart">
+      <a (click)="likeBtn()">
+        <i nz-icon class="heart-icon"
+        nzType="heart"
+        #heart
+        [class.liked]="product.liked"
+        [nzTheme]="product.liked ? 'fill':'outline'"></i>
+      </a>
+      <a class="cart-icon" (click)="cartBtn()" #cart>
+        <img src="assets/addcart.svg" class="add-to-cart-icon" alt="add to cart">
+        <i *ngIf="product.cart" nz-icon nzType="check" nzTheme="outline"></i>
+      </a>
     </div>
+    <span *ngIf="product.discount >= 15" class="ribbon">
+      <span style="background-color: #1D242B;">{{product.discount}}% discount</span>
+    </span>
   </a>
 </div>

@@ -11,6 +11,17 @@
   &:hover {
     transform: translateY(-10px);
   }
+
+  .prod-rate {
+    margin-top: -9px;
+    ::ng-deep .ant-rate {
+      font-size: 14px;
+      margin-top: 3px;
+      .ant-rate-star:not(:last-child) {
+        margin-right: 0;
+    }
+    }
+  }
 }
 .card-title {
   margin-bottom: 0;
@@ -24,16 +35,7 @@
   object-fit: cover;
   margin-top: 16px;
 }
-.prod-rate {
-  margin-top: -9px;
-}
-::ng-deep .ant-rate {
-  font-size: 14px;
-  margin-top: 3px;
-  .ant-rate-star:not(:last-child) {
-    margin-right: 0;
-}
-}
+
 .action {
   position: absolute;
   bottom: 8px;
@@ -46,6 +48,10 @@
   font-size: 21px;
   margin-bottom: 6px;
   color: #c7c7c7;
+  cursor: pointer;
+}
+.heart-icon.liked {
+  color: #ff4e4e;
 }
 .add-to-cart-icon {
   width: 21px;
@@ -57,4 +63,62 @@
 .price {
   color: #0077C0;
   font-weight: bold;
+}
+.ribbon {
+  position: absolute;
+  left: -5px;
+  top: -5px;
+  z-index: 1;
+  overflow: hidden;
+  width: 75px;
+  height: 75px;
+}
+.ribbon span {
+  color: #fff;
+  background-color: #1D242B;
+  text-align: center;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  width: 100px;
+  display: block;
+  box-shadow: 0 3px 10px -5px #000;
+  position: absolute;
+  top: 19px;
+  left: -21px;
+  font-size: 10px;
+  line-height: 20px;
+}
+.ribbon span:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 100%;
+  z-index: -1;
+  border-left: 3px solid #1D242B;
+  border-right: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #1D242B;
+}
+.ribbon span:after {
+  content: '';
+  position: absolute;
+  right: 0%;
+  top: 100%;
+  z-index: -1;
+  border-right: 3px solid #1D242B;
+  border-left: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #1D242B;
+  border-right-color: #1D242B;
+  border-top-color: #1D242B;
+}
+.cart-icon {
+  position: relative;
+  i {
+    position: absolute;
+    top: 3px;
+    left: 1px;
+    font-size: 23px;
+    color: #0077c0;
+  }
 }

@@ -1,0 +1,106 @@
+.card {
+  position: relative;
+  display: flex;
+  box-shadow: 1px 1px 5px rgb(0 0 0 / 20%);
+  padding: 4px;
+  width: 520px;
+  padding: 5px 0;
+}
+@media (max-width: 1200px) {
+  .card {
+    width: 440px;
+    padding: 15px 0;
+    .img-contain {
+      width: 125px;
+      height: 125px;
+    }
+  }
+}
+@media (max-width: 576px) {
+  .card {
+    width: 300px;
+    padding: 15px;
+    .img-contain {
+      width: 90px;
+      height: 90px;
+    }
+
+    .delete-icon {
+      top: auto;
+      right: auto;
+      left: 15px;
+      bottom: 15px;
+
+      i {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
+.img-contain {
+  width: 150px;
+  height: 150px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    padding: 7px;
+  }
+}
+.card-contain {
+  width: 63%;
+}
+
+.delete-icon {
+  position: absolute;
+  top: 4px;
+  right: 18px;
+  font-size: 17px;
+  color: #ff2e2e;
+}
+
+.price {
+  color: #0077C0;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.date {
+  color: #747373;
+  margin-top: -11px;
+  margin-bottom: -5px;
+  font-size: 1rem;
+}
+.link {
+  color: #0077c0;
+  font-size: 1rem;
+      &:hover {
+        text-decoration: underline;
+      }
+}
+.inner {
+  display: flex;
+  justify-content: space-between;
+}
+
+.amount {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  .btn {
+    background-color: #0077C0;
+    border-color: #0077C0;
+  }
+}
+
+.prod-rate {
+  ::ng-deep .ant-rate {
+    font-size: 14px;
+    margin-top: 3px;
+    .ant-rate-star:not(:last-child) {
+      margin-right: 0;
+  }
+}
+}

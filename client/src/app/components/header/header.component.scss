@@ -59,7 +59,16 @@
   align-items: center;
 
   .heart, .search {
-    margin-right: 5px;
+    margin-right: 15px;
+    position: relative;
+    ::ng-deep nz-badge {
+      position: absolute;
+      left: 8px;
+      top: -10px;
+      nz-badge-sup {
+        background-color: #0077C0;
+      }
+    }
 
     i {
       font-size: 20px;
@@ -67,16 +76,25 @@
   }
 
   .cart-icon {
-    margin-right: 5px;
+    margin-right: 15px;
+    position: relative;
 
     img {
       width: 25px;
+    }
+    ::ng-deep nz-badge {
+      position: absolute;
+      left: 8px;
+      top: -10px;
+      nz-badge-sup {
+        background-color: #0077C0;
+      }
     }
   }
 
   .auth {
     .primary {
-      margin-right: 5px;
+      margin-right: 15px;
     }
   }
 }
@@ -128,4 +146,59 @@ nav {
 
 ::ng-deep .ant-drawer-body {
   padding: 0;
+}
+
+::ng-deep .sider-cart .title-of-site::before {
+  width: 20px !important;
+}
+.sider-cart {
+  padding-top: 14px;
+  padding-bottom: 14px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    a {
+      color: #0077c0;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.cart-side {
+  position: relative;
+  padding-bottom: 65px;
+
+  .total-cost {
+    position: fixed;
+    bottom: 0;
+    width: 555px;
+    height: 55px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 25px;
+    box-shadow: 1px 2px 16px rgb(0 0 0 / 20%);
+    background-color: white;
+
+    h2 {
+      margin: 0;
+    }
+    .price {
+      color: #0077C0;
+      font-weight: bold;
+      margin: 0;
+    }
+  }
+}
+
+.empty-cart {
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
 }

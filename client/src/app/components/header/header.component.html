@@ -11,12 +11,14 @@
         <nz-drawer [nzClosable]="false" [nzVisible]="visible" nzPlacement="right" nzTitle="Warehouse"
           (nzOnClose)="visible = false">
           <div class="restform draw">
-            <div class="heart">
+            <a routerLink="/likes" class="heart">
               <i nz-icon nzType="heart" nzTheme="outline"></i>
-            </div>
-            <div class="cart-icon">
+              <nz-badge nzStandalone [nzCount]="likescount"></nz-badge>
+            </a>
+            <a routerLink="/cart" class="cart-icon">
               <img src="assets/cart.svg" alt="logo">
-            </div>
+              <nz-badge nzStandalone [nzCount]="cartcount"></nz-badge>
+            </a>
             <div class="search">
               <i nz-icon nzType="search" nzTheme="outline"></i>
             </div>
@@ -49,12 +51,14 @@
         <li><a routerLink="#" routerLinkActive="active">Contact</a></li>
       </ul>
       <div class="restform d-none d-lg-flex">
-        <div class="heart">
+        <a routerLink="/likes" class="heart">
           <i nz-icon nzType="heart" nzTheme="outline"></i>
-        </div>
-        <div class="cart-icon">
+          <nz-badge nzStandalone [nzCount]="likescount"></nz-badge>
+        </a>
+        <a class="cart-icon" (click)="cartDrawer = true">
           <img src="assets/cart.svg" alt="logo">
-        </div>
+          <nz-badge nzStandalone [nzCount]="cartcount"></nz-badge>
+        </a>
         <div class="search">
           <i nz-icon nzType="search" nzTheme="outline"></i>
         </div>
@@ -71,6 +75,34 @@
     </div>
   </div>
 </nav>
+
+<nz-drawer  [nzWidth]="555"
+            [nzClosable]="false"
+            [nzVisible]="cartDrawer"
+            nzPlacement="right"
+            (nzOnClose)="cartDrawer = false">
+          <div class="cart-side">
+            <div class="container">
+              <div class="sider-cart">
+                <div class="header">
+                    <h2 class="title-of-site">Cart</h2>
+                  <div>
+                    <a routerLink="/cart">Go to full cart...</a>
+                  </div>
+                </div>
+              </div>
+              <div class="empty-cart" *ngIf="cart.length === 0">
+                <img style="width: 70%;" src="assets/emptycart.svg" alt="Empty Cart">
+              </div>
+              <app-cart-card *ngFor="let item of cart;trackBy: trackByFun" [cart]="item"></app-cart-card>
+            </div>
+            <div class="total-cost">
+              <h2>Total cost</h2>
+              <h3 class="price">{{totalPrice | currency}}</h3>
+            </div>
+          </div>
+
+</nz-drawer>
 
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <ul nz-menu>

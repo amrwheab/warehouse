@@ -1,0 +1,30 @@
+<div class="card mb-2">
+  <div class="img-contain mr-4">
+    <img [src]="cart.product.images[0].url.replace(localHost, apiUrl)" alt="product">
+  </div>
+  <a class="delete-icon" *ngIf="cartRoute" (click)="deleteProd()">
+    <i nz-icon nzType="delete" nzTheme="outline"></i>
+  </a>
+  <div class="card-contain">
+    <h3>{{cart.product.name.length >= 30 ? cart.product.name.slice(0,25)+'...': cart.product.name}}</h3>
+    <div class="inner">
+      <div>
+        <p class="price">{{cart.product.price | currency}}</p>
+        <p class="date">{{cart.product.dateCreated | date}}</p>
+        <div class="prod-rate">
+          <nz-rate [ngModel]="cart.product.rating*5" nzAllowHalf nzDisabled ></nz-rate>
+        </div>
+        <a class="link" [routerLink]="'/categories/'+cart.product.category.id">{{cart.product.category.name}}</a>
+      </div>
+      <div class="amount">
+        <button nz-button nzType="primary" class="btn" (click)="modifyAmount(1)">
+          <i nz-icon nzType="plus" nzTheme="outline"></i>
+        </button>
+        <span>{{cart.amount}}</span>
+        <button nz-button nzType="primary" class="btn" (click)="modifyAmount(0)">
+          <i nz-icon nzType="minus" nzTheme="outline"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

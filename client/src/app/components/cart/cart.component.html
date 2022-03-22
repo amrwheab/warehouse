@@ -1,0 +1,24 @@
+<div class="overlay" *ngIf="loading">
+  <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+</div>
+<div class="cart">
+  <div class="container">
+    <h2 class="title-of-site mb-4">Cart</h2>
+    <div class="cart-contain">
+      <app-cart-card  class="m-2"
+                      *ngFor="let item of cart;trackBy: trackByFun"
+                      [cart]="item"
+                      (deleteFromCart)="deleteFromCart($event)"
+                      ></app-cart-card>
+    </div>
+    <div class="empty-cart" *ngIf="!loading && cart.length === 0">
+      <img src="assets/emptycart.svg" alt="Empty Cart">
+    </div>
+    <div class="pagin-contain" *ngIf="cart.length > 0 && !loading">
+      <nz-pagination [nzPageIndex]="page" [nzTotal]="count" [nzPageSize]="8" (nzPageIndexChange)="goPage($event)"></nz-pagination>
+    </div>
+  </div>
+  <div *ngIf="!loading && cart.length === 0" class="go-home">
+    <a routerLink="/" nz-button nzType="primary">Go Home</a>
+  </div>
+</div>

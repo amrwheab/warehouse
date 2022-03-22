@@ -1,3 +1,5 @@
+import { Cart } from './../../interfaces/Cart';
+import { CartService } from './../../services/cart.service';
 import { UserService } from './../../services/user.service';
 import { User } from './../../interfaces/User';
 import { Component, OnInit } from '@angular/core';
@@ -11,20 +13,34 @@ export class HeaderComponent implements OnInit {
 
   user: User | any;
   visible = false;
+  cart: Cart[] = [];
+  cartcount = 0;
+  likescount = 0;
+  totalPrice = 0;
+  cartDrawer = false;
 
   constructor(
-    private userServ: UserService
+    private userServ: UserService,
+    private cartServ: CartService
   ) { }
 
   ngOnInit(): void {
     this.userServ.user.subscribe(user => {
       this.user = user;
     });
+    this.cartServ.cartcount.subscribe(count => { this.cartcount = count; });
+    this.cartServ.likescount.subscribe(count => { this.likescount = count; });
+    this.cartServ.totalPrice.subscribe(price => { this.totalPrice = price; });
+    this.cartServ.cart.subscribe(cart => { this.cart = cart; });
   }
 
   logOut(): void {
     localStorage.removeItem('token');
-    this.userServ.user.next({loading: false, id: ''});
+    location.reload();
+  }
+
+  trackByFun(num: number): number {
+    return num;
   }
 
 }

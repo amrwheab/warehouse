@@ -64,8 +64,8 @@
       </div>
     </div>
 
-    <div class="pagin-contain" *ngIf="products.length > 0 && !loading">
-      <nz-pagination [nzPageIndex]="page" [nzTotal]="count" [nzPageSize]="8" (nzPageIndexChange)="goPage($event)"></nz-pagination>
+    <div class="pagin-contain">
+      <nz-pagination [nzPageIndex]="page" [nzTotal]="count" [nzPageSize]="16" (nzPageIndexChange)="goPage($event)"></nz-pagination>
     </div>
 
 

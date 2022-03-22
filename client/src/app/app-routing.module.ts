@@ -1,3 +1,5 @@
+import { LikesComponent } from './components/likes/likes.component';
+import { CartComponent } from './components/cart/cart.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './components/home/home.component';
@@ -11,6 +13,9 @@ const routes: Routes = [
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule), canActivate: [AuthGuard] },
   { path: 'categories', component: CategoriesComponent},
   { path: 'categories/:id', component: CategoryComponent},
+  { path: 'products/:id', component: CategoriesComponent},
+  { path: 'cart', component: CartComponent},
+  { path: 'likes', component: LikesComponent},
 ];
 
 @NgModule({

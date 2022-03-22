@@ -49,8 +49,8 @@ export class SignupComponent implements OnInit {
     this.userServ.signupUser(this.signUpForm.value).subscribe(({token, user}) => {
       this.message.remove(load);
       localStorage.setItem('token', token);
-      this.userServ.user.next({loading: false, ...user})
-      this.router.navigateByUrl('/');
+      this.userServ.user.next({loading: false, ...user});
+      this.router.navigateByUrl('/').then(() => location.reload());
     }, err => {
       this.message.remove(load);
       this.message.error(err.error);

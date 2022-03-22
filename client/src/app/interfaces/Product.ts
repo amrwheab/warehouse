@@ -21,4 +21,6 @@ export interface Product {
   filters: object;
   slug: string;
   discount: number;
+  cart: boolean;
+  liked: boolean;
 }

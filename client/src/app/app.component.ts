@@ -1,3 +1,4 @@
+import { UserService } from './services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
@@ -7,7 +8,10 @@ import { NavigationEnd, Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private userServ: UserService
+    ) { }
   adminRoute = true;
   authRoute = true;
 
@@ -15,6 +19,7 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
         const urls = e?.url?.slice(1);
+        this.userServ.url.next(urls);
         if (urls?.startsWith('admin')) {
           this.adminRoute = true;
         } else {
