@@ -1,0 +1,14 @@
+<div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide" *ngFor="let img of imgs">
+      <img [src]="img?.url" />
+    </div>
+  </div>
+</div>
+<div class="swiper mySwiper">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide thum" *ngFor="let img of imgs;let i = index" [class.active]="i === currIndex()">
+      <img [src]="img?.url" (click)="swip(i)" />
+    </div>
+  </div>
+</div>

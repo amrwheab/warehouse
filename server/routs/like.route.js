@@ -3,6 +3,7 @@ const Like = require('../models/Like')
 const Product = require('../models/Product')
 const User = require('../models/User')
 const Cart = require('../models/Cart')
+const Rate = require('../models/Rate')
 
 router.get('/', async (req, res) => {
   const {user} = req.query
@@ -15,8 +16,9 @@ router.get('/', async (req, res) => {
     const products = likes.map(like => (like.product))
     const poductsIds = products.map(ele => (ele._id))
     const cartProds = await Cart.find({user, product: {$in: poductsIds}})
+    const rates = await Rate.find({product: {$in: poductsIds}})
     cartProdIds = cartProds.map(cart => (cart.product.toString()))
-    res.status(200).json({likes, cartProdIds})
+    res.status(200).json({likes, cartProdIds, rates})
   } catch (err) {
     console.log(err)
     res.status(400).json('some thing went wrong')

@@ -7,7 +7,7 @@
     <div class="old-price">{{(product.price * product.discount / 100) + product.price | currency}}</div>
     <div class="price">{{product.price | currency}}</div>
     <div class="prod-rate">
-      <nz-rate [ngModel]="product.rating*5" nzAllowHalf nzDisabled ></nz-rate>
+      <nz-rate [ngModel]="product.rating / product.numReviews" nzAllowHalf nzDisabled ></nz-rate>
     </div>
     <div class="action">
       <a (click)="likeBtn()">

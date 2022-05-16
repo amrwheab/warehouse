@@ -39,6 +39,14 @@ export class CartCardComponent implements OnInit {
         this.cart.amount++;
         const oldTotal = this.cartServ.totalPrice.getValue();
         this.cartServ.totalPrice.next(oldTotal + this.cart.product.price);
+        let cartToEdit = this.cartServ.cart.getValue();
+        cartToEdit = cartToEdit.map(car => {
+          if (car.id === this.cart.id) {
+            car.amount = this.cart.amount;
+          }
+          return car;
+        });
+        this.cartServ.cart.next(cartToEdit);
       }, err => {
         console.log(err);
         this.message.remove(load);
@@ -50,6 +58,14 @@ export class CartCardComponent implements OnInit {
         this.cart.amount--;
         const oldTotal = this.cartServ.totalPrice.getValue();
         this.cartServ.totalPrice.next(oldTotal - this.cart.product.price);
+        let cartToEdit = this.cartServ.cart.getValue();
+        cartToEdit = cartToEdit.map(car => {
+          if (car.id === this.cart.id) {
+            car.amount = this.cart.amount;
+          }
+          return car;
+        });
+        this.cartServ.cart.next(cartToEdit);
       }, err => {
         console.log(err);
         this.message.remove(load);

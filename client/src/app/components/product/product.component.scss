@@ -1,0 +1,111 @@
+.product {
+  padding-top: 10px;
+  padding-bottom: 50px;
+}
+.swip-contain {
+  width: 300px;
+}
+
+.gray {
+  color: #726f6ff7;
+  font-size: 1.05rem;
+}
+
+.category {
+  color: #0077C0;
+  font-size: 1.05rem;
+  text-decoration: underline;
+}
+.fake-price {
+  text-decoration: line-through;
+}
+.price {
+  color: #0077C0;
+  font-weight: bold;
+  font-size: 1.05rem;
+}
+::ng-deep .product .product-options .ant-btn.ant-btn-primary {
+  width: 50%;
+}
+.product-options .heart-contain {
+  margin-left: 10px;
+  i {
+    font-size: 25px;
+    color: #ff4949;
+  }
+}
+
+.added-cart {
+  justify-content: space-between;
+  gap: 10px;
+  width: 320px;
+  display: inline-flex;
+}
+
+::ng-deep .added-cart .ant-btn.ant-btn-primary {
+
+    background-color: #0077C0;
+    border-color: #0077C0;
+}
+
+.amount {
+  line-height: 38px;
+  width: 210px;
+  text-align: center;
+}
+
+.browse-contain {
+  display: flex;
+  justify-content: center;
+}
+
+.browse-img {
+  width: 350px;
+}
+
+.rating {
+  width: 310px;
+}
+
+.gold {
+  color: #fcf832;
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-right: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+
+  i {
+    margin-top: 3px
+  }
+}
+
+.rate-sec {
+  display: flex;
+  align-items: center;
+
+  .rate-grow {
+    position: relative;
+    height: 10px;
+    display: inline-block;
+    background-color: #0077c0;
+    margin-top: 3px;
+    margin-left: -15px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    .rate-num {
+      position: absolute;
+      right: -30px;
+      top: -4px;
+      font-size: 12px;
+      color: #6c6a6a;
+    }
+  }
+}
+
+::ng-deep .rate-now nz-rate i {
+  font-size: 25px;
+}

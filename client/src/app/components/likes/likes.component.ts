@@ -37,6 +37,7 @@ export class LikesComponent implements OnInit, OnDestroy {
         this.loading = false;
       });
     });
+    this.countSub = this.cartServ.likescount.subscribe(count => { this.count = count; });
   }
 
   ngOnDestroy(): void {
@@ -53,6 +54,10 @@ export class LikesComponent implements OnInit, OnDestroy {
 
   trackByFun(i: number): number {
     return i;
+  }
+
+  unlike(e: string): void {
+    this.products = this.products.filter(prod => prod.id !== e);
   }
 
   goPage(e: string): void {

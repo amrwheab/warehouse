@@ -1,9 +1,12 @@
+<div class="overlay" *ngIf="loading">
+  <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+</div>
 <div class="likes">
   <div class="container">
     <h2 class="title-of-site mb-3">Liked Products</h2>
     <div class="prods-section">
       <div class="mr-3" *ngFor="let prod of products;trackBy: trackByFun">
-        <app-prod-card [product]="prod"></app-prod-card>
+        <app-prod-card [product]="prod" (unlikedEvent)="unlike($event)"></app-prod-card>
       </div>
       <div class="notfound" *ngIf="products.length===0 && !loading">
         <img src="assets/notfound.svg" alt="not found">

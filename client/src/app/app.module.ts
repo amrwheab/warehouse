@@ -38,6 +38,8 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { CartCardComponent } from './components/cart-card/cart-card.component';
 import { CartComponent } from './components/cart/cart.component';
 import { LikesComponent } from './components/likes/likes.component';
+import { ProductComponent } from './components/product/product.component';
+import { SwipComponent } from './components/swip/swip.component';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -58,6 +60,8 @@ registerLocaleData(en);
     CartCardComponent,
     CartComponent,
     LikesComponent,
+    ProductComponent,
+    SwipComponent,
   ],
   imports: [
     BrowserModule,
@@ -91,7 +95,8 @@ registerLocaleData(en);
     {
       provide: SWIPER_CONFIG,
       useValue: DEFAULT_SWIPER_CONFIG
-    }],
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

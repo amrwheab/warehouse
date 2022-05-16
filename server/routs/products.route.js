@@ -4,6 +4,7 @@ const path = require('path')
 const fs = require('fs')
 const Cart = require('../models/Cart')
 const Like = require('../models/Like')
+const Rate = require('../models/Rate')
 const jwt = require('jsonwebtoken')
 
 router.get('/', async (req, res) => {
@@ -25,6 +26,38 @@ router.get('/oneproduct/:id', async (req, res) => {
   try {
     const product = await Product.findById(id).populate('category');
     res.status(200).json(product)
+  } catch (err) {
+    console.log(err)
+    res.status(400).json('some thing went wrong')
+  }
+})
+
+router.get('/getbyslug/:slug', async (req, res) => {
+  const { slug } = req.params
+  const { token } = req.query
+  let userId = null;
+  try {
+    userId = jwt.verify(token, process.env.JWTSECRET)?.id
+  } catch {}
+  try {
+    const product = await Product.findOne({slug}).populate('category');
+    let cart = 0;
+    let liked = 0;
+    if (userId) {
+      const cartPromise = Cart.findOne({product: product.id, user: userId})
+      const likePromise = Like.count({product: product.id, user: userId})
+      const res = await Promise.all([cartPromise, likePromise])
+      cart = res[0]
+      liked = res[1]
+    }
+    const rate = await Rate.find({product: product._id})
+    res.status(200).json({
+      product,
+      cart: cart?.amount > 0 ? cart.amount : 0,
+      liked: liked > 0,
+      rate,
+      userId
+    })
   } catch (err) {
     console.log(err)
     res.status(400).json('some thing went wrong')
@@ -66,14 +99,16 @@ router.get('/filters', async (req, res) => {
     let cartProdIds = []
     let likeProdIds = []
 
+    const poductsIds = products.map(ele => (ele._id))
       if (userId) {
-        const poductsIds = products.map(ele => (ele._id))
         const cartProds = await Cart.find({user: userId, product: {$in: poductsIds}})
         const likeProds = await Like.find({user: userId, product: {$in: poductsIds}})
         cartProdIds = cartProds.map(cart => (cart.product.toString()))
         likeProdIds = likeProds.map(like => (like.product.toString()))
       }
-    res.status(200).json({products, count, cartProdIds, likeProdIds})
+      
+    const rates = await Rate.find({product: {$in: poductsIds}})
+    res.status(200).json({products, count, cartProdIds, likeProdIds, rates})
   } catch(err) {
     console.log(err)
     res.status(400).json('some thing went wrong')

@@ -1,0 +1,72 @@
+<div class="product">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-5">
+        <div class="swip-contain">
+          <app-swip [imgs]="product?.images"></app-swip>
+        </div>
+      </div>
+      <div class="col-12 col-lg-7">
+        <div>
+          <p class="gray">{{product.brand}}</p>
+          <h1>{{product?.name}}</h1>
+          <p>
+            <a class="category" [routerLink]="'/categories/'+product?.category?.id">{{ product?.category?.name }}</a>
+          </p>
+          <p class="gray">{{ product?.dateCreated | date: 'dd/mm/yyyy' }}</p>
+          <p class="gray fake-price">{{ (product?.price + product?.price * (product?.discount/100)).toFixed(2) }}</p>
+          <p class="price">{{ product?.price?.toFixed(2) }}</p>
+          <div class="product-options">
+            <button *ngIf="product.cartAmount <= 0" nz-button nzType="primary" nzSize="large" (click)="addCart()">Add To Cart</button>
+            <div class="added-cart" *ngIf="product.cartAmount > 0">
+              <button nz-button nzType="danger" nzSize="large" (click)="removeFromCart()">Remove From Cart</button>
+              <button class="update-amount icons" nzSize="large" nz-button nzType="primary" (click)="modifyAmount(0)">
+                <i nz-icon nzType="minus"></i>
+              </button>
+              <span class="amount">{{product.cartAmount}}</span>
+              <button class="update-amount icons" nzSize="large" nz-button nzType="primary" (click)="modifyAmount(1)">
+                <i nz-icon nzType="plus"></i>
+              </button>
+            </div>
+            <button class="heart-contain" nz-button nzType="text" (click)="likeBtn()">
+              <i nz-icon nzType="heart" [nzTheme]="product.liked ? 'fill':'outline'"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nz-divider></nz-divider>
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <h2 class="title-of-site">Discription</h2>
+        <div class="gray" [innerHtml]="product?.description"></div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="browse-contain d-none d-lg-flex">
+          <img class="browse-img" src="assets/browse.svg" alt="browse" />
+        </div>
+      </div>
+    </div>
+    <nz-divider></nz-divider>
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <div class="rating">
+          <h2 class="title-of-site">Rating</h2>
+          <div class="rate-sec" *ngFor="let i of [5,4,3,2,1]">
+            <p class="gold">
+              {{i}} <i nz-icon nzType="star" nzTheme="fill"></i>
+            </p>
+            <span class="rate-grow" [style]="'width:'+(((product?.rate[i-1]/product?.numReviews)*100) || 0)+'%'">
+              <span class="rate-num">{{(((product?.rate[i-1]/product?.numReviews)*100) || 0)+'%'}}</span>
+            </span>
+          </div>
+          <nz-divider></nz-divider>
+          <div class="rate-now">
+            <h3>Rate Now</h3>
+            <nz-rate [ngModel]="product?.rated" (ngModelChange)="modifyRate($event)"></nz-rate>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

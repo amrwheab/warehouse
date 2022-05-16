@@ -33,11 +33,14 @@
               }
             ],
             "styles": [
+              "./node_modules/swiper/swiper.min.css",
               "src/bootstrap-grid.min.css",
               "src/theme.less",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/swiper/swiper-bundle.min.js"
+            ]
           },
           "configurations": {
             "production": {

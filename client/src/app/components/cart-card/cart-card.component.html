@@ -12,7 +12,7 @@
         <p class="price">{{cart.product.price | currency}}</p>
         <p class="date">{{cart.product.dateCreated | date}}</p>
         <div class="prod-rate">
-          <nz-rate [ngModel]="cart.product.rating*5" nzAllowHalf nzDisabled ></nz-rate>
+          <nz-rate [ngModel]="cart.product.rating / cart.product.numReviews" nzAllowHalf nzDisabled ></nz-rate>
         </div>
         <a class="link" [routerLink]="'/categories/'+cart.product.category.id">{{cart.product.category.name}}</a>
       </div>

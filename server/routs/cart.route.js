@@ -2,6 +2,7 @@ const router = require('express').Router()
 const Cart = require('../models/Cart')
 const Product = require('../models/Product')
 const User = require('../models/User')
+const Rate = require('../models/Rate')
 
 router.get('/', async (req, res) => {
   const page = parseInt(req.query.page)
@@ -12,13 +13,16 @@ router.get('/', async (req, res) => {
     const cart = await Cart.find({user}).limit(8).skip(skip)
     .populate({path: 'product', select, populate: {path: 'category'}})
     const count = await Cart.count({user})
+    const products = cart.map(like => (like.product))
+    const poductsIds = products.map(ele => (ele._id))
+    const rates = await Rate.find({product: {$in: poductsIds}})
     const cartTotalPrice = await Cart.find({user}, {user: 0}).populate({path: 'product', select: 'price'})
     const totalPriceArray = cartTotalPrice.map((a) => (a.product?.price * a.amount))
     let totalPrice = 0
     if (totalPriceArray.length > 0) {
       totalPrice = totalPriceArray?.reduce((a,b) => a+b)
     }
-    res.status(200).json({cart, count, totalPrice})
+    res.status(200).json({cart, count, totalPrice, rates})
   } catch (err) {
     console.log(err)
     res.status(400).json('some thing went wrong')

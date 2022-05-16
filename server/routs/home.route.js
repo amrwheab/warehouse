@@ -3,6 +3,7 @@ const Product = require('../models/Product')
 const Category = require('../models/Category')
 const Cart = require('../models/Cart')
 const Like = require('../models/Like')
+const Rate = require('../models/Rate')
 const jwt = require('jsonwebtoken')
 
 router.get('/', async (req, res) => {
@@ -18,7 +19,7 @@ router.get('/', async (req, res) => {
     featureProductPromise = Product.find({isFeatured: true}).limit(12).select(select).populate('category')
     techProductPromise = Product.find({category: '622a1f69ce42576754bc9d62'}).limit(12).select(select).populate('category')
     fashionProductPromise = Product.find({category: '622a3b28ce42576754bcb4e7'}).limit(12).select(select).populate('category')
-  
+
     let [ category, 
             mobileProduct, 
             featureProduct, 
@@ -32,15 +33,16 @@ router.get('/', async (req, res) => {
       let cartProdIds = []
       let likeProdIds = []
 
+      const poductsIds = [...mobileProduct, ...featureProduct, ...techProduct, ...fashionProduct].map(ele => (ele._id))
       if (id) {
-        const poductsIds = [...mobileProduct, ...featureProduct, ...techProduct, ...fashionProduct].map(ele => (ele._id))
         const cartProds = await Cart.find({user: id, product: {$in: poductsIds}})
         const likeProds = await Like.find({user: id, product: {$in: poductsIds}})
         cartProdIds = cartProds.map(cart => (cart.product.toString()))
         likeProdIds = likeProds.map(like => (like.product.toString()))
       }
+      const rates = await Rate.find({product: {$in: poductsIds}})
 
-    res.status(200).json({category, mobileProduct, featureProduct, techProduct, fashionProduct, cartProdIds, likeProdIds})
+    res.status(200).json({category, mobileProduct, featureProduct, techProduct, fashionProduct, cartProdIds, likeProdIds, rates})
   } catch (err) {
     console.log(err)
     res.status(400).json('some thing went wrong')
