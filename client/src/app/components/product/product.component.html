@@ -67,6 +67,38 @@
           </div>
         </div>
       </div>
+      <nz-divider class="d-lg-none"></nz-divider>
+      <div class="col-12 col-lg-6">
+        <div class="comments">
+          <h2 class="title-of-site">Comments</h2>
+          <div class="no-comment" *ngIf="product?.comments?.length === 0">
+            <img src="assets/nocomment.png" alt="no comment">
+            <h3>No Comments Yet!</h3>
+          </div>
+          <div class="comment" *ngFor="let comment of product.comments">
+            <div class="comment-img">
+              <img [src]="comment.userdata[0].image" [alt]="comment.userdata[0].name">
+            </div>
+            <div class="comment-body">
+              <h5><a>{{comment.userdata[0].name}}</a></h5>
+              <p>{{comment.comment}}</p>
+            </div>
+            <div class="ups">
+              <i *ngIf="!comment.uped && !comment.downed" (click)="upDownComment(1, comment._id)" class="modify-up" nz-icon nzType="caret-up" nzTheme="outline"></i>
+              {{comment.avgup}}
+              <i *ngIf="!comment.uped && !comment.downed" (click)="upDownComment(2, comment._id)" class="modify-up" nz-icon nzType="caret-down" nzTheme="outline"></i>
+              <i *ngIf="comment.uped || comment.downed" (click)="removeUpDown(comment._id)"  class="modify-up remove" nz-icon nzType="delete" nzTheme="outline"></i>
+            </div>
+          </div>
+          <button (click)="getNextComments()" nz-button nzType="link" *ngIf="product?.commentsCount>product?.comments?.length">load more ...</button>
+          <form class="send-comment">
+            <input nz-input placeholder="Add your comment" name="commentValue" [(ngModel)]="commentValue" />
+            <button nz-button nzType="primary" (click)="addComment()">
+              <i nz-icon nzType="send" nzTheme="outline"></i>
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </div>

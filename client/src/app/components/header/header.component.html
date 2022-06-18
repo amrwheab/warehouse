@@ -69,7 +69,7 @@
         <nz-spin *ngIf="user?.loading"></nz-spin>
         <a *ngIf="!user?.loading && user?.id" class="user-img" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
           <span>{{user.name}}</span>
-          <img src="assets/user.png" alt="user">
+          <img [src]="user?.image" alt="user">
         </a>
       </div>
     </div>

@@ -5,6 +5,7 @@ const fs = require('fs')
 const Cart = require('../models/Cart')
 const Like = require('../models/Like')
 const Rate = require('../models/Rate')
+const Comment = require('../models/Comment')
 const jwt = require('jsonwebtoken')
 
 router.get('/', async (req, res) => {
@@ -51,12 +52,37 @@ router.get('/getbyslug/:slug', async (req, res) => {
       liked = res[1]
     }
     const rate = await Rate.find({product: product._id})
+    const comments = await Comment.aggregate([
+      {$match: {product: product._id}},
+      {$addFields: {
+        uped: {$in : [ userId, "$up" ]},
+        downed: {$in : [ userId, "$down" ]},
+        avgup: {$subtract: [{$size: "$up"}, {$size: "$down"}] },
+        id: "$_id"
+      }},
+      {$project: {up: 0, down: 0}},
+      {$lookup: {
+        from: "users",
+        localField: "user",
+        foreignField: "_id",
+        as: "userdata",
+        pipeline: [{$project: {name: 1, image: 1}}]
+      }},
+      {$sort: {
+        avgup: -1
+      }},
+      {$limit: 3}
+    ])
+    const commentsCount = await Comment.count({product: product._id})
+
     res.status(200).json({
       product,
       cart: cart?.amount > 0 ? cart.amount : 0,
       liked: liked > 0,
       rate,
-      userId
+      userId,
+      comments,
+      commentsCount
     })
   } catch (err) {
     console.log(err)

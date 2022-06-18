@@ -57,7 +57,9 @@ export class ProductService {
           rate:  this.getSlugRate(res.rate),
           rating: this.getRate(res.rate),
           numReviews: res.rate?.length,
-          rated: res.rate.find((el) => el?.user === res?.userId)?.rate || 0
+          rated: res.rate.find((el) => el?.user === res?.userId)?.rate || 0,
+          comments: res.comments,
+          commentsCount: res.commentsCount
         };
       }));
   }

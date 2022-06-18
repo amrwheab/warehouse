@@ -1,3 +1,4 @@
+import { CommentService } from './../../services/comment.service';
 import { UserService } from './../../services/user.service';
 import { CartService } from './../../services/cart.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,6 +18,8 @@ export class ProductComponent implements OnInit, OnDestroy {
   productSub: Subscription;
 
   product: Product = { images: [{}], rate: [0, 0, 0, 0, 0] };
+  commentValue = '';
+  commentsNextPage = 1;
 
   constructor(
     private prodServ: ProductService,
@@ -24,7 +27,8 @@ export class ProductComponent implements OnInit, OnDestroy {
     private actRoute: ActivatedRoute,
     private message: NzMessageService,
     private userServ: UserService,
-    private router: Router
+    private router: Router,
+    private commentServ: CommentService
   ) { }
 
   ngOnInit(): void {
@@ -171,26 +175,128 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   modifyRate(rate: number): void {
-    const load = this.message.loading('action in progress...').messageId;
-    this.prodServ.modifyRate(rate, this.product.id).subscribe(() => {
-      this.message.remove(load);
-      if (rate === 0) {
-        this.product.numReviews -= 1;
-        this.product.rate[this.product.rated - 1] -= 1;
-      } else {
-        if (this.product.rated > 0) {
+    // tslint:disable-next-line: no-string-literal
+    if (this.userServ.user.getValue()['id']) {
+      const load = this.message.loading('action in progress...').messageId;
+      this.prodServ.modifyRate(rate, this.product.id).subscribe(() => {
+        this.message.remove(load);
+        if (rate === 0) {
+          this.product.numReviews -= 1;
           this.product.rate[this.product.rated - 1] -= 1;
-          this.product.rate[rate - 1] += 1;
         } else {
-          this.product.numReviews += 1;
-          this.product.rate[rate - 1] += 1;
+          if (this.product.rated > 0) {
+            this.product.rate[this.product.rated - 1] -= 1;
+            this.product.rate[rate - 1] += 1;
+          } else {
+            this.product.numReviews += 1;
+            this.product.rate[rate - 1] += 1;
+          }
         }
+        this.product.rated = rate;
+      }, err => {
+        console.log(err);
+        this.message.remove(load);
+        this.message.error('some thing went wrong');
+      });
+    } else {
+      this.router.navigateByUrl('/auth/login');
+    }
+  }
+
+  addComment(): void {
+    // tslint:disable-next-line: no-string-literal
+    const userId = this.userServ.user.getValue()['id'];
+    if (userId) {
+      const productId = this.product.id;
+      const load = this.message.loading('action in progress ...').messageId;
+      this.commentServ.addComment(userId, productId, this.commentValue).subscribe((res) => {
+        this.message.remove(load);
+        this.product.comments.push({
+          id: res._id,
+          product: productId,
+          user: userId,
+          userdata: [this.userServ.user.getValue()],
+          comment: this.commentValue,
+          avgup: 0
+        });
+        this.commentValue = '';
+      }, (err) => {
+        console.log(err);
+        this.message.remove(load);
+        this.message.error('some thing went wrong');
+      });
+    } else {
+      this.router.navigateByUrl('/auth/login');
+    }
+  }
+
+  upDownComment(e: number, commentId: string): void {
+    // tslint:disable-next-line: no-string-literal
+    const userId = this.userServ.user.getValue()['id'];
+    if (userId) {
+      const load = this.message.loading('action in progress ...').messageId;
+      if (e === 1) {
+        this.commentServ.upComment(commentId, userId).subscribe(() => {
+          this.message.remove(load);
+          this.product.comments.find(ele => ele._id === commentId).avgup++;
+          this.product.comments.find(ele => ele._id === commentId).uped = true;
+          this.product.comments.sort((a, b) => b.avgup - a.avgup);
+        }, err => {
+          console.log(err);
+          this.message.remove(load);
+          this.message.error('some thing went wrong');
+        });
+      } else {
+        this.commentServ.downComment(commentId, userId).subscribe(() => {
+          this.message.remove(load);
+          this.product.comments.find(ele => ele._id === commentId).avgup--;
+          this.product.comments.find(ele => ele._id === commentId).downed = true;
+          this.product.comments.sort((a, b) => b.avgup - a.avgup);
+        }, err => {
+          console.log(err);
+          this.message.remove(load);
+          this.message.error('some thing went wrong');
+        });
       }
-      this.product.rated = rate;
+    } else {
+      this.router.navigateByUrl('/auth/login');
+    }
+  }
+
+  removeUpDown(id: string): void {
+    // tslint:disable-next-line: no-string-literal
+    const userId = this.userServ.user.getValue()['id'];
+    const comment = this.product.comments.find(ele => ele._id === id);
+    const load = this.message.loading('action in progress ...').messageId;
+    this.commentServ.removeUpDown(comment.uped, id, userId).subscribe(() => {
+      this.message.remove(load);
+      if (comment.uped) {
+        comment.uped = false;
+        comment.avgup--;
+      }
+      if (comment.downed) {
+        comment.downed = false;
+        comment.avgup++;
+      }
     }, err => {
       console.log(err);
       this.message.remove(load);
-      this.message.error('some thing went wrong');
+    });
+  }
+
+  getNextComments(): void {
+    // tslint:disable-next-line: no-string-literal
+    const userId = this.userServ.user.getValue()['id'];
+    const load = this.message.loading('action in progress ...').messageId;
+    this.commentServ.getComments(this.commentsNextPage, this.product.id, userId)
+    .subscribe(({comments, commentsCount}) => {
+      this.message.remove(load);
+      this.product.comments.push(...comments);
+      this.product.commentsCount = commentsCount;
+      this.commentsNextPage++;
+    }, err => {
+      console.log(err);
+      this.message.remove(load);
     });
   }
 

@@ -8,4 +8,5 @@ export interface User {
   street: string | undefined;
   zip: string | undefined;
   isAdmin: boolean | undefined;
+  image?: string;
 }

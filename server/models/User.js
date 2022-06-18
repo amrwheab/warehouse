@@ -9,6 +9,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  image: {
+    type: String,
+    default: 'assets/user.png'
+  },
   passwordHash: {
     type: String,
     required: true,

@@ -23,6 +23,7 @@ const homeRouter = require('./routs/home.route')
 const cartRouter = require('./routs/cart.route')
 const likeRouter = require('./routs/like.route')
 const rateRouter = require('./routs/rate.route')
+const commentRouter = require('./routs/comment.route')
 
 // requests
 app.use('/products', productRouter)
@@ -35,6 +36,7 @@ app.use('/home', homeRouter)
 app.use('/cart', cartRouter)
 app.use('/like', likeRouter)
 app.use('/rate', rateRouter)
+app.use('/comments', commentRouter)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT ,() => {

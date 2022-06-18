@@ -1,4 +1,5 @@
 import { Category } from './Category';
+import { Comment } from './Comment';
 
 export interface Product {
   id?: string;
@@ -25,4 +26,6 @@ export interface Product {
   liked?: boolean;
   cartAmount?: number;
   rated?: number;
+  comments?: Comment[];
+  commentsCount?: number;
 }
