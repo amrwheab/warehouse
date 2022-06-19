@@ -3,7 +3,10 @@
 </div>
 <div class="cart">
   <div class="container">
-    <h2 class="title-of-site mb-4">Cart</h2>
+    <div class="d-flex justfy-sb">
+      <h2 class="title-of-site mb-4">Cart</h2>
+      <button nz-button nzType="primary" (click)="showOrder=true">Order Now!</button>
+    </div>
     <div class="cart-contain">
       <app-cart-card  class="m-2"
                       *ngFor="let item of cart;trackBy: trackByFun"
@@ -22,3 +25,10 @@
     <a routerLink="/" nz-button nzType="primary">Go Home</a>
   </div>
 </div>
+
+<nz-modal [nzWidth]="800" [(nzVisible)]="showOrder" nzTitle="Order">
+  <ng-container *nzModalContent>
+    <app-order></app-order>
+  </ng-container>
+  <ng-container *nzModalFooter></ng-container>>
+</nz-modal>

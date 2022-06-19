@@ -25,7 +25,7 @@ export class CartService {
       const decodedToken = this.jwt.decodeToken(token);
       this.decodedToken.next(decodedToken);
       if (decodedToken) {
-        this.getCart(decodedToken?.id, '1').subscribe(({ cart, count, totalPrice }) => {
+        this.getCart(decodedToken?.id, '1', '').subscribe(({ cart, count, totalPrice }) => {
           this.cart.next(cart);
           this.cartcount.next(count);
           this.totalPrice.next(totalPrice);
@@ -50,9 +50,9 @@ export class CartService {
     }
   }
 
-  getCart(user: string, page: string): Observable<{ cart: Cart[], count: number, totalPrice: number }> {
+  getCart(user: string, page: string, search: string): Observable<{ cart: Cart[], count: number, totalPrice: number }> {
     return this.http.get<{ cart: Cart[], count: number, totalPrice: number, rates: any }>
-    (environment.apiUrl + '/cart', { params: { user, page } }).pipe(map(res => {
+    (environment.apiUrl + '/cart', { params: { user, page, search } }).pipe(map(res => {
       res.cart = res.cart.map((carele) => {
         carele.product.rating = this.getRate(res.rates?.filter(ele => ele?.product === carele.product.id));
         carele.product.numReviews = res.rates?.filter(ele => ele?.product === carele.product.id)?.length || 0;

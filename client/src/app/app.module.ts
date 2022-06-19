@@ -1,3 +1,5 @@
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzRateModule } from 'ng-zorro-antd/rate';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -40,6 +42,9 @@ import { CartComponent } from './components/cart/cart.component';
 import { LikesComponent } from './components/likes/likes.component';
 import { ProductComponent } from './components/product/product.component';
 import { SwipComponent } from './components/swip/swip.component';
+import { OrderComponent } from './components/order/order.component';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
+
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -62,6 +67,7 @@ registerLocaleData(en);
     LikesComponent,
     ProductComponent,
     SwipComponent,
+    OrderComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,7 +91,10 @@ registerLocaleData(en);
     NzSelectModule,
     NzMessageModule,
     NzBadgeModule,
-    NzRateModule
+    NzRateModule,
+    NzModalModule,
+    NzStepsModule,
+    NzTableModule
   ],
   providers: [
     {

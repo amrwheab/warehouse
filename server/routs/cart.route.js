@@ -8,13 +8,18 @@ router.get('/', async (req, res) => {
   const page = parseInt(req.query.page)
   const skip = (page - 1) * 8
   const {user} = req.query
+  let search = req.query.search || ''
   try {
     const select = '_id name images price discount slug rating numReviews dateCreated'
-    const cart = await Cart.find({user}).limit(8).skip(skip)
-    .populate({path: 'product', select, populate: {path: 'category'}})
-    const count = await Cart.count({user})
-    const products = cart.map(like => (like.product))
-    const poductsIds = products.map(ele => (ele._id))
+    let cart = await Cart.find({user}).limit(8).skip(skip)
+    .populate({path: 'product', select, populate: {path: 'category'}, match: {name: { $regex: search, $options : 'i' }}})
+    cart = cart.filter(ele => ele.product)
+    let countProds = await Cart.find({user}, {product: 1})
+    .populate({path: 'product', select: '_id', populate: {path: 'category'}, match: {name: { $regex: search, $options : 'i' }}})
+    countProds = countProds.filter(ele => ele.product)
+    const count = countProds.length;
+    const products = cart.map(like => (like?.product))
+    const poductsIds = products.map(ele => (ele?._id))
     const rates = await Rate.find({product: {$in: poductsIds}})
     const cartTotalPrice = await Cart.find({user}, {user: 0}).populate({path: 'product', select: 'price'})
     const totalPriceArray = cartTotalPrice.map((a) => (a.product?.price * a.amount))

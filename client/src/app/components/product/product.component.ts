@@ -1,3 +1,4 @@
+import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { CommentService } from './../../services/comment.service';
 import { UserService } from './../../services/user.service';
 import { CartService } from './../../services/cart.service';
@@ -21,6 +22,17 @@ export class ProductComponent implements OnInit, OnDestroy {
   commentValue = '';
   commentsNextPage = 1;
 
+  config: SwiperConfigInterface = {
+    slidesPerView: 7,
+    spaceBetween: 20,
+    slidesPerGroup: 1,
+    loopFillGroupWithBlank: true,
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    }
+  };
+
   constructor(
     private prodServ: ProductService,
     private cartServ: CartService,
@@ -32,6 +44,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.resizing();
     this.actRoute.params.subscribe(({ slug }) => {
       this.__getProduct(slug);
     });
@@ -55,6 +68,30 @@ export class ProductComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.productSub) {
       this.productSub.unsubscribe();
+    }
+  }
+
+  resizing(): void {
+    if (window.innerWidth > 0 && window.innerWidth < 576) {
+      this.config.slidesPerView = 2.4;
+      this.config.navigation = false;
+    } else if (window.innerWidth >= 576 && window.innerWidth < 768) {
+      this.config.slidesPerView = 3;
+    } else if (window.innerWidth >= 768 && window.innerWidth < 992) {
+      this.config.slidesPerView = 4;
+      this.config.navigation = false;
+    } else if (window.innerWidth > 992 && window.innerWidth < 1200) {
+      this.config.slidesPerView = 5;
+      this.config.navigation = {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      };
+    } else if (window.innerWidth > 1200) {
+      this.config.slidesPerView = 7;
+      this.config.navigation = {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      };
     }
   }
 

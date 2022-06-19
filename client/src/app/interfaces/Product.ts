@@ -28,4 +28,5 @@ export interface Product {
   rated?: number;
   comments?: Comment[];
   commentsCount?: number;
+  related?: Product[];
 }

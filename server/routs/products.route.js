@@ -74,6 +74,8 @@ router.get('/getbyslug/:slug', async (req, res) => {
       {$limit: 3}
     ])
     const commentsCount = await Comment.count({product: product._id})
+    const related = await Product.find({category: product.category, _id: {$ne: product._id}}, 
+      {name: 1, images: 1, discount: 1, slug: 1, price: 1}).limit(10)
 
     res.status(200).json({
       product,
@@ -82,7 +84,8 @@ router.get('/getbyslug/:slug', async (req, res) => {
       rate,
       userId,
       comments,
-      commentsCount
+      commentsCount,
+      related
     })
   } catch (err) {
     console.log(err)

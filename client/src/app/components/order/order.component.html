@@ -1,0 +1,54 @@
+<nz-steps [nzCurrent]="0">
+  <nz-step nzTitle="Order products"></nz-step>
+  <nz-step nzTitle="Payment"></nz-step>
+  <nz-step nzTitle="Done"></nz-step>
+</nz-steps>
+
+
+<div class="step step0">
+  <h3 class="title-of-site">Product</h3>
+  <p>Which product you want to order?</p>
+  <div class="row">
+    <div class="col-lg-8">
+      <form class="search-form">
+        <input [(ngModel)]="search" name="search" type="text" nz-input placeholder="search">
+        <button (click)="findCart()" nz-button nzType="primary">Search</button>
+      </form>
+    </div>
+  </div>
+  <nz-table
+  #rowSelectionTable
+  nzShowSizeChanger
+  [nzData]="cart"
+  [nzFrontPagination]="false"
+  [nzLoading]="loading"
+  [nzTotal]="total"
+  [nzPageSize]="pageSize"
+  [nzPageIndex]="pageIndex"
+  (nzPageIndexChange)="indexChange($event)"
+>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th>Image</th>
+      <th>price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of cart">
+      <td
+        [nzChecked]="setOfCheckedId.has(data.product.id)"
+        (nzCheckedChange)="onItemChecked(data.product.id, $event)"
+      ></td>
+      <td>{{ data?.product?.name }}</td>
+      <td><img class="order-img" [src]="data?.product?.images[0].url" [alt]="data?.product?.name"></td>
+      <td>{{ data?.product?.price | currency }}</td>
+    </tr>
+  </tbody>
+</nz-table>
+<nz-divider></nz-divider>
+<h3 class="title-of-site">Total Order Price: <span class="order-price">{{orderPrice | currency}}</span></h3>
+<nz-divider></nz-divider>
+<h3 class="title-of-site">Select Payment Method</h3>
+</div>

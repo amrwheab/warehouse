@@ -20,6 +20,8 @@ export class CartComponent implements OnInit, OnDestroy {
   cartLoadingSub: Subscription;
   actRouteSub: Subscription;
 
+  showOrder = false;
+
   constructor(
     private cartServ: CartService,
     private router: Router,
@@ -40,7 +42,7 @@ export class CartComponent implements OnInit, OnDestroy {
       } else {
         this.loading = true;
         const userId = this.cartServ.decodedToken.getValue().id;
-        this.cartSub = this.cartServ.getCart(userId, page).subscribe(({cart, count}) => {
+        this.cartSub = this.cartServ.getCart(userId, page, '').subscribe(({cart, count}) => {
           this.cart = cart;
           this.count = count;
           this.loading = false;

@@ -1,6 +1,6 @@
 .product {
   padding-top: 10px;
-  padding-bottom: 50px;
+  padding-bottom: 20px;
 }
 .swip-contain {
   width: 300px;
@@ -197,5 +197,22 @@
     text-align: center;
     transform: translateX(-10%);
     margin-top: 10px;
+  }
+}
+.most-feat {
+
+  margin-top: -17px;
+
+  .most-feat-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+}
+.middle-sec {
+  height: 280px;
+  &::ng-deep .prod-card {
+    height: 260px !important;
   }
 }
