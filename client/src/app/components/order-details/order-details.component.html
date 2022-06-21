@@ -41,6 +41,10 @@
                 alt="paypal">
               <img [class.active]="payMethod==='stripe'" (click)="payMethod='stripe'" src="assets/stripe.svg"
                 alt="stripe">
+              <div class="ondelivery" [class.active]="payMethod==='ondelivery'" (click)="payMethod='ondelivery'">
+                <h2>On Delivery</h2>
+                <img src="assets/pay.svg" alt="On Delivery">
+              </div>
             </div>
           </nz-form-control>
         </nz-form-item>

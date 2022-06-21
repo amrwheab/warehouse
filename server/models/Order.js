@@ -42,6 +42,10 @@ const orderSchema = mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
 	},
+	paid: {
+		type: Boolean,
+		required: true
+	},
 	dateOrdered: {
 		type: Date,
 		default: Date.now,

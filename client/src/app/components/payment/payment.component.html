@@ -1,16 +1,29 @@
-<h3 class="title-of-site mt-1 mb-4">Total Order Price: <span class="order-price">{{orderPrice | currency}}</span></h3>
+<h3 class="title-of-site mt-1 mb-4">Order Price: <span class="order-price">{{orderPrice | currency}}</span></h3>
+<h3 class="title-of-site mt-1 mb-4" *ngIf="payMethod === 'ondelivery'">Taxes: <span class="order-price">20</span></h3>
+<h3 class="title-of-site mt-1 mb-4" *ngIf="payMethod === 'ondelivery'">
+  Total Order Price:
+  <span class="order-price">
+    {{ orderPrice + 20  | currency}}
+  </span>
+</h3>
 <div *ngIf="payMethod==='paypal'" class="paypal mb-3">
   <ngx-paypal [config]="payPalConfig"></ngx-paypal>
 </div>
 
-<nz-alert *ngIf="completed" nzType="success" nzMessage="Now You Finished!"></nz-alert>
-<button #sub class="hidden-btn">hh</button>
-<div *ngIf="payMethod!=='paypal'" class="stripe">
-  stripe
+<nz-alert *ngIf="completed && payMethod==='paypal'" nzType="success" nzMessage="Now You Finished!"></nz-alert>
+<button #sub class="hidden-btn"></button>
+
+<div *ngIf="payMethod==='stripe'" class="stripe">
+  <form>
+    <ngx-stripe-card
+      [options]="cardOptions"
+      [elementsOptions]="elementsOptions"
+    ></ngx-stripe-card>
+  </form>
 </div>
 
 <div class="action-btn">
-  <button nz-button nzType="primary" [disabled]="!completed" (click)="next.emit()">Next</button>
+  <button nz-button nzType="primary" [disabled]="!completed" (click)="handleNext()">Next</button>
   <button nz-button nzType="default" (click)="previous.emit()">Previous</button>
   <button nz-button nzType="default" (click)="cancel.emit()">Cancel</button>
 </div>

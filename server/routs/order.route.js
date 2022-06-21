@@ -3,6 +3,7 @@ const Order = require('../models/Order')
 const Product = require('../models/Product')
 const paypal = require("@paypal/checkout-server-sdk")
 const mongoose = require('mongoose')
+const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 const Environment = paypal.core.SandboxEnvironment
 const paypalClient = new paypal.core.PayPalHttpClient(
@@ -64,7 +65,38 @@ router.post('/paypal', async (req, res) => {
 })
 
 router.post('/new', async (req, res) => {
-  const {products, details, user} = req.body
+  const {products, details, user, paid} = req.body
+  try {
+    const productsToOrderIds = products.map(ele => ele.product)
+    const productsValues = await Product.find({_id: {$in: productsToOrderIds}}, {price: 1})
+    let totalPrice = 0
+    products.map(ele => {
+      const product = productsValues.find(prod => prod._id === mongoose.Types.ObjectId(ele.product) || ele.product)
+      totalPrice += product.price * ele.amount
+    })
+    
+    const newOrder = new Order({
+      orderItems: products,
+      shippingAddress1: details.shippingAddress1,
+      shippingAddress2: details.shippingAddress2,
+      city: details.city,
+      zip: details.zip,
+      phone: details.phone,
+      totalPrice,
+      user,
+      paid
+    })
+    
+    await newOrder.save()
+    res.status(200).json('ordered successfully')
+  } catch(err) {
+    console.log(err)
+    res.status(400).json('some thing went wrong')
+  }
+})
+
+router.post('/stripe', async (req, res) => {
+  const {products, details, user, token} = req.body
   try {
     const productsToOrderIds = products.map(ele => ele.product)
     const productsValues = await Product.find({_id: {$in: productsToOrderIds}}, {price: 1})
@@ -74,24 +106,36 @@ router.post('/new', async (req, res) => {
       totalPrice += product.price * ele.amount
     })
 
-    const newOrder = new Order({
-      orderItems: products,
-      shippingAddress1: details.shippingAddress1,
-      shippingAddress2: details.shippingAddress2,
-      city: details.city,
-      zip: details.zip,
-      phone: details.phone,
-      totalPrice,
-      user
-    })
-
-    await newOrder.save()
-    res.status(200).json('ordered successfully')
+    stripe.charges.create({
+      amount: +totalPrice.toFixed(2)*100,
+      currency: "USD",
+      source: token.id,
+      description: "Warehouse charge"
+    }, async (err, charge) => {
+      if (err) {
+        console.log(err)
+        res.status(500).json('some thing went wrong')
+      } else {
+        const newOrder = new Order({
+          orderItems: products,
+          shippingAddress1: details.shippingAddress1,
+          shippingAddress2: details.shippingAddress2,
+          city: details.city,
+          zip: details.zip,
+          phone: details.phone,
+          totalPrice,
+          user,
+          paid: true
+        })
+        
+        await newOrder.save()
+        res.status(200).json('ordered successfully')
+      }
+    });
+    
   } catch(err) {
-    console.log(err)
     res.status(400).json('some thing went wrong')
   }
 })
-
 
 module.exports = router

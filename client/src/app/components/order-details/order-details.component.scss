@@ -18,3 +18,17 @@
     }
   }
 }
+.ondelivery {
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+
+  img {
+    width: 75px;
+    object-fit: cover;
+  }
+
+  &.active {
+    border-bottom: 4px solid #0077c0;
+  }
+}

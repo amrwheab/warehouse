@@ -1,3 +1,4 @@
+import { environment } from './../environments/environment';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzRateModule } from 'ng-zorro-antd/rate';
@@ -14,7 +15,7 @@ import { IconsProviderModule } from './icons-provider.module';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
@@ -49,6 +50,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzResultModule } from 'ng-zorro-antd/result';
+import { NgxStripeModule } from 'ngx-stripe';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -80,6 +82,7 @@ registerLocaleData(en);
     AppRoutingModule,
     IconsProviderModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     NzButtonModule,
@@ -103,7 +106,8 @@ registerLocaleData(en);
     NzTableModule,
     NgxPayPalModule,
     NzAlertModule,
-    NzResultModule
+    NzResultModule,
+    NgxStripeModule.forRoot(environment.stripeKey),
   ],
   providers: [
     {
