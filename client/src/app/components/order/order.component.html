@@ -1,11 +1,12 @@
-<nz-steps [nzCurrent]="0">
+<nz-steps [nzCurrent]="currentStep">
   <nz-step nzTitle="Order products"></nz-step>
+  <nz-step nzTitle="Order Details"></nz-step>
   <nz-step nzTitle="Payment"></nz-step>
   <nz-step nzTitle="Done"></nz-step>
 </nz-steps>
 
 
-<div class="step step0">
+<div *ngIf="currentStep===0" class="step step0">
   <h3 class="title-of-site">Product</h3>
   <p>Which product you want to order?</p>
   <div class="row">
@@ -16,39 +17,68 @@
       </form>
     </div>
   </div>
-  <nz-table
-  #rowSelectionTable
-  nzShowSizeChanger
-  [nzData]="cart"
-  [nzFrontPagination]="false"
-  [nzLoading]="loading"
-  [nzTotal]="total"
-  [nzPageSize]="pageSize"
-  [nzPageIndex]="pageIndex"
-  (nzPageIndexChange)="indexChange($event)"
->
-  <thead>
-    <tr>
-      <th></th>
-      <th>Name</th>
-      <th>Image</th>
-      <th>price</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of cart">
-      <td
-        [nzChecked]="setOfCheckedId.has(data.product.id)"
-        (nzCheckedChange)="onItemChecked(data.product.id, $event)"
-      ></td>
-      <td>{{ data?.product?.name }}</td>
-      <td><img class="order-img" [src]="data?.product?.images[0].url" [alt]="data?.product?.name"></td>
-      <td>{{ data?.product?.price | currency }}</td>
-    </tr>
-  </tbody>
-</nz-table>
-<nz-divider></nz-divider>
-<h3 class="title-of-site">Total Order Price: <span class="order-price">{{orderPrice | currency}}</span></h3>
-<nz-divider></nz-divider>
-<h3 class="title-of-site">Select Payment Method</h3>
+  <nz-table #rowSelectionTable [nzData]="cart" [nzFrontPagination]="false" [nzLoading]="loading"
+    [nzTotal]="total" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex" (nzPageIndexChange)="indexChange($event)">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Price</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of cart">
+        <td [nzChecked]="setOfCheckedId.has(data.product.id)"
+          (nzCheckedChange)="onItemChecked(data.product.id, $event)"></td>
+        <td>{{ data?.product?.name }}</td>
+        <td><img class="order-img" [src]="data?.product?.images[0].url" [alt]="data?.product?.name"></td>
+        <td>{{ data?.product?.price | currency }}</td>
+        <td>{{ data?.amount }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <nz-divider></nz-divider>
+  <h3 class="title-of-site">Total Order Price: <span class="order-price">{{orderPrice | currency}}</span></h3>
+
+  <div class="action-btn">
+    <button nz-button nzType="primary" [disabled]="orderPrice===0" (click)="currentStep=1">Next</button>
+    <button nz-button nzType="default" (click)="cancel.emit()">Cancel</button>
+  </div>
+</div>
+
+<div *ngIf="currentStep===1" class="step step1">
+  <app-order-details
+    (nextStep)="nextToPayment($event)"
+    (payMethodChange)="payMethod=$event"
+    (previous)="currentStep=0"
+    (cancel)="cancel.emit()"></app-order-details>
+</div>
+
+<div *ngIf="currentStep===2" class="step step2">
+  <app-payment
+  [cart]="cart"
+    [setOfCheckedId]="setOfCheckedId"
+    [payMethod]="payMethod"
+    [orderPrice]="orderPrice"
+    [orderDetails]="orderDetails"
+    (next)="currentStep=3"
+    (previous)="currentStep=1"
+    (cancel)="cancel.emit()"
+    >
+  </app-payment>
+</div>
+
+<div *ngIf="currentStep===3" class="step step3">
+  <nz-result
+      nzStatus="success"
+      nzTitle="Your Products is Successfully Ordered"
+      nzSubTitle="You can check your profile page to know the status of your order, and also we will be in touch with you via your email"
+    >
+      <div nz-result-extra>
+        <a nz-button nzType="primary" routerLink="/">Go Home</a>
+        <button nz-button (click)="cancel.emit()">Cancel</button>
+      </div>
+    </nz-result>
 </div>

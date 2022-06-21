@@ -3,7 +3,7 @@ import { UserService } from './../../services/user.service';
 import { Subscription } from 'rxjs';
 import { CartService } from './../../services/cart.service';
 import { Cart } from './../../interfaces/Cart';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-order',
@@ -11,6 +11,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./order.component.scss']
 })
 export class OrderComponent implements OnInit {
+
+  @Output() cancel = new EventEmitter();
 
   constructor(
     private cartServ: CartService,
@@ -37,8 +39,12 @@ export class OrderComponent implements OnInit {
 
   // our stuff
 
+  currentStep = 0;
   cartSub: Subscription;
   orderPrice = 0;
+  payMethod = 'paypal';
+  orderDetails = {};
+
 
   loadDataFromServer(
     pageIndex: number,
@@ -68,11 +74,12 @@ export class OrderComponent implements OnInit {
 
   onItemChecked(id: string, checked: boolean): void {
     this.updateCheckedSet(id, checked);
-    const product = this.cart.find(ele => ele.product.id === id).product;
+    const cart = this.cart.find(ele => ele.product.id === id);
+    const product = cart.product;
     if (checked) {
-      this.orderPrice += product.price;
+      this.orderPrice += product.price * cart.amount;
     } else {
-      this.orderPrice -= product.price;
+      this.orderPrice -= product.price * cart.amount;
     }
   }
 
@@ -107,6 +114,11 @@ export class OrderComponent implements OnInit {
       console.log(err);
       this.message.remove(load);
     });
+  }
+
+  nextToPayment(e: any): void {
+    this.orderDetails = JSON.parse(e);
+    this.currentStep = 2;
   }
 
 }

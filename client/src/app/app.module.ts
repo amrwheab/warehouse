@@ -44,7 +44,11 @@ import { ProductComponent } from './components/product/product.component';
 import { SwipComponent } from './components/swip/swip.component';
 import { OrderComponent } from './components/order/order.component';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
-
+import { PaymentComponent } from './components/payment/payment.component';
+import { NgxPayPalModule } from 'ngx-paypal';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzResultModule } from 'ng-zorro-antd/result';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -68,6 +72,8 @@ registerLocaleData(en);
     ProductComponent,
     SwipComponent,
     OrderComponent,
+    PaymentComponent,
+    OrderDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -94,7 +100,10 @@ registerLocaleData(en);
     NzRateModule,
     NzModalModule,
     NzStepsModule,
-    NzTableModule
+    NzTableModule,
+    NgxPayPalModule,
+    NzAlertModule,
+    NzResultModule
   ],
   providers: [
     {

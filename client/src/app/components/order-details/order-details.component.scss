@@ -1,0 +1,20 @@
+.action-btn {
+  padding-top: 18px;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 8px;
+}
+.payment-method {
+  display: flex;
+  gap: 35px;
+
+  img {
+    width: 130px;
+    height: 70px;
+    cursor: pointer;
+
+    &.active {
+      border-bottom: 4px solid #0077c0;
+    }
+  }
+}

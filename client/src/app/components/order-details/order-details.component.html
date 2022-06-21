@@ -1,0 +1,55 @@
+<div class="order-details">
+  <h3 class="title-of-site">Order Details</h3>
+  <div class="row">
+    <div class="col-lg-8">
+      <form nz-form #form="ngForm">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-form-label nzFor="shippingAddress1">Shipping Address 1</nz-form-label>
+            <input nz-input name="shippingAddress1" type="text" id="shippingAddress1" required ngModel>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <nz-form-label nzFor="shippingAddress2">Shipping Address 2</nz-form-label>
+            <input nz-input name="shippingAddress2" type="text" id="shippingAddress2" ngModel>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <nz-form-label nzFor="city">City</nz-form-label>
+            <input nz-input name="city" type="text" id="city" required ngModel>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <nz-form-label nzFor="zip">ZIP</nz-form-label>
+            <input nz-input name="zip" type="text" id="zip" required ngModel>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <nz-form-label nzFor="phone">Phone</nz-form-label>
+            <input nz-input name="phone" type="text" id="phone" required ngModel>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <nz-form-label nzFor="phone">Payment Method</nz-form-label>
+            <div class="payment-method">
+              <img [class.active]="payMethod==='paypal'" (click)="payMethod='paypal'" src="assets/paypal.svg"
+                alt="paypal">
+              <img [class.active]="payMethod==='stripe'" (click)="payMethod='stripe'" src="assets/stripe.svg"
+                alt="stripe">
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+  </div>
+  <div class="action-btn">
+    <button nz-button nzType="primary" [disabled]="form.invalid" (click)="formSubmit(form)">Next</button>
+    <button nz-button nzType="default" (click)="previous.emit()">Previous</button>
+    <button nz-button nzType="default" (click)="cancel.emit()">Cancel</button>
+  </div>
+</div>

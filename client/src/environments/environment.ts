@@ -7,6 +7,8 @@ export const environment = {
   apiUrl: 'http://192.168.1.12:3000',
   localHost: 'http://localhost:3000',
   // apiUrl: 'http://localhost:3000',
+  paypalsecret: 'Af_w-ScQbLbrSqrwJKRuESd71ZLtKNG2zUf3YuJndpV3YF8JOninuSUt6yeDG3QZaRs1qOv19lrDhaV0'
+
 };
 
 /*

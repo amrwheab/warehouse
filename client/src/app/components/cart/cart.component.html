@@ -26,9 +26,9 @@
   </div>
 </div>
 
-<nz-modal [nzWidth]="800" [(nzVisible)]="showOrder" nzTitle="Order">
+<nz-modal [nzWidth]="800" [(nzVisible)]="showOrder" nzTitle="Order" (nzOnCancel)="showOrder=false">
   <ng-container *nzModalContent>
-    <app-order></app-order>
+    <app-order (cancel)="showOrder=false"></app-order>
   </ng-container>
   <ng-container *nzModalFooter></ng-container>>
 </nz-modal>

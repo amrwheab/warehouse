@@ -1,0 +1,15 @@
+.order-price {
+  color: #0077C0;
+  font-weight: bold;
+}
+.action-btn {
+  padding-top: 18px;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 8px;
+}
+.hidden-btn {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
