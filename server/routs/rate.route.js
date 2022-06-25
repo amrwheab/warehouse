@@ -30,7 +30,6 @@ router.post('/', async (req, res) => {
       await newRate.save()
       res.status(200).json('added successfully')
     } else {
-      console.log(err)
       res.status(400).json('some thing went wrong')
     }
   } catch (err) {

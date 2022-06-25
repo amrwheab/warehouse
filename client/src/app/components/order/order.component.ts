@@ -3,14 +3,14 @@ import { UserService } from './../../services/user.service';
 import { Subscription } from 'rxjs';
 import { CartService } from './../../services/cart.service';
 import { Cart } from './../../interfaces/Cart';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.scss']
 })
-export class OrderComponent implements OnInit {
+export class OrderComponent implements OnInit, OnDestroy {
 
   @Output() cancel = new EventEmitter();
 
@@ -53,7 +53,7 @@ export class OrderComponent implements OnInit {
     this.loading = true;
     // tslint:disable-next-line: no-string-literal
     const userId = this.userServ.user.getValue()['id'];
-    this.cartServ.getCart(userId, `${pageIndex}`, search).subscribe(data => {
+    this.cartSub = this.cartServ.getCart(userId, `${pageIndex}`, search).subscribe(data => {
       this.loading = false;
       this.cart = data.cart;
       this.total = data.count;
@@ -85,6 +85,12 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadDataFromServer(this.pageIndex, this.search);
+  }
+
+  ngOnDestroy(): void {
+    if (this.cartSub) {
+      this.cartSub.unsubscribe();
+    }
   }
 
   findCart(): void {

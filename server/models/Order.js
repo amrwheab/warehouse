@@ -18,6 +18,7 @@ const orderSchema = mongoose.Schema({
 	},
 	shippingAddress2: {
 		type: String,
+		default: ''
 	},
 	city: {
 		type: String,
@@ -33,7 +34,7 @@ const orderSchema = mongoose.Schema({
 	status: {
 		type: String,
 		required: true,
-		default: 'Pending',
+		default: 'pending',
 	},
 	totalPrice: {
 		type: Number,

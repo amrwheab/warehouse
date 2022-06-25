@@ -1,3 +1,4 @@
+import { OrderDashDetailsComponent } from './orders-dash/order-dash-details/order-dash-details.component';
 import { ModifyproductComponent } from './products-dash/modifyproduct/modifyproduct.component';
 import { AdminComponent } from './admin/admin.component';
 import { CarouselDashComponent } from './carousel-dash/carousel-dash.component';
@@ -23,6 +24,7 @@ const routes: Routes = [
     { path: 'categories/addcategory', component: ModifyCategoryComponent },
     { path: 'categories/updatecategory/:id', component: ModifyCategoryComponent },
     { path: 'orders', component: OrdersDashComponent },
+    { path: 'orders/order-details/:id', component: OrderDashDetailsComponent },
     { path: 'carousel', component: CarouselDashComponent },
     { path: 'carousel/addcarousel', component: ModifyCarouselComponent },
     { path: 'carousel/updatecarousel/:id', component: ModifyCarouselComponent },

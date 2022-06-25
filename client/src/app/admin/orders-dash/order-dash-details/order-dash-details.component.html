@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-lg-6">
+    <h2 class="title-of-site">City</h2>
+    <ul>
+      <li>{{order?.city}}</li>
+    </ul>
+    <h2 class="title-of-site">Addresses</h2>
+    <ul>
+      <li>{{order?.shippingAddress1}}</li>
+      <li>{{order?.shippingAddress2}}</li>
+    </ul>
+    <h2 class="title-of-site">ZIP Code</h2>
+    <ul>
+      <li>{{order?.zip}}</li>
+    </ul>
+    <h2 class="title-of-site">Phone</h2>
+    <ul>
+      <li>{{order?.phone}}</li>
+    </ul>
+    <h2 class="title-of-site">Order Products</h2>
+    <ul>
+      <li *ngFor="let prod of order?.orderItems">
+        <p>
+          product: <a class="link" [routerLink]="'/products/' + prod?.product?.slug">{{prod?.product?.name}}</a>
+        </p>
+        <p>
+          amount: {{prod?.amount}}
+        </p>
+      </li>
+    </ul>
+    <h2 class="title-of-site">Total price</h2>
+    <ul>
+      <li>{{order?.totalPrice | currency}}</li>
+    </ul>
+    <h2 class="title-of-site">User</h2>
+    <ul>
+      <li><a class="link" [routerLink]="'/users/' + order?.user?.id">{{order?.user?.name}}</a></li>
+    </ul>
+    <h2 class="title-of-site">Paid</h2>
+    <ul>
+      <li>{{order?.paid ? 'YES':'NO'}}</li>
+    </ul>
+    <h2 class="title-of-site">Status</h2>
+    <form>
+      <nz-form-control>
+        <nz-select (ngModelChange)="changed=true" #status name="status" class="select" [ngModel]="currentStatus">
+          <nz-option nzValue="pending" nzLabel="Pending"></nz-option>
+          <nz-option nzValue="shipped" nzLabel="Shipped"></nz-option>
+          <nz-option nzValue="canceled" nzLabel="Canceled"></nz-option>
+          <nz-option nzValue="completed" nzLabel="Completed"></nz-option>
+        </nz-select>
+      </nz-form-control>
+      <button nz-button nzType="primary" [disabled]="!changed && currentStatus === order.status.toLowerCase()" (click)="updateStatus(status?.value)">Update</button>
+    </form>
+  </div>
+</div>

@@ -1,1 +1,34 @@
-<p>users-dash works!</p>
+<div class="row">
+  <div class="col-lg-6 col-md-8 col-xs-12">
+    <form class="search-form" (submit)="applySearch()">
+      <input nz-input placeholder="search for users" name="searchValue" [(ngModel)]="searchValue" />
+      <button nz-button nzType="primary">Search</button>
+    </form>
+  </div>
+</div>
+<section class="users-table">
+  <nz-table #middleTable nzSize="middle" [nzLoading]="loading" [nzScroll]="{ x: '700px' }" [nzData]="users"
+    [nzFrontPagination]="false" [nzTotal]="count" [nzPageSize]="8" [nzPageIndex]="page"
+    (nzQueryParams)="onQueryParamsChange($event)">
+    <thead>
+      <tr>
+        <th nzWidth="50px"><strong>#</strong></th>
+        <th><strong>Name</strong></th>
+        <th><strong>Email</strong></th>
+        <th><strong>City</strong></th>
+        <th><strong>Admin</strong></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of middleTable.data; let i = index">
+        <td>{{i+1}}</td>
+        <td>{{ data.name.length > 84 ? data.name.slice(0, 84) + '...':data.name }}</td>
+        <td>{{data.email}}</td>
+        <td>{{data.city}}</td>
+        <td>
+          <nz-switch [(ngModel)]="data.isAdmin" (ngModelChange)="makeAdmin($event, data.id)"></nz-switch>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</section>

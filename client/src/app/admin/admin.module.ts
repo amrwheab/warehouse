@@ -33,6 +33,7 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { ModifyCategoryComponent } from './categories-dash/modify-category/modify-category.component';
 import { ModifyCarouselComponent } from './carousel-dash/modify-carousel/modify-carousel.component';
+import { OrderDashDetailsComponent } from './orders-dash/order-dash-details/order-dash-details.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { ModifyCarouselComponent } from './carousel-dash/modify-carousel/modify-
     ModifyproductComponent,
     ImageCropperComponent,
     ModifyCategoryComponent,
-    ModifyCarouselComponent
+    ModifyCarouselComponent,
+    OrderDashDetailsComponent
   ],
   imports: [
     CommonModule,

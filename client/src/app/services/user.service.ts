@@ -5,12 +5,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../interfaces/User';
 
+interface UserGet {
+  users: User[];
+  count: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  user: BehaviorSubject<User | { loading: boolean }> = new BehaviorSubject({ loading: true });
+  user: BehaviorSubject<User | { loading: boolean } | any> = new BehaviorSubject({ loading: true });
   url = new BehaviorSubject('');
   jwt = new JwtHelperService();
 
@@ -35,6 +40,18 @@ export class UserService {
       localStorage.removeItem('token');
       this.user.next({ loading: false });
     }
+  }
+
+  getUsers(page: string, search: string): Observable<UserGet> {
+    // tslint:disable-next-line: no-string-literal
+    const user = this.user.getValue()['id'];
+    return this.http.get<UserGet>(environment.apiUrl + '/user', {params: {user, page, search}});
+  }
+
+  userAdmin(admin: boolean, userId: string): Observable<string> {
+    // tslint:disable-next-line: no-string-literal
+    const user = this.user.getValue()['id'];
+    return this.http.put<string>(environment.apiUrl + '/user/admin', {admin, user, userId});
   }
 
   signupUser(value: User): Observable<{ token: string, user: User }> {

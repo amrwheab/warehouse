@@ -3,6 +3,40 @@ const User = require('../models/User')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+router.get('/', async (req, res) => {
+  const { user, page, search } = req.query
+  const skip = (parseInt(page)-1)*8
+  try {
+    const userAdmin = await User.findById(user)
+    if (userAdmin.mainAdmin) {
+      const users = await User.find({name:  { $regex: search, $options : 'i' }}).limit(8).skip(skip)
+      const count = await User.find({name:  { $regex: search, $options : 'i' }}).count()
+      res.status(200).json({users, count})
+    } else { 
+      res.status(500).json('You aren\'t allowed')
+    }
+  } catch (err) {
+    console.log(err)
+    res.status(400).json('some thing went wrong')
+  }
+})
+
+router.put('/admin', async (req, res) => {
+  const { user, admin, userId } = req.body
+  try {
+    const userAdmin = await User.findById(user)
+    if (userAdmin.mainAdmin) {
+      await User.updateOne({_id: userId}, {isAdmin: admin})
+      res.status(200).json('updated successfully')
+    }else { 
+      res.status(500).json('You aren\'t allowed')
+    }
+  } catch (err) {
+    console.log(err)
+    res.status(400).json('some thing went wrong')
+  }
+})
+
 router.post('/register', async (req, res) => {
 
   const { 

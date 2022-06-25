@@ -1,1 +1,39 @@
-<p>orders-dash works!</p>
+<div class="row">
+  <div class="col-lg-6 col-md-8 col-xs-12">
+    <form class="search-form" (submit)="applySearch()">
+      <input nz-input placeholder="search by user name" name="searchValue" [(ngModel)]="searchValue" />
+      <button nz-button nzType="primary">Search</button>
+    </form>
+  </div>
+</div>
+<section class="categories-table">
+  <nz-table #middleTable nzSize="middle" [nzLoading]="loading" [nzScroll]="{ x: '600px' }" [nzData]="orders"
+    [nzFrontPagination]="false" [nzTotal]="count" [nzPageSize]="8" [nzPageIndex]="page"
+    (nzQueryParams)="onQueryParamsChange($event)">
+    <thead>
+      <tr>
+        <th nzWidth="50px"><strong>#</strong></th>
+        <th><strong>User Name</strong></th>
+        <th><strong>Date</strong></th>
+        <th><strong>Price</strong></th>
+        <th><strong>Action</strong></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of middleTable.data; let i = index">
+        <td>{{i+1}}</td>
+        <td>{{ data.user.name.length > 84 ? data.user.name.slice(0, 84) + '...':data.user.name }}</td>
+        <td>{{data.dateOrdered | date: 'dd/mm/yyyy'}}</td>
+        <td>{{data.totalPrice | currency}}</td>
+        <td>
+          <button nz-button nzType="primary" class="mr-1 updatebtn" (click)="updateOrder(data.id)">
+            <i nz-icon nzType="edit" nzTheme="outline"></i>
+          </button>
+          <button nz-button nzDanger (click)="confirmDelete(data.id)">
+            <i nz-icon nzType="delete" nzTheme="outline"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</section>

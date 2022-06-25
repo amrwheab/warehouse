@@ -76,33 +76,36 @@
   </div>
 </nav>
 
-<nz-drawer  [nzWidth]="555"
-            [nzClosable]="false"
-            [nzVisible]="cartDrawer"
-            nzPlacement="right"
-            (nzOnClose)="cartDrawer = false">
-          <div class="cart-side">
-            <div class="container">
-              <div class="sider-cart">
-                <div class="header">
-                    <h2 class="title-of-site">Cart</h2>
-                  <div>
-                    <a routerLink="/cart" (click)="cartDrawer=false">Go to full cart...</a>
+<div class="header-drawer">
+
+  <nz-drawer  [nzWidth]="555"
+              [nzClosable]="false"
+              [nzVisible]="cartDrawer"
+              nzPlacement="right"
+              (nzOnClose)="cartDrawer = false">
+            <div class="cart-side">
+              <div class="container">
+                <div class="sider-cart">
+                  <div class="header">
+                      <h2 class="title-of-site">Cart</h2>
+                    <div>
+                      <a routerLink="/cart" (click)="cartDrawer=false">Go to full cart...</a>
+                    </div>
                   </div>
                 </div>
+                <div class="empty-cart" *ngIf="cart.length === 0">
+                  <img style="width: 70%;" src="assets/emptycart.svg" alt="Empty Cart">
+                </div>
+                <app-cart-card *ngFor="let item of cart;trackBy: trackByFun" [cart]="item"></app-cart-card>
               </div>
-              <div class="empty-cart" *ngIf="cart.length === 0">
-                <img style="width: 70%;" src="assets/emptycart.svg" alt="Empty Cart">
+              <div class="total-cost">
+                <h2>Total cost</h2>
+                <h3 class="price">{{totalPrice | currency}}</h3>
               </div>
-              <app-cart-card *ngFor="let item of cart;trackBy: trackByFun" [cart]="item"></app-cart-card>
             </div>
-            <div class="total-cost">
-              <h2>Total cost</h2>
-              <h3 class="price">{{totalPrice | currency}}</h3>
-            </div>
-          </div>
 
-</nz-drawer>
+  </nz-drawer>
+</div>
 
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <ul nz-menu>
