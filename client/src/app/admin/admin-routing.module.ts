@@ -1,3 +1,4 @@
+import { ProdWithExcelComponent } from './products-dash/prod-with-excel/prod-with-excel.component';
 import { OrderDashDetailsComponent } from './orders-dash/order-dash-details/order-dash-details.component';
 import { ModifyproductComponent } from './products-dash/modifyproduct/modifyproduct.component';
 import { AdminComponent } from './admin/admin.component';
@@ -20,6 +21,7 @@ const routes: Routes = [
     { path: 'products', component: ProductsDashComponent },
     { path: 'products/addproduct', component: ModifyproductComponent },
     { path: 'products/updateproduct/:id', component: ModifyproductComponent },
+    { path: 'products/prodwithexcel', component: ProdWithExcelComponent },
     { path: 'categories', component: CategoriesDashComponent },
     { path: 'categories/addcategory', component: ModifyCategoryComponent },
     { path: 'categories/updatecategory/:id', component: ModifyCategoryComponent },

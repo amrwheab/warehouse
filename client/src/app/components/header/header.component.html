@@ -19,7 +19,7 @@
               <img src="assets/cart.svg" alt="logo">
               <nz-badge nzStandalone [nzCount]="cartcount"></nz-badge>
             </a>
-            <div class="search">
+            <div class="search" (click)="visibleSearch = true">
               <i nz-icon nzType="search" nzTheme="outline"></i>
             </div>
           </div>
@@ -59,7 +59,7 @@
           <img src="assets/cart.svg" alt="logo">
           <nz-badge nzStandalone [nzCount]="cartcount"></nz-badge>
         </a>
-        <div class="search">
+        <div class="search" (click)="visibleSearch = true">
           <i nz-icon nzType="search" nzTheme="outline"></i>
         </div>
         <div *ngIf="!user?.loading && !user?.id" class="auth">
@@ -76,33 +76,41 @@
   </div>
 </nav>
 
+
+<nz-drawer [nzClosable]="true" [nzVisible]="visibleSearch" [nzHeight]="120" nzWrapClassName="searchDrawer"
+  (nzOnClose)="visibleSearch=false" nzPlacement="top" nzTitle="Search">
+  <ng-container *nzDrawerContent>
+    <div class="search-body">
+      <input type="search" nz-input #searchVal>
+      <button nz-button nzType="primary" (click)="search(searchVal.value)">Search</button>
+    </div>
+  </ng-container>
+</nz-drawer>
+
 <div class="header-drawer">
 
-  <nz-drawer  [nzWidth]="555"
-              [nzClosable]="false"
-              [nzVisible]="cartDrawer"
-              nzPlacement="right"
-              (nzOnClose)="cartDrawer = false">
-            <div class="cart-side">
-              <div class="container">
-                <div class="sider-cart">
-                  <div class="header">
-                      <h2 class="title-of-site">Cart</h2>
-                    <div>
-                      <a routerLink="/cart" (click)="cartDrawer=false">Go to full cart...</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="empty-cart" *ngIf="cart.length === 0">
-                  <img style="width: 70%;" src="assets/emptycart.svg" alt="Empty Cart">
-                </div>
-                <app-cart-card *ngFor="let item of cart;trackBy: trackByFun" [cart]="item"></app-cart-card>
-              </div>
-              <div class="total-cost">
-                <h2>Total cost</h2>
-                <h3 class="price">{{totalPrice | currency}}</h3>
-              </div>
+  <nz-drawer [nzWidth]="555" [nzClosable]="false" [nzVisible]="cartDrawer" nzPlacement="right"
+    (nzOnClose)="cartDrawer = false">
+    <div class="cart-side">
+      <div class="container">
+        <div class="sider-cart">
+          <div class="header">
+            <h2 class="title-of-site">Cart</h2>
+            <div>
+              <a routerLink="/cart" (click)="cartDrawer=false">Go to full cart...</a>
             </div>
+          </div>
+        </div>
+        <div class="empty-cart" *ngIf="cart.length === 0">
+          <img style="width: 70%;" src="assets/emptycart.svg" alt="Empty Cart">
+        </div>
+        <app-cart-card *ngFor="let item of cart;trackBy: trackByFun" [cart]="item"></app-cart-card>
+      </div>
+      <div class="total-cost">
+        <h2>Total cost</h2>
+        <h3 class="price">{{totalPrice | currency}}</h3>
+      </div>
+    </div>
 
   </nz-drawer>
 </div>

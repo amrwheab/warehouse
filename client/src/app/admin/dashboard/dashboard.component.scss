@@ -1,0 +1,24 @@
+.stat-contain {
+  display: flex;
+  justify-content: center;
+}
+.statstics {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+@media (min-width: 840px) {
+  .statstics {
+    justify-content: space-between;
+  }
+}
+.stat {
+  border: 1px solid #4a5156;
+  padding: 15px 40px;
+  border-radius: 3px;
+  width: 190px;
+}
+.title-of-site {
+  margin-bottom: 25px;
+}

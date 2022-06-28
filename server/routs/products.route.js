@@ -105,21 +105,30 @@ router.get('/filters', async (req, res) => {
   let brand = null
   let price = null
   let filters = null
+  let search = null
   for (const key in query) {
     if (key === 'brand') { brand = query[key] }
     else if (key === 'price') { price = query[key]}
+    else if (key === 'search') { search = query[key]}
     else if (key !== 'category' && key!== 'page' && key!=='token') {
       filters = {}
       filters[key] = query[key]
     }
   }
   try {
-    let body = {category: query.category}
+    let body = {}
+    if (query?.category) {
+      body = {category: query.category}
+    }
     if (brand) {body['brand']=brand}
+    if (search) {body['name']= { $regex: search, $options : 'i'  }}
     if (price) {body['price']={$lt: parseFloat(price)}}
     if (filters) {
-      for (const key in filters)
-      body[`filters.${key}`]=filters[key]
+      for (const key in filters) {
+        if (key !== 'v'){
+          body[`filters.${key}`]=filters[key]
+        }
+      }
     }
     const select = '_id name images price discount slug rating numReviews';
     const productsPromise = Product.find(body).limit(16).skip(skip).select(select)
@@ -148,6 +157,17 @@ router.get('/brands', async (req, res) => {
   const {category, brand} = req.query
   try {
     const brands = await Product.find({brand: {$regex: brand, $options: 'i'}, category}, {brand: 1}).limit(10)
+    res.status(200).json(brands)
+  } catch (err) {
+    console.log(err)
+    res.status(400).json('some thing went wrong')
+  }
+})
+
+router.get('/brandsforsearch', async (req, res) => {
+  const {brand} = req.query
+  try {
+    const brands = await Product.find({brand: {$regex: brand, $options: 'i'}}, {brand: 1}).limit(10)
     res.status(200).json(brands)
   } catch (err) {
     console.log(err)
@@ -192,6 +212,17 @@ router.post('/', async (req, res) => {
     })
     await newProduct.save()
     res.status(200).json(newProduct)
+  } catch (err) {
+    console.log(err)
+    res.status(400).json('some thing went wrong')
+  }
+})
+
+router.post('/many', async (req, res) => {
+  const { products } = req.body
+  try {
+    await Product.insertMany(products)
+    res.json('added successfully')
   } catch (err) {
     console.log(err)
     res.status(400).json('some thing went wrong')

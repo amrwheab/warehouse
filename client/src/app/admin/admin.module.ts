@@ -31,9 +31,11 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 import { ModifyCategoryComponent } from './categories-dash/modify-category/modify-category.component';
 import { ModifyCarouselComponent } from './carousel-dash/modify-carousel/modify-carousel.component';
 import { OrderDashDetailsComponent } from './orders-dash/order-dash-details/order-dash-details.component';
+import { ProdWithExcelComponent } from './products-dash/prod-with-excel/prod-with-excel.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import { OrderDashDetailsComponent } from './orders-dash/order-dash-details/orde
     ImageCropperComponent,
     ModifyCategoryComponent,
     ModifyCarouselComponent,
-    OrderDashDetailsComponent
+    OrderDashDetailsComponent,
+    ProdWithExcelComponent
   ],
   imports: [
     CommonModule,
@@ -74,7 +77,8 @@ import { OrderDashDetailsComponent } from './orders-dash/order-dash-details/orde
     NzSelectModule,
     NzNotificationModule,
     NzMessageModule,
-    NzSpinModule
+    NzSpinModule,
+    NzStatisticModule
   ]
 })
 export class AdminModule { }

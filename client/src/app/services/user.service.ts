@@ -1,3 +1,4 @@
+import { Order } from './../interfaces/Order';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/environment';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -8,6 +9,16 @@ import { User } from '../interfaces/User';
 interface UserGet {
   users: User[];
   count: number;
+}
+
+interface Stats {
+  views: number;
+  productsCount: number;
+  categoriesCount: number;
+  ordersCount: number;
+  usersCount: number;
+  users: User[];
+  orders: Order[];
 }
 
 @Injectable({
@@ -46,6 +57,10 @@ export class UserService {
     // tslint:disable-next-line: no-string-literal
     const user = this.user.getValue()['id'];
     return this.http.get<UserGet>(environment.apiUrl + '/user', {params: {user, page, search}});
+  }
+
+  getStats(): Observable<Stats> {
+    return this.http.get<Stats>(environment.apiUrl + '/stats');
   }
 
   userAdmin(admin: boolean, userId: string): Observable<string> {

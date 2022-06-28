@@ -12,6 +12,17 @@ mongoose.connect(process.env.MONGODB_URL, (err) => {
   console.log('database connected')
 })
 
+// stats
+let views = 1128
+const getViews = (req, res, next) => {
+  views += 1
+  next()
+}
+
+const getAllViews = () => {return views}
+
+module.exports.getAllViews = getAllViews;
+
 // routes
 const productRouter = require('./routs/products.route')
 const categoryRouter = require('./routs/categories.route')
@@ -25,6 +36,7 @@ const likeRouter = require('./routs/like.route')
 const rateRouter = require('./routs/rate.route')
 const commentRouter = require('./routs/comment.route')
 const orderRouter = require('./routs/order.route')
+const statsRouter = require('./routs/stats.route')
 
 // requests
 app.use('/products', productRouter)
@@ -33,12 +45,13 @@ app.use('/uploadimage', imageUploadRouter)
 app.use('/carousel', carouselRouter)
 app.use('/footer', footerRouter)
 app.use('/user', userRouter)
-app.use('/home', homeRouter)
+app.use('/home', getViews, homeRouter)
 app.use('/cart', cartRouter)
 app.use('/like', likeRouter)
 app.use('/rate', rateRouter)
 app.use('/comments', commentRouter)
 app.use('/orders', orderRouter)
+app.use('/stats', statsRouter)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT ,() => {

@@ -1,3 +1,4 @@
+import { SearchComponent } from './components/search/search.component';
 import { ProductComponent } from './components/product/product.component';
 import { LikesComponent } from './components/likes/likes.component';
 import { CartComponent } from './components/cart/cart.component';
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'products/:slug', component: ProductComponent},
   { path: 'cart', component: CartComponent},
   { path: 'likes', component: LikesComponent},
+  { path: 'search', component: SearchComponent},
 ];
 
 @NgModule({

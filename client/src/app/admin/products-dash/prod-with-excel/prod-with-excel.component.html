@@ -1,0 +1,35 @@
+<div class="prod">
+  <h3 class="title-of-site mb-3">Add with Execl</h3>
+  <div class="row">
+    <div class="col-lg-6">
+      <input type="file" nz-input (change)="fileChange($event)" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+    </div>
+  </div>
+  <section class="products-table mt-3">
+    <nz-table #middleTable nzSize="middle" [nzShowPagination]="false" [nzScroll]="{ x: '992px' }" [nzData]="products">
+      <thead>
+        <tr>
+          <th nzWidth="50px"><strong>#</strong></th>
+          <th nzWidth="300px"><strong>Name</strong></th>
+          <th><strong>Brand</strong></th>
+          <th><strong>Price</strong></th>
+          <th><strong>Category</strong></th>
+          <th><strong>Count</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of middleTable.data; let i = index">
+          <td>{{i+1}}</td>
+          <td>{{ data.name.length > 84 ? data.name.slice(0, 84) + '...':data.name }}</td>
+          <td>{{ data.brand }}</td>
+          <td>{{ data.price | currency}}</td>
+          <td>{{ data.category }}</td>
+          <td>{{ data.countInStock }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <div class="my-3 sub-contain">
+      <button nz-button nzType="primary" [disabled]="products.length === 0" (click)="handleSubmit()">Submit</button>
+    </div>
+  </section>
+</div>

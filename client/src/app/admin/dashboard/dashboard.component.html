@@ -1,1 +1,78 @@
-dash works
+<div class="overlay" *ngIf="loading">
+  <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+</div>
+<div class="dash">
+  <div class="stat-contain">
+    <div class="statstics">
+      <div class="stat">
+        <nz-statistic [nzValue]="(views | number)" nzTitle="Daily Views" [nzPrefix]="eye"></nz-statistic>
+        <ng-template #eye><i nz-icon nzType="eye" nzTheme="outline"></i></ng-template>
+      </div>
+      <div class="stat">
+        <nz-statistic [nzValue]="(productsCount | number)" nzTitle="Products" [nzPrefix]="container"></nz-statistic>
+        <ng-template #container><i nz-icon nzType="container" nzTheme="outline"></i></ng-template>
+      </div>
+      <div class="stat">
+        <nz-statistic [nzValue]="(categoriesCount | number)" nzTitle="Categories" [nzPrefix]="apartment"></nz-statistic>
+        <ng-template #apartment><i nz-icon nzType="apartment" nzTheme="outline"></i></ng-template>
+      </div>
+      <div class="stat">
+        <nz-statistic [nzValue]="(usersCount | number)" nzTitle="Users" [nzPrefix]="userIcon"></nz-statistic>
+        <ng-template #userIcon><i nz-icon nzType="user" nzTheme="outline"></i></ng-template>
+      </div>
+      <div class="stat d-none d-xl-block">
+        <nz-statistic [nzValue]="(ordersCount | number)" nzTitle="Orders" [nzPrefix]="nodeExpand"></nz-statistic>
+        <ng-template #nodeExpand><i nz-icon nzType="node-expand" nzTheme="outline"></i></ng-template>
+      </div>
+    </div>
+  </div>
+  <nz-divider></nz-divider>
+  <div class="row">
+    <div class="col-lg-6">
+      <h2 class="title-of-site">Recent Orders</h2>
+      <section>
+        <nz-table #middleTable [nzShowPagination]="false" nzSize="middle" [nzLoading]="loading" [nzScroll]="{ x: '400px' }" [nzData]="orders">
+          <thead>
+            <tr>
+              <th nzWidth="50px"><strong>#</strong></th>
+              <th><strong>User Name</strong></th>
+              <th><strong>Date</strong></th>
+              <th><strong>Price</strong></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of middleTable.data; let i = index">
+              <td>{{i+1}}</td>
+              <td>{{ data?.user?.name.length > 84 ? data.user.name.slice(0, 84) + '...':data?.user?.name }}</td>
+              <td>{{data?.dateOrdered | date: 'dd/mm/yyyy'}}</td>
+              <td>{{data?.totalPrice | currency}}</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </section>
+    </div>
+    <div class="col-lg-6">
+      <h2 class="title-of-site">Recent Users</h2>
+      <section>
+        <nz-table #middleTable [nzShowPagination]="false" nzSize="middle" [nzLoading]="loading" [nzScroll]="{ x: '400px' }" [nzData]="users">
+          <thead>
+            <tr>
+              <th nzWidth="50px"><strong>#</strong></th>
+              <th><strong>Name</strong></th>
+              <th><strong>Email</strong></th>
+              <th><strong>City</strong></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of users; let i = index">
+              <td>{{i+1}}</td>
+              <td>{{ data?.name?.length > 84 ? data.name.slice(0, 84) + '...':data?.name }}</td>
+              <td>{{data?.email}}</td>
+              <td>{{data?.city}}</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </section>
+    </div>
+  </div>
+</div>

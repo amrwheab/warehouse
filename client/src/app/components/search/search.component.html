@@ -1,0 +1,70 @@
+<div class="overlay" *ngIf="loading">
+  <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+</div>
+
+<div class="products py-3">
+  <div class="container">
+    <h2 class="title-of-site title">Search Results</h2>
+    <form nz-form>
+      <nz-form-item style="width: 200px;">
+        <nz-form-control>
+          <nz-select
+          nzShowSearch
+          nzServerSearch
+          nzPlaceHolder="Brand"
+          [nzShowArrow]="false"
+          [nzFilterOption]="true"
+          name="brand"
+          [(ngModel)]="brand"
+          (nzOnSearch)="brandSearch($event)"
+        >
+        <nz-option nzLabel="all" nzValue=""></nz-option>
+          <nz-option *ngFor="let b of brands" [nzLabel]="b" [nzValue]="b"></nz-option>
+        </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <input nz-input type="number" placeholder="Price less than?" name="price" [(ngModel)]="price" />
+        </nz-form-control>
+      </nz-form-item>
+      <!-- <nz-form-item style="width: 200px;" *ngFor="let fil of category?.filters;let i=index;trackBy: trackByFun">
+        <nz-form-control>
+          <nz-select
+          nzShowSearch
+          nzServerSearch
+          [nzPlaceHolder]="fil"
+          [nzShowArrow]="false"
+          [nzFilterOption]="true"
+          [name]="fil+i"
+          [(ngModel)]="filters[fil]"
+          (nzOnSearch)="filtersSearch($event, fil)"
+        >
+          <nz-option nzLabel="all" nzValue=""></nz-option>
+          <nz-option *ngFor="let b of filValues;trackBy:trackByFun" [nzLabel]="b" [nzValue]="b"></nz-option>
+        </nz-select>
+        </nz-form-control>
+      </nz-form-item> -->
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzType="primary" (click)="searchNow()">Search</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+
+    <div class="prods-section">
+      <div class="mr-3" *ngFor="let prod of products;trackBy">
+        <app-prod-card [product]="prod"></app-prod-card>
+      </div>
+      <div class="notfound" *ngIf="products.length===0 && !loading">
+        <img src="assets/notfound.svg" alt="not found">
+      </div>
+    </div>
+
+    <div class="pagin-contain">
+      <nz-pagination [nzPageIndex]="page" [nzTotal]="count" [nzPageSize]="16" (nzPageIndexChange)="goPage($event)"></nz-pagination>
+    </div>
+
+
+  </div>
+</div>

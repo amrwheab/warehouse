@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Cart } from './../../interfaces/Cart';
 import { CartService } from './../../services/cart.service';
 import { UserService } from './../../services/user.service';
@@ -18,10 +19,12 @@ export class HeaderComponent implements OnInit {
   likescount = 0;
   totalPrice = 0;
   cartDrawer = false;
+  visibleSearch = false;
 
   constructor(
     private userServ: UserService,
-    private cartServ: CartService
+    private cartServ: CartService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -41,6 +44,11 @@ export class HeaderComponent implements OnInit {
 
   trackByFun(num: number): number {
     return num;
+  }
+
+  search(val: string): void {
+    this.router.navigateByUrl(`/search?v=${val}`);
+    this.visibleSearch = false;
   }
 
 }

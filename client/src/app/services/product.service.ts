@@ -87,6 +87,10 @@ export class ProductService {
     return this.http.get<any[]>(environment.apiUrl + '/products/brands', { params: { category, brand } });
   }
 
+  getAvailableBrandsForSearch(brand: string): Observable<any> {
+    return this.http.get(environment.apiUrl + '/products/brandsforsearch', { params: { brand } });
+  }
+
   getAvailableFilters(filters: string, category: string, filterKey: string): Observable<any[]> {
     return this.http.get<any[]>(environment.apiUrl + '/products/avilablefilters', { params: { category, filters, filterKey } });
   }
@@ -145,6 +149,10 @@ export class ProductService {
 
   addProduct(value: {}): Observable<any> {
     return this.http.post(environment.apiUrl + '/products', value);
+  }
+
+  addMany(products: Product[]): Observable<string> {
+    return this.http.post<string>(environment.apiUrl + '/products/many', {products});
   }
 
   updateProduct(value: {}, id: string): Observable<any> {
