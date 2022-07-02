@@ -28,23 +28,6 @@
           <input nz-input type="number" placeholder="Price less than?" name="price" [(ngModel)]="price" />
         </nz-form-control>
       </nz-form-item>
-      <!-- <nz-form-item style="width: 200px;" *ngFor="let fil of category?.filters;let i=index;trackBy: trackByFun">
-        <nz-form-control>
-          <nz-select
-          nzShowSearch
-          nzServerSearch
-          [nzPlaceHolder]="fil"
-          [nzShowArrow]="false"
-          [nzFilterOption]="true"
-          [name]="fil+i"
-          [(ngModel)]="filters[fil]"
-          (nzOnSearch)="filtersSearch($event, fil)"
-        >
-          <nz-option nzLabel="all" nzValue=""></nz-option>
-          <nz-option *ngFor="let b of filValues;trackBy:trackByFun" [nzLabel]="b" [nzValue]="b"></nz-option>
-        </nz-select>
-        </nz-form-control>
-      </nz-form-item> -->
       <nz-form-item>
         <nz-form-control>
           <button nz-button nzType="primary" (click)="searchNow()">Search</button>

@@ -1,0 +1,28 @@
+.user {
+  padding: 28px 0;
+}
+.user-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+.user-body p {
+  color: gray;
+}
+.user-vec {
+  width: 270px;
+}
+@media (max-width: 992px) {
+  .img-contain {
+    display: flex;
+    justify-content: center;
+  }
+  .user-body {
+    text-align: center;
+
+    h2.title-of-site::before {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+}

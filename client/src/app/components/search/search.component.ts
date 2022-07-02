@@ -22,7 +22,6 @@ export class SearchComponent implements OnInit, OnDestroy {
   count = 0;
   actRouteSub: Subscription;
   productsSub: Subscription;
-  filters = {};
 
 
   constructor(
@@ -78,8 +77,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     const load = this.message.loading('action in progress...').messageId;
     this.router.navigate([], {queryParams: {
       brand: this.brand,
-      price: this.price,
-      ...this.filters
+      price: this.price
     }}).then(() => this.message.remove(load));
   }
 
@@ -87,8 +85,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.router.navigate([], {queryParams: {
       brand: this.brand,
       price: this.price,
-      page: e,
-      ...this.filters
+      page: e
     }});
   }
 }

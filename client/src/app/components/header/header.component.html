@@ -38,7 +38,7 @@
               <a routerLink="/auth/login">Log in</a>
             </li>
             <li nz-menu-item *ngIf="!user?.loading && user?.id">
-              <a routerLink="#">profile page</a>
+              <a [routerLink]="'/user/'+user.id">profile page</a>
             </li>
             <li *ngIf="!user?.loading && user?.id" nz-menu-item nzDanger (click)="logOut()">Log out</li>
           </ul>
@@ -117,7 +117,7 @@
 
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <ul nz-menu>
-    <li nz-menu-item>Profile page</li>
+    <li nz-menu-item><a [routerLink]="'/user/'+user.id">Profile page</a></li>
     <li nz-menu-item routerLink="/admin" *ngIf="user.isAdmin">Admin page</li>
     <li nz-menu-item nzDanger (click)="logOut()">Log out</li>
   </ul>

@@ -1,3 +1,4 @@
+import { UserComponent } from './components/user/user.component';
 import { SearchComponent } from './components/search/search.component';
 import { ProductComponent } from './components/product/product.component';
 import { LikesComponent } from './components/likes/likes.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule), canActivate: [AuthGuard] },
   { path: 'categories', component: CategoriesComponent},
   { path: 'categories/:id', component: CategoryComponent},
+  { path: 'user/:id', component: UserComponent},
   { path: 'products/:slug', component: ProductComponent},
   { path: 'cart', component: CartComponent},
   { path: 'likes', component: LikesComponent},

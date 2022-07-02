@@ -1,0 +1,61 @@
+<div class="user">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="img-contain">
+          <img class="user-img" [src]="user?.image.replace(localHost, apiUrl)" [alt]="user?.name">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="pt-3 user-body">
+          <h2 class="title-of-site">{{user?.name}}</h2>
+          <p>{{user?.phone}}</p>
+          <p>{{user?.country + ', ' + user?.city + ', ' + user?.street}}</p>
+          <p>{{user?.zip}}</p>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="d-none d-lg-block">
+          <img class="user-vec" src="assets/uservec.svg" alt="vector">
+        </div>
+      </div>
+    </div>
+
+    <h2 class="title-of-site mb-3">Orders</h2>
+    <div class="row">
+      <div class="col-lg-8">
+        <section class="categories-table">
+          <nz-table #middleTable nzSize="middle" [nzLoading]="loading" [nzScroll]="{ x: '600px' }" [nzData]="orders"
+            [nzFrontPagination]="false" [nzTotal]="ordersCount" [nzPageSize]="8" [nzPageIndex]="ordersPage"
+            (nzQueryParams)="onQueryParamsChange($event)">
+            <thead>
+              <tr>
+                <th nzWidth="50px"><strong>#</strong></th>
+                <th><strong>Date</strong></th>
+                <th><strong>Price</strong></th>
+                <th *ngIf="isProfile"><strong>status</strong></th>
+                <th *ngIf="isProfile"><strong>Action</strong></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of middleTable.data; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{data.dateOrdered | date: 'dd/mm/yyyy'}}</td>
+                <td>{{data.totalPrice | currency}}</td>
+                <td *ngIf="isProfile">{{data.status}}</td>
+                <td *ngIf="isProfile">
+                  <button *ngIf="data.status !== 'canceled'" nz-button nzDanger (click)="confirmCancel(data.id)">
+                    <i nz-icon nzType="delete" nzTheme="outline"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="overlay" *ngIf="loading">
+  <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+</div>

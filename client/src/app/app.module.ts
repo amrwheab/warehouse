@@ -52,6 +52,7 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { NgxStripeModule } from 'ngx-stripe';
 import { SearchComponent } from './components/search/search.component';
+import { UserComponent } from './components/user/user.component';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -78,6 +79,7 @@ registerLocaleData(en);
     PaymentComponent,
     OrderDetailsComponent,
     SearchComponent,
+    UserComponent,
   ],
   imports: [
     BrowserModule,

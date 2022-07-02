@@ -20,6 +20,10 @@ export class OrderService {
     return this.http.get<ReturnOrder>(environment.apiUrl + '/orders/', {params: {page, search}});
   }
 
+  getUserOrders(id: string, page: string): Observable<ReturnOrder> {
+    return this.http.get<ReturnOrder>(environment.apiUrl + '/orders/byuser', {params: {user: id, page}});
+  }
+
   getOneOrder(id: string): Observable<Order> {
     return this.http.get<Order>(environment.apiUrl + '/orders/one/' + id);
   }

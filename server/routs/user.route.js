@@ -100,7 +100,7 @@ router.post('/login', async (req, res) => {
 router.get('/getuser/:id', async (req, res) => {
   const { id } = req.params
   try {
-    const user = await User.findById(id).select('-password')
+    const user = await User.findById(id).select('-passwordHash')
     res.status(200).json(user)
   } catch (err) {
     console.log(err)

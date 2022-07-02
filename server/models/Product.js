@@ -66,6 +66,10 @@ const productSchema = mongoose.Schema({
   discount: {
     type: Number,
     default: 0,
+  },
+  loc: {
+    raf: String,
+    pos: String
   }
 })
 
