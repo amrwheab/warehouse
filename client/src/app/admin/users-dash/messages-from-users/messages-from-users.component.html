@@ -1,0 +1,26 @@
+<div class="message">
+  <h2 class="title-of-site mb-4">Messages From Users</h2>
+  <div class="card-contain">
+    <div class="message-card" *ngFor="let message of messages">
+      <div class="header">
+        <div>
+          <img src="assets/user.png" alt="user">
+        </div>
+        <div>
+          <h4>{{message.name}}</h4>
+          <span>{{message.email}}</span>
+        </div>
+      </div>
+      <div class="body">
+        <p>{{message.content}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="pagin-contain" *ngIf="!loading">
+    <nz-pagination [nzPageIndex]="page" [nzTotal]="count" [nzPageSize]="10" (nzPageIndexChange)="goPage($event)"></nz-pagination>
+  </div>
+</div>
+
+<div class="overlay" *ngIf="loading">
+  <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+</div>

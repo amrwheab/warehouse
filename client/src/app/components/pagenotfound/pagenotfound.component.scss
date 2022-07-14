@@ -1,0 +1,29 @@
+.notfound {
+  padding: 50px 0;
+}
+
+.empty-cart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  img {
+    width: 450px;
+  }
+}
+@media (max-width: 576px) {
+  .empty-cart {
+    img {
+      width: 100%;
+    }
+  }
+}
+
+a {
+  text-decoration: underline;
+  transition: .3s;
+
+  &:hover {
+    color: #0077C0;
+  }
+}

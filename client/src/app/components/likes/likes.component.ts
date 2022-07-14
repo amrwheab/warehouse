@@ -1,3 +1,4 @@
+import { UserService } from './../../services/user.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/interfaces/Product';
@@ -12,7 +13,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 export class LikesComponent implements OnInit, OnDestroy {
 
   products: Product[] = [];
-  count: number;
+  count = 0;
   loading = true;
   page = '1';
   actRouteSub: Subscription;
@@ -23,19 +24,25 @@ export class LikesComponent implements OnInit, OnDestroy {
     private cartServ: CartService,
     private actRoute: ActivatedRoute,
     private router: Router,
+    private userServ: UserService
   ) { }
 
   ngOnInit(): void {
     this.loading = true;
     this.actRouteSub = this.actRoute.queryParams.subscribe(({page}) => {
       if (page) { this.page = page; }
-      this.likesSub = this.cartServ.getLikes(this.page).subscribe(res => {
-        this.products = res.map(a => a.product);
+      // tslint:disable-next-line: no-string-literal
+      if (this.userServ.user.getValue()['id']) {
+        this.likesSub = this.cartServ.getLikes(this.page).subscribe(res => {
+          this.products = res.map(a => a.product);
+          this.loading = false;
+        }, err => {
+          console.log(err);
+          this.loading = false;
+        });
+      } else {
         this.loading = false;
-      }, err => {
-        console.log(err);
-        this.loading = false;
-      });
+      }
     });
     this.countSub = this.cartServ.likescount.subscribe(count => { this.count = count; });
   }

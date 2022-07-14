@@ -1,3 +1,4 @@
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
@@ -36,6 +37,8 @@ import { ModifyCategoryComponent } from './categories-dash/modify-category/modif
 import { ModifyCarouselComponent } from './carousel-dash/modify-carousel/modify-carousel.component';
 import { OrderDashDetailsComponent } from './orders-dash/order-dash-details/order-dash-details.component';
 import { ProdWithExcelComponent } from './products-dash/prod-with-excel/prod-with-excel.component';
+import { SendToSubComponent } from './users-dash/send-to-sub/send-to-sub.component';
+import { MessagesFromUsersComponent } from './users-dash/messages-from-users/messages-from-users.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +55,9 @@ import { ProdWithExcelComponent } from './products-dash/prod-with-excel/prod-wit
     ModifyCategoryComponent,
     ModifyCarouselComponent,
     OrderDashDetailsComponent,
-    ProdWithExcelComponent
+    ProdWithExcelComponent,
+    SendToSubComponent,
+    MessagesFromUsersComponent
   ],
   imports: [
     CommonModule,
@@ -78,7 +83,8 @@ import { ProdWithExcelComponent } from './products-dash/prod-with-excel/prod-wit
     NzNotificationModule,
     NzMessageModule,
     NzSpinModule,
-    NzStatisticModule
+    NzStatisticModule,
+    NzPaginationModule
   ]
 })
 export class AdminModule { }

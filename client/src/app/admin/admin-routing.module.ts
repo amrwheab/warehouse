@@ -1,3 +1,5 @@
+import { MessagesFromUsersComponent } from './users-dash/messages-from-users/messages-from-users.component';
+import { SendToSubComponent } from './users-dash/send-to-sub/send-to-sub.component';
 import { ProdWithExcelComponent } from './products-dash/prod-with-excel/prod-with-excel.component';
 import { OrderDashDetailsComponent } from './orders-dash/order-dash-details/order-dash-details.component';
 import { ModifyproductComponent } from './products-dash/modifyproduct/modifyproduct.component';
@@ -18,6 +20,8 @@ const routes: Routes = [
   { path: '', component: AdminComponent, children: [
     { path: 'dashboard', component: DashboardComponent },
     { path: 'users', component: UsersDashComponent },
+    { path: 'users/sendtosub', component: SendToSubComponent },
+    { path: 'users/messages', component: MessagesFromUsersComponent },
     { path: 'products', component: ProductsDashComponent },
     { path: 'products/addproduct', component: ModifyproductComponent },
     { path: 'products/updateproduct/:id', component: ModifyproductComponent },

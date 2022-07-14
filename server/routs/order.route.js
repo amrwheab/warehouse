@@ -36,7 +36,7 @@ router.get('/', async (req, res) => {
   try {
     const users = await User.find({ name: { $regex: search || '', $options: 'i' } }, { _id: 1 })
     const usersIds = users.map(({ _id }) => _id)
-    const orders = await Order.find({ user: { $in: usersIds } }).sort({ _id: -1 }).skip(skip).populate('user', { name: 1 })
+    const orders = await Order.find({ user: { $in: usersIds } }).sort({ _id: -1 }).limit(8).skip(skip).populate('user', { name: 1 })
     const count = await Order.find({ user: { $in: usersIds } }).count()
     res.status(200).json({ orders, count })
   } catch (err) {
@@ -244,6 +244,49 @@ router.post('/stripe', async (req, res) => {
       }
     });
 
+  } catch (err) {
+    console.log(err)
+    res.status(400).json('some thing went wrong')
+  }
+})
+
+router.post('/mobile', async (req, res) => {
+  const { products, user} = req.body
+  try {
+    const prodNames = products.map(ele => ele.title)
+    const productsValues = await Product.find({ name: {$in: prodNames} }, { price: 1 })
+    let totalPrice = 0
+    products.map(ele => {
+      const product = productsValues.find(prod => prod._id === mongoose.Types.ObjectId(ele.product) || ele.product)
+      totalPrice += product.price * ele.amount
+    })
+    const orderItems = productsValues.map(ele => {
+      return {
+        product: ele._id,
+        amount: products.find(prod => prod.title === ele.name).amount
+      }
+    })
+    const newOrder = new Order({
+      orderItems,
+      shippingAddress1: 'sdfjhduff',
+      shippingAddress2: 'sdjgdfydyfdygyd',
+      city: 'cairo',
+      zip: 12753,
+      phone: 01245473222,
+      totalPrice,
+      user,
+      paid: true
+    })
+
+    await newOrder.save()
+    // const userForMail = await User.findById(user).select('email')
+    // await transporter.sendMail({
+    //   from: '"Amr Wheab" <amr.wheab2020@gmail.com>',
+    //   to: userForMail.email,
+    //   subject: "Add Order",
+    //   html: pendingHtml
+    // });
+    res.status(200).json('ordered successfully')
   } catch (err) {
     console.log(err)
     res.status(400).json('some thing went wrong')

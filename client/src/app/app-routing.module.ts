@@ -1,3 +1,6 @@
+import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
+import { ContactComponent } from './components/contact/contact.component';
+import { AboutComponent } from './components/about/about.component';
 import { UserComponent } from './components/user/user.component';
 import { SearchComponent } from './components/search/search.component';
 import { ProductComponent } from './components/product/product.component';
@@ -21,6 +24,9 @@ const routes: Routes = [
   { path: 'cart', component: CartComponent},
   { path: 'likes', component: LikesComponent},
   { path: 'search', component: SearchComponent},
+  { path: 'about', component: AboutComponent},
+  { path: 'contact', component: ContactComponent},
+  { path: '**', component: PagenotfoundComponent},
 ];
 
 @NgModule({

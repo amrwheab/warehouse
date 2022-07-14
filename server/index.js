@@ -37,6 +37,8 @@ const rateRouter = require('./routs/rate.route')
 const commentRouter = require('./routs/comment.route')
 const orderRouter = require('./routs/order.route')
 const statsRouter = require('./routs/stats.route')
+const subRouter = require('./routs/subscriper.route')
+const messageRouter = require('./routs/message.route')
 
 // requests
 app.use('/products', productRouter)
@@ -52,6 +54,8 @@ app.use('/rate', rateRouter)
 app.use('/comments', commentRouter)
 app.use('/orders', orderRouter)
 app.use('/stats', statsRouter)
+app.use('/subs', subRouter)
+app.use('/message', messageRouter)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT ,() => {

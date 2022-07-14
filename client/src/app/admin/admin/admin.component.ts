@@ -1,3 +1,5 @@
+import { User } from './../../interfaces/User';
+import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,10 +10,16 @@ import { Component, OnInit } from '@angular/core';
 export class AdminComponent implements OnInit {
 
   collepsed = false;
+  user: User;
 
-  constructor() { }
+  constructor(
+    private userServ: UserService
+  ) { }
 
   ngOnInit(): void {
+    this.userServ.user.subscribe(user => {
+      this.user = user;
+    });
   }
 
   collepseChange(e: boolean): void  {

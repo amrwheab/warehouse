@@ -28,8 +28,8 @@
               <a routerLink="/">Home</a>
             </li>
             <li nz-menu-item><a routerLink="/categories">Categories</a></li>
-            <li nz-menu-item><a routerLink="#">About</a></li>
-            <li nz-menu-item><a routerLink="#">Contact</a></li>
+            <li nz-menu-item><a routerLink="/about">About</a></li>
+            <li nz-menu-item><a routerLink="/contact">Contact</a></li>
             <nz-divider></nz-divider>
             <li *ngIf="!user?.loading && !user?.id" nz-menu-item nzMatchRouter="/auth/signup">
               <a routerLink="/auth/signup">Sign up</a>
@@ -47,8 +47,8 @@
       <ul class="menu d-none d-lg-flex">
         <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
         <li><a routerLink="/categories" routerLinkActive="active">Categories</a></li>
-        <li><a routerLink="#" routerLinkActive="active">About</a></li>
-        <li><a routerLink="#" routerLinkActive="active">Contact</a></li>
+        <li><a routerLink="/about" routerLinkActive="active">About</a></li>
+        <li><a routerLink="/contact" routerLinkActive="active">Contact</a></li>
       </ul>
       <div class="restform d-none d-lg-flex">
         <a routerLink="/likes" class="heart">

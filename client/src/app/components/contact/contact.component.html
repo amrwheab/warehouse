@@ -1,0 +1,39 @@
+<div class="contact">
+  <div class="container">
+    <h2 class="title-of-site">Contact Us</h2>
+    <div class="row">
+      <div class="col-lg-6">
+        <form [formGroup]="contactForm">
+          <nz-form-item class="d-block">
+            <nz-form-label nzFor="name">name</nz-form-label>
+            <nz-form-control
+              [nzValidateStatus]="(contactForm.controls.name.invalid && contactForm.controls.name.touched) ? 'error': ''"
+              nzErrorTip="name is required">
+              <input nz-input formControlName="name" placeholder="name" type="text" id="name">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="d-block">
+            <nz-form-label nzFor="email">email</nz-form-label>
+            <nz-form-control
+              [nzValidateStatus]="(contactForm.controls.email.invalid && contactForm.controls.email.touched) ? 'error': ''"
+              nzErrorTip="email is invalid">
+              <input nz-input formControlName="email" placeholder="email" type="email" id="email">
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="d-block">
+            <nz-form-label nzFor="content">content</nz-form-label>
+            <nz-form-control
+              [nzValidateStatus]="(contactForm.controls.content.invalid && contactForm.controls.content.touched) ? 'error': ''"
+              nzErrorTip="content is required">
+              <textarea nz-input formControlName="content" placeholder="content" type="text" id="content"></textarea>
+            </nz-form-control>
+          </nz-form-item>
+          <button nz-button nzType="primary" type="submit" [disabled]="contactForm.invalid" (click)="sendMessage()">Submit</button>
+        </form>
+      </div>
+      <div class="col-lg-6">
+        <img class="contact-img" src="assets/contact.svg" alt="contact">
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+
+<h2 class="title-of-site">
+  Send Messages Via Email
+</h2>
+<nz-form-item class="d-block">
+  <nz-form-label nzFor="name">Message</nz-form-label>
+  <nz-form-control>
+    <ckeditor [config]="{placeholder: 'body'}" [editor]="editor" name="mail" [(ngModel)]="messageValue"></ckeditor>
+  </nz-form-control>
+</nz-form-item>
+
+<button nz-button nzType="primary" (click)="sendMail()">Submit</button>

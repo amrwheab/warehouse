@@ -1,0 +1,52 @@
+.card-contain {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.message-card {
+  border: 1px solid #c7c7c7;
+  padding: 10px 20px;
+  border-radius: 7px;
+
+
+  .header {
+    display: flex;
+    gap: 10px;
+    img {
+      width: 50px;
+    }
+    h4 {
+      margin: 0;
+    }
+    span {
+      color: #AFACAC;
+    }
+  }
+
+  .body {
+    background-color: #d5d5d5;
+    margin-top: 15px;
+    margin-left: 14px;
+    padding: 10px;
+    border-radius: 7px;
+
+    p {
+      margin: 0;
+    }
+  }
+}
+@media (min-width: 992px) {
+  .message-card {
+    width: 500px;
+  }
+}
+
+.pagin-contain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 0px;
+}

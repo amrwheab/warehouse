@@ -28,8 +28,8 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</p>
           </div>
           <form>
-            <input nz-input type="text" placeholder="xxx@xxx.com">
-            <button nz-button nzType="primary" nzSize="large">
+            <input nz-input type="text" placeholder="xxx@xxx.com" #email>
+            <button nz-button nzType="primary" nzSize="large" (click)="addSub(email.value)">
               <i nz-icon nzType="send" nzTheme="outline"></i>
             </button>
           </form>

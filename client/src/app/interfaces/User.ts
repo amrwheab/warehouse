@@ -9,4 +9,5 @@ export interface User {
   zip: string | undefined;
   isAdmin: boolean | undefined;
   image?: string;
+  mainAdmin?: boolean;
 }
