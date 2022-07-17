@@ -21,6 +21,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   product: Product = { images: [{}], rate: [0, 0, 0, 0, 0] };
   commentValue = '';
   commentsNextPage = 1;
+  colors = [];
 
   config: SwiperConfigInterface = {
     slidesPerView: 7,
@@ -53,6 +54,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   private __getProduct(slug: string): void {
     this.productSub = this.prodServ.getOneProductBySlug(slug).subscribe(product => {
       this.product = product;
+      this.colors = product.images.map(ele => ele.color !== 'nocolor' ? ele.color : null).filter(ele => ele);
       this.cartServ.cart.subscribe((car) => {
         car.forEach((ele) => {
           if (ele.product.id === product.id) {

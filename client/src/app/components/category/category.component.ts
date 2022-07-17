@@ -112,18 +112,18 @@ export class CategoryComponent implements OnInit, OnDestroy {
   search(): void {
     const load = this.message.loading('action in progress...').messageId;
     this.router.navigate([], {queryParams: {
+      ...this.filters,
       brand: this.brand,
       price: this.price,
-      ...this.filters
     }}).then(() => this.message.remove(load));
   }
 
   goPage(e: string): void {
     this.router.navigate([], {queryParams: {
+      ...this.filters,
       brand: this.brand,
       price: this.price,
       page: e,
-      ...this.filters
     }});
   }
 

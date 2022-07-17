@@ -1,3 +1,4 @@
+import { AdminGuard } from './guards/admin.guard';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { AboutComponent } from './components/about/about.component';
@@ -15,7 +16,7 @@ import { CategoryComponent } from './components/category/category.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule), canActivate: [AdminGuard] },
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule), canActivate: [AuthGuard] },
   { path: 'categories', component: CategoriesComponent},
   { path: 'categories/:id', component: CategoryComponent},

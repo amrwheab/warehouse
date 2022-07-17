@@ -10,7 +10,8 @@ const shippedHtml = require('../views/shipped')
 const pendingHtml = require('../views/pending')
 const completedHtml = require('../views/completed')
 const canceledHtml = require('../views/canceled')
-const axios = require('axios')
+const {NodeSSH} = require('node-ssh')
+const ssh = new NodeSSH()
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
@@ -179,11 +180,16 @@ router.post('/new', async (req, res) => {
     })
 
     rasProd = JSON.stringify(productsValues[0])
-    // const raf = JSON.parse(rasProd).loc.raf
-    // const pos = JSON.parse(rasProd).loc.pos
+    const raf = JSON.parse(rasProd).loc.raf
+    const pos = JSON.parse(rasProd).loc.pos
 
-    // await axios.get(`http://192.168.1.100?raf=${raf}&pos=${pos}`)
-
+    await ssh.connect({
+      host: '192.168.1.100',
+      username: 'pi',
+      password: '268405'
+    })
+    await ssh.execCommand(`python3 /home/pi/Desktop/search.py ${raf} ${pos}`)
+      
     // const userForMail = await User.findById(user).select('email')
     await newOrder.save()
     // await transporter.sendMail({
@@ -251,30 +257,20 @@ router.post('/stripe', async (req, res) => {
 })
 
 router.post('/mobile', async (req, res) => {
-  const { products, user} = req.body
   try {
-    const prodNames = products.map(ele => ele.title)
-    const productsValues = await Product.find({ name: {$in: prodNames} }, { price: 1 })
-    let totalPrice = 0
-    products.map(ele => {
-      const product = productsValues.find(prod => prod._id === mongoose.Types.ObjectId(ele.product) || ele.product)
-      totalPrice += product.price * ele.amount
-    })
-    const orderItems = productsValues.map(ele => {
-      return {
-        product: ele._id,
-        amount: products.find(prod => prod.title === ele.name).amount
-      }
-    })
+    console.log('mobile')
     const newOrder = new Order({
-      orderItems,
-      shippingAddress1: 'sdfjhduff',
-      shippingAddress2: 'sdjgdfydyfdygyd',
-      city: 'cairo',
+      orderItems: [{
+        product: '62148b56b73659dcfcfd0d56',
+        amount: 3
+      }],
+      shippingAddress1: 'Kafr elshikh',
+      shippingAddress2: 'damitta',
+      city: 'kafr elshikh',
       zip: 12753,
       phone: 01245473222,
-      totalPrice,
-      user,
+      totalPrice: 233.97,
+      user: '62b65f85ddf591490c1badf9',
       paid: true
     })
 

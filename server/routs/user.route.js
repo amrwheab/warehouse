@@ -108,5 +108,16 @@ router.get('/getuser/:id', async (req, res) => {
   }
 })
 
+router.get('/isadmin/:id', async (req, res) => {
+  const {id} = req.params
+  try {
+    const user = await User.findById(id).select('isAdmin')
+    res.status(200).json(user.isAdmin)
+  } catch (err) {
+    console.log(err)
+    res.status(400).json(false)
+  }
+})
+
 
 module.exports = router
