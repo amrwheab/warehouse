@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { UserService } from './../../../services/user.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Router } from '@angular/router';
@@ -13,13 +14,15 @@ import { Product } from 'src/app/interfaces/Product';
 })
 export class ProdCardComponent implements OnInit {
 
-  @ViewChild('heart') heart: ElementRef;
-  @ViewChild('cart') cart: ElementRef;
+  @ViewChild('heart') heart: ElementRef<HTMLElement>;
+  @ViewChild('cart') cart: ElementRef<HTMLElement>;
   @Input() product: Product;
   @Output() unlikedEvent = new EventEmitter<string>();
 
   apiUrl = environment.apiUrl;
   localHost = environment.localHost;
+  children = [];
+
   constructor(
     private cartServ: CartService,
     private router: Router,
@@ -30,8 +33,22 @@ export class ProdCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getChildren(elem: Element): void {
+    const length = elem.children.length;
+    for (let i = 0; i < length; i++) {
+      this.children.push(elem.children[i]);
+      this.getChildren(elem.children[i]);
+    }
+  }
+
   goToProduct(e: any): void {
-    if (!e.path.includes(this.heart.nativeElement) && !e.path.includes(this.cart.nativeElement)) {
+    this.getChildren(this.heart.nativeElement);
+    const heartChildren = [...this.children];
+    this.children = [];
+    this.getChildren(this.cart.nativeElement);
+    const cartChildren = [...this.children];
+    this.children = [];
+    if (!heartChildren.includes(e.target) && !cartChildren.includes(e.target)) {
       this.router.navigateByUrl('/products/' + this.product.slug);
     }
   }

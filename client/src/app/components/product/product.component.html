@@ -60,7 +60,7 @@
               {{i}} <i nz-icon nzType="star" nzTheme="fill"></i>
             </p>
             <span class="rate-grow" [style]="'width:'+(((product?.rate[i-1]/product?.numReviews)*100) || 0)+'%'">
-              <span class="rate-num">{{(((product?.rate[i-1]/product?.numReviews)*100).toFixed(0) || 0)+'%'}}</span>
+              <span class="rate-num">{{(((product?.rate[i-1]/(product?.numReviews || 1))*100).toFixed(0) || 0)+'%'}}</span>
             </span>
           </div>
           <nz-divider></nz-divider>
